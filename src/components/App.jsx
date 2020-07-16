@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import Navbar from "./../shared/Navbar";
+import Navbar from "../shared/Navbar";
 import Notes from "./Notes";
 // import Note from "./Note";
 
