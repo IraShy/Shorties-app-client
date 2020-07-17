@@ -1,44 +1,46 @@
 import React from "react";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
+
 import Nav from "react-bootstrap/Nav";
+import Form from "react-bootstrap/Form";
+import FormControl from "react-bootstrap/FormControl";
+import Button from "react-bootstrap/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import { faFileCode, faSearch } from "@fortawesome/free-solid-svg-icons";
 
 const NavBar = () => {
   return (
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-      <Navbar.Brand href="/">Home</Navbar.Brand>
+    <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
+      <Navbar.Brand href="/">
+        {" "}
+        <FontAwesomeIcon icon={faFileCode} size="2x" color="grey" />
+      </Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link href="/search">Search</Nav.Link>
-          <Nav.Link href="/notes/create">Add a note</Nav.Link>
-          <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.2">
-              Another action
-            </NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item href="#action/3.4">
-              Separated link
-            </NavDropdown.Item>
-          </NavDropdown>
+          <Form inline>
+            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+            <Button variant="outline-success">
+              <FontAwesomeIcon icon={faSearch} />
+            </Button>
+          </Form>
+          <Nav.Link href="/notes/create">add</Nav.Link>
         </Nav>
         <Nav>
-          <Nav.Link href="/Login">Login</Nav.Link>
+          <Nav.Link href="/Login"> login</Nav.Link>
           <Nav.Link eventKey={2} href="/sign-up">
             Sign Up
           </Nav.Link>
 
-          <Nav.Link href="/login">
-            <span
-              className="nav-item nav-link"
-              onClick={() => {
-                localStorage.removeItem("token");
-              }}
-            >
-              Logout
-            </span>
+          <Nav.Link
+            href="/login"
+            className="nav-item nav-link"
+            onClick={() => {
+              localStorage.removeItem("token");
+            }}
+          >
+            Logout
           </Nav.Link>
         </Nav>
       </Navbar.Collapse>
