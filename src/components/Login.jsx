@@ -1,7 +1,7 @@
 import React from "react";
 
 class Login extends React.Component {
-  state = { email: "", password: "", username: "", errMessage: "" };
+  state = { email: "", password: "", errMessage: "" };
 
   onInputChange = (event) => {
     const key = event.target.id;
@@ -12,9 +12,9 @@ class Login extends React.Component {
 
   onFormSubmit = async (event) => {
     event.preventDefault();
-    const { email, password, username } = this.state;
+    const { email, password } = this.state;
     const body = {
-      user: { email, password, username },
+      auth: { email, password },
     };
     try {
       const response = await fetch(
