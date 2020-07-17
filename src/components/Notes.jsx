@@ -7,7 +7,8 @@ class Notes extends React.Component {
   getNotes = async () => {
     const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/notes`);
     const data = await response.json();
-    this.setState({ notes: data });
+    this.setState({ notes: data.notes });
+    console.log(this.state);
   };
 
   deleteNote = async (id) => {
