@@ -5,24 +5,22 @@ import Nav from "react-bootstrap/Nav";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import { faFileCode, faSearch } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 const NavBar = () => {
   return (
     <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
       <Navbar.Brand href="/">
-        {" "}
-        <FontAwesomeIcon icon={faFileCode} size="2x" color="grey" />
+        <img src={require('../assets/note_taking.png')} width="40" height="40" alt="icon"/>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">
-          <Form inline>
-            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+          <Form inline className="m-2">
+            <FormControl type="text" placeholder="Search" className="mr-sm-2 " />
             <Button variant="outline-success">
-              <FontAwesomeIcon icon={faSearch} />
+              <img src={require('../assets/search.png')} width="25" height="25" alt="icon"/>
             </Button>
           </Form>
           <Nav.Link href="/notes/create">add</Nav.Link>
