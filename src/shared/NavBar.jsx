@@ -29,6 +29,17 @@ const NavBar = () => {
           <Nav.Link eventKey={2} href="/sign-up">
             Sign Up
           </Nav.Link>
+
+          <Nav.Link href="/login">
+            <span
+              className="nav-item nav-link"
+              onClick={() => {
+                localStorage.removeItem("token");
+              }}
+            >
+              Logout
+            </span>
+          </Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
