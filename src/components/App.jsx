@@ -1,15 +1,17 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import Navbar from "../shared/Navbar";
+import NavBar from "../shared/NavBar";
 import Notes from "./Notes";
 import Login from "./Login";
 import SignUp from "./SignUp";
 // import Note from "./Note";
+import '../stylesheets/App.scss';
+
 
 const App = () => {
   return (
     <>
-      <Navbar />
+      <NavBar />
       <Switch>
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={SignUp} />
