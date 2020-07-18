@@ -21,7 +21,7 @@ const NavBar = () => {
               <img src={require('../assets/search.png')} width="25" height="25" alt="icon"/>
             </Button>
           </Form>
-          <Nav.Link href="/notes/create">add</Nav.Link>
+          <Nav.Link href="/notes/create"><img src={require('../assets/add_note.png')} width="30" height="30" alt="icon"/></Nav.Link>
         </Nav>
         <Nav>
           <Nav.Link href="/Login"> login</Nav.Link>
