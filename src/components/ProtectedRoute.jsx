@@ -23,7 +23,7 @@ class ProtectedRoute extends React.Component {
         throw new Error("not authorized");
       } else {
         const { jwt } = await response.json();
-        const response_user = await fetch("http://localhost:3000/status/user", {
+        const response_user = await fetch(`${process.env.REACT_APP_BACKEND_URL}/status/user`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -32,6 +32,7 @@ class ProtectedRoute extends React.Component {
         
         localStorage.setItem("token", jwt);
         this.context.dispatchUser("current user", { user });
+          
         this.setState({
           auth: true,
           loading: false,
