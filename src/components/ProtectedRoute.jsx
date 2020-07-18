@@ -9,8 +9,23 @@ class ProtectedRoute extends React.Component {
     loading: true,
   };
 
+  getNotes = async () => {
+    const response = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/notes`,
+      {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+    const notes = await response.json();
+
+    this.context.dispatchUser("populate", { notes });
+  };
+
   async componentDidMount() {
     try {
+      this.getNotes();
       const response = await fetch(
         `${process.env.REACT_APP_BACKEND_URL}/status`,
         {
@@ -23,6 +38,7 @@ class ProtectedRoute extends React.Component {
         throw new Error("not authorized");
       } else {
         const { jwt } = await response.json();
+
         const response_user = await fetch(`${process.env.REACT_APP_BACKEND_URL}/status/user`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -33,6 +49,7 @@ class ProtectedRoute extends React.Component {
         localStorage.setItem("token", jwt);
         this.context.dispatchUser("current user", { user });
           
+
         this.setState({
           auth: true,
           loading: false,
