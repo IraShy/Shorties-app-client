@@ -5,40 +5,49 @@ import { Context } from "../context/Context";
 class AddNote extends Component {
   static contextType = Context;
 
-  onInputChange = (event) => {
+  state = {
+    note: {},
+    category: {}
+  }
+
+  onInputChange = (entity, event) => {
     this.setState({
-      [event.target.id]: event.target.value,
+      [entity]: {...this.state[entity], [event.target.id]: event.target.value },
     });
-    
+    console.log(entity, event.target.id, event.target.value)
   };
 
   onFormSubmit = async (event) => {
-    event.preventDafault();
-    const body = {
-      note: this.state,
-      // category: this.state.category
-    };
+    event.preventDefault();
+    const { note } = this.state;
+    const { category } = this.state;
+
+    console.log({note, category, state:this.state})
+
+    const category_response = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/categories`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({ category }),
+      }
+    );
+
+    const category_json = await category_response.json();
+    note.category_id = category_json.id
+
     const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/notes`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
-      body: JSON.stringify(body.note)
+      body: JSON.stringify({ note }),
     });
 
-    // const category_response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/categories`, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Authorization: `Bearer ${localStorage.getItem("token")}`,
-    //   },
-    //   body: JSON.stringify(body.category)
-
-    // });
-
-   
-    console.log(body);
     // console.log(category_response);
 
     const newNote = await response.json();
@@ -56,22 +65,21 @@ class AddNote extends Component {
             type="text"
             name="title"
             id="title"
-            onChange={this.onInputChange}
+            onChange={(e) => this.onInputChange("note", e)}
           />
-          {/* <label htmlFor="title">category</label>
+          <label htmlFor="title">category</label>
           <input
             type="text"
             name="category"
-            id="category"
-            onChange={this.onInputChange}
-          /> */}
-
+            id="name"
+            onChange={(e) => this.onInputChange("category", e)}
+          />
 
           <label htmlFor="description">Body</label>
           <textarea
             name="body"
             id="body"
-            onChange={this.onInputChange}
+            onChange={(e) => this.onInputChange("note", e)}
           ></textarea>
           <input type="submit" value="Submit" />
         </form>
