@@ -6,6 +6,7 @@ import Notes from "./Notes";
 import Login from "./Login";
 import SignUp from "./SignUp";
 import ProtectedRoute from "./ProtectedRoute";
+import Home from "./Home";
 import NoFound from "./NotFound";
 
 import "../stylesheets/App.scss";
@@ -18,6 +19,8 @@ class App extends Component {
         <NavBar />
 
         <Switch>
+          <Route exact path="/" component={Home} />
+
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={SignUp} />
           <ProtectedRoute exact path="/notes" component={Notes} />

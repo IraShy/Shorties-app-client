@@ -1,6 +1,8 @@
-import React from "react";
+import React, { Component } from "react";
+import { Context } from "../context/Context";
 
-class Login extends React.Component {
+class Login extends Component {
+  static contextType = Context;
   state = { email: "", password: "", errMessage: "" };
 
   onInputChange = (event) => {
@@ -35,6 +37,7 @@ class Login extends React.Component {
         this.props.history.push("/notes");
       }
     } catch (err) {
+      console.log(err);
       this.setState({
         errMessage: err.message,
       });

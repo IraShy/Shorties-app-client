@@ -11,6 +11,9 @@ class NavBar extends Component {
   static contextType = Context;
 
   render() {
+        console.log('context')
+
+    console.log(this.context)
     return (
       <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
         <Navbar.Brand href="/">
@@ -50,7 +53,7 @@ class NavBar extends Component {
           </Nav>
 
           <Nav>
-            {this.context.currentUser || localStorage.getItem("auth") ? (
+            {this.context.currentUser ? (
               <React.Fragment>
                 <Nav.Link className="nav-item nav-link" to="/notes">
                   Notes{" "}
