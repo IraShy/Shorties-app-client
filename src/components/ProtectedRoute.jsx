@@ -1,7 +1,9 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
+import { Context } from "../context/Context";
 
 class ProtectedRoute extends React.Component {
+  static contextType = Context;
   state = {
     auth: false,
     loading: true,
@@ -9,22 +11,34 @@ class ProtectedRoute extends React.Component {
 
   async componentDidMount() {
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/status`, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/status`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         }
-      })
+      );
       if (response.status >= 400) {
-        throw(new Error("not authorized"))
-      } else { 
-        const { jwt } = await response.json()        
-        localStorage.setItem('token', jwt)
+        throw new Error("not authorized");
+      } else {
+        const { jwt } = await response.json();
+        const response_user = await fetch(`${process.env.REACT_APP_BACKEND_URL}/status/user`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        const { user } = await response_user.json()
+        
+        localStorage.setItem("token", jwt);
+        this.context.dispatchUser("current user", { user });
+          
         this.setState({
           auth: true,
           loading: false,
         });
       }
-    } catch(err) {
+    } catch (err) {
       this.setState({
         loading: false,
       });
