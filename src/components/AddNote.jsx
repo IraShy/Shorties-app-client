@@ -1,20 +1,22 @@
 import React, { Component } from "react";
 import { Context } from "../context/Context";
-// import CreateCategory from "./CreateCategory";
 
 class AddNote extends Component {
   static contextType = Context;
 
   state = {
     note: {},
-    category: {}
-  }
+    category: {},
+  };
 
   onInputChange = (entity, event) => {
     this.setState({
-      [entity]: {...this.state[entity], [event.target.id]: event.target.value },
+      [entity]: {
+        ...this.state[entity],
+        [event.target.id]: event.target.value,
+      },
     });
-    console.log(entity, event.target.id, event.target.value)
+    console.log(entity, event.target.id, event.target.value);
   };
 
   onFormSubmit = async (event) => {
@@ -22,7 +24,7 @@ class AddNote extends Component {
     const { note } = this.state;
     const { category } = this.state;
 
-    console.log({note, category, state:this.state})
+    console.log({ note, category, state: this.state });
 
     const category_response = await fetch(
       `${process.env.REACT_APP_BACKEND_URL}/categories`,
@@ -37,7 +39,7 @@ class AddNote extends Component {
     );
 
     const category_json = await category_response.json();
-    note.category_id = category_json.id
+    note.category_id = category_json.id;
 
     const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/notes`, {
       method: "POST",
@@ -60,28 +62,43 @@ class AddNote extends Component {
       <div className="container">
         <h1>Add a new Note</h1>
         <form onSubmit={this.onFormSubmit}>
-          <label htmlFor="title">Title</label>
-          <input
-            type="text"
-            name="title"
-            id="title"
-            onChange={(e) => this.onInputChange("note", e)}
-          />
-          <label htmlFor="title">category</label>
-          <input
-            type="text"
-            name="category"
-            id="name"
-            onChange={(e) => this.onInputChange("category", e)}
-          />
+          <div className="form-row">
+            <div className="form-group col-md-6">
+              <label htmlFor="title">Title</label>
+              <input
+                type="text"
+                name="title"
+                id="title"
+                onChange={(e) => this.onInputChange("note", e)}
+                className="form-control"
+              />
+            </div>
 
-          <label htmlFor="description">Body</label>
-          <textarea
-            name="body"
-            id="body"
-            onChange={(e) => this.onInputChange("note", e)}
-          ></textarea>
-          <input type="submit" value="Submit" />
+            <div className="form-group col-md-6">
+              <label htmlFor="title">category</label>
+              <input
+                type="text"
+                name="category"
+                id="name"
+                onChange={(e) => this.onInputChange("category", e)}
+                className="form-control"
+              />
+            </div>
+
+            <div className="form-group col-md-6">
+              <label htmlFor="description">Body</label>
+              <textarea
+                name="body"
+                id="body"
+                onChange={(e) => this.onInputChange("note", e)}
+                className="form-control"
+              ></textarea>
+              <button
+                type="submit"
+                className="btn btn-primary mt-3 ml-1"
+              >Submit</button>
+            </div>
+          </div>
         </form>
       </div>
     );
