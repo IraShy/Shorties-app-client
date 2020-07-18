@@ -8,6 +8,7 @@ import SignUp from "./SignUp";
 import ProtectedRoute from "./ProtectedRoute";
 import Home from "./Home";
 import NoFound from "./NotFound";
+import AddNote from "./AddNote";
 
 import "../stylesheets/App.scss";
 
@@ -24,6 +25,8 @@ class App extends Component {
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={SignUp} />
           <ProtectedRoute exact path="/notes" component={Notes} />
+          <ProtectedRoute exact path="/notes/create" component={AddNote} />
+
           {/* <Route exact path="/notes/:id" component={Note} /> */}
           <Route component={NoFound} />
         </Switch>

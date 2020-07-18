@@ -11,9 +11,7 @@ class NavBar extends Component {
   static contextType = Context;
 
   render() {
-        console.log('context')
-
-    console.log(this.context)
+  
     return (
       <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
         <Navbar.Brand href="/">
@@ -42,22 +40,23 @@ class NavBar extends Component {
                 />
               </Button>
             </Form>
-            <Nav.Link href="/notes/create">
-              <img
-                src={require("../assets/add_note.png")}
-                width="30"
-                height="30"
-                alt="icon"
-              />
-            </Nav.Link>
           </Nav>
 
           <Nav>
             {this.context.currentUser ? (
               <React.Fragment>
-                <Nav.Link className="nav-item nav-link" to="/notes">
-                  Notes{" "}
+                <Nav.Link className="nav-item nav-link" href="/notes">
+                  Notes
                 </Nav.Link>
+                <Nav.Link href="/notes/create">
+                  <img
+                    src={require("../assets/add_note.png")}
+                    width="30"
+                    height="30"
+                    alt="icon"
+                  />
+                </Nav.Link>
+
                 <Nav.Link
                   href="/login"
                   className="nav-item nav-link"

@@ -1,25 +1,19 @@
-import React from "react";
+import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { Context } from "../context/Context";
 
-class Notes extends React.Component {
-  state = { notes: [] };
-
-  getNotes = async () => {
-    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/notes`);
-    const data = await response.json();
-    this.setState({ notes: data.notes });
-    console.log(this.state);
-  };
+class Notes extends Component {
+  static contextType = Context;
 
   deleteNote = async (id) => {
+    this.context.dispatch("delete", id);
     await fetch(`${process.env.REACT_APP_BACKEND_URL}/notes/${id}`, {
       method: "DELETE",
     });
-    this.getNotes();
   };
 
-  renderNotes = () => {
-    return this.state.notes.map((note, index) => {
+  renderNotes = (notes) => {
+    return notes.map((note, index) => {
       return (
         <div key={index}>
           <h1>{note.title}</h1>
@@ -41,12 +35,11 @@ class Notes extends React.Component {
     });
   };
 
-  componentDidMount() {
-    this.getNotes();
-  }
-
   render() {
-    return this.renderNotes();
+    const { notes } = this.context;
+    console.log(notes)
+    return <React.Fragment>
+      {this.renderNotes(notes)}</React.Fragment>;
   }
 }
 
