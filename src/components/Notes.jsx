@@ -12,8 +12,8 @@ class Notes extends Component {
       },
     });
     const notes = await response.json();
-
     this.context.dispatchUser("populate", { notes });
+    console.log(this.context)
   };
 
   deleteNote = async (id) => {
@@ -51,6 +51,9 @@ class Notes extends Component {
     });
   };
 
+
+ 
+
   render() {
     const { notes, search } = this.context;
     let filteredNotes = [
@@ -67,6 +70,7 @@ class Notes extends Component {
       ),
     ];
     return <React.Fragment>{this.renderNotes(filteredNotes)}</React.Fragment>;
+
   }
 }
 

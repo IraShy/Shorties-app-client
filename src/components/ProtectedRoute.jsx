@@ -20,9 +20,23 @@ class ProtectedRoute extends Component {
     this.context.dispatchUser("populate", { notes });
   };
 
+  getCategories = async () => {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/categories`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    const categories = await response.json();
+    this.context.dispatchUser("populate", { categories });
+    
+    
+  };
+
   async componentDidMount() {
     try {
       this.getNotes();
+      this.getCategories();
+
       const response = await fetch(
         `${process.env.REACT_APP_BACKEND_URL}/status`,
         {

@@ -1,29 +1,41 @@
 import React, { Component } from "react";
 import { Context } from "../context/Context";
+import CreatableSelect from "react-select/creatable";
 
 class AddNote extends Component {
   static contextType = Context;
 
   state = {
     note: {},
-    category: {},
+    categories: [],
   };
 
-  onInputChange = (entity, event) => {
+  onInputChange = (event) => {
     this.setState({
-      [entity]: {
-        ...this.state[entity],
+      "note": {
+        ...this.state.note,
         [event.target.id]: event.target.value,
-      },
+      }
     });
-   
   };
+
+  onCategoryChange = (newValue, actionMeta) => {
+      if(newValue) {
+        this.setState({categories: newValue.map(i => i.label)})
+      } else if(actionMeta.action === "remove-value") {
+        const removedValue = actionMeta.removedValue.label;
+        this.setState({categories: this.state.categories.filter(category => category !== removedValue)});
+      }
+  }
 
   onFormSubmit = async (event) => {
     event.preventDefault();
     const { note } = this.state;
-    const { category } = this.state;
-    
+    const { categories } = this.state;
+    const body = {
+      categories: categories.map(c => ({name: c}))
+    };
+
     const category_response = await fetch(
       `${process.env.REACT_APP_BACKEND_URL}/categories`,
       {
@@ -32,14 +44,12 @@ class AddNote extends Component {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        body: JSON.stringify({ category }),
+        body: JSON.stringify(body),
       }
     );
 
-    // use dropdown to show existed category and also have the ability to create a new category, the category default option will be other  (if not category is selected)
-
     const category_json = await category_response.json();
-    note.category_id = category_json.id;
+    note.category_ids = category_json.map(c => c.id);
 
     const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/notes`, {
       method: "POST",
@@ -50,14 +60,19 @@ class AddNote extends Component {
       body: JSON.stringify({ note }),
     });
 
-   
-
     const newNote = await response.json();
     this.context.dispatchUser("add", newNote);
     this.props.history.push("/notes");
   };
 
+
+
+ 
+
   render() {
+   
+    const{categories} = this.context
+    const options = categories.map((c, index) => ({label: c.name, value: index}))
     return (
       <div className="container">
         <h1>Add a new Note</h1>
@@ -69,20 +84,20 @@ class AddNote extends Component {
                 type="text"
                 name="title"
                 id="title"
-                onChange={(e) => this.onInputChange("note", e)}
+                onChange={this.onInputChange}
                 className="form-control"
               />
             </div>
 
             <div className="form-group col-md-6">
               <label htmlFor="title">category</label>
-              <input
-                type="text"
-                name="category"
-                id="name"
-                onChange={(e) => this.onInputChange("category", e)}
-                className="form-control"
+              <CreatableSelect
+                isMulti
+                onChange={this.onCategoryChange}
+                options={ options }
+                key={options.id}              
               />
+        
             </div>
 
             <div className="form-group col-md-6">
@@ -90,13 +105,12 @@ class AddNote extends Component {
               <textarea
                 name="body"
                 id="body"
-                onChange={(e) => this.onInputChange("note", e)}
+                onChange={this.onInputChange}
                 className="form-control"
               ></textarea>
-              <button
-                type="submit"
-                className="btn btn-primary mt-3 ml-1"
-              >Submit</button>
+              <button type="submit" className="btn btn-primary mt-3 ml-1">
+                Submit
+              </button>
             </div>
           </div>
         </form>
