@@ -17,7 +17,7 @@ class ProtectedRoute extends Component {
     });
     const notes = await response.json();
 
-    this.context.dispatchUser("populate", { notes });
+    this.context.dispatchUser("populateNotes", { notes });
   };
 
   getCategories = async () => {
@@ -27,7 +27,7 @@ class ProtectedRoute extends Component {
       },
     });
     const categories = await response.json();
-    this.context.dispatchUser("populate", { categories });
+    this.context.dispatchUser("populateCategories", { categories });
     
     
   };
