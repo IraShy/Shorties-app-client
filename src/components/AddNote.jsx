@@ -11,13 +11,23 @@ class AddNote extends Component {
   };
 
   onInputChange = (event) => {
+    if (event.target?.files) {
     this.setState({
+      "note": {
+        ...this.state.note,
+        [event.target.id]: event.target.files[0],
+      }
+    });
+    } else {
+      this.setState({
       "note": {
         ...this.state.note,
         [event.target.id]: event.target.value,
       }
     });
+    }
   };
+  
 
   onCategoryChange = (newValue, actionMeta) => {
       if(newValue) {
@@ -51,13 +61,20 @@ class AddNote extends Component {
     const category_json = await category_response.json();
     note.category_ids = category_json.map(c => c.id);
 
+    const data = new FormData()
+    for (let key in this.state) {
+      data.append(`note[${key}]`, this.state[key])
+    }
+
     const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/notes`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        // "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
-      body: JSON.stringify({ note }),
+      // body: JSON.stringify({ note }),
+      // body: data,
+      body: JSON.stringify(data)
     });
 
     const newNote = await response.json();
@@ -76,7 +93,7 @@ class AddNote extends Component {
     return (
       <div className="container">
         <h1>Add a new Note</h1>
-        <form onSubmit={this.onFormSubmit}>
+        <form encType="multipart/form-data" onSubmit={this.onFormSubmit}>
           <div className="form-row">
             <div className="form-group col-md-6">
               <label htmlFor="title">Title</label>
@@ -108,6 +125,14 @@ class AddNote extends Component {
                 onChange={this.onInputChange}
                 className="form-control"
               ></textarea>
+              <label htmlFor="image">Image</label>
+              <input
+                type="file"
+                name="image"
+                id="image"
+                onChange={(e) => this.onInputChange("note", e)}
+              />
+
               <button type="submit" className="btn btn-primary mt-3 ml-1">
                 Submit
               </button>
