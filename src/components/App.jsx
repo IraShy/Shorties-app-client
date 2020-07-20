@@ -7,13 +7,13 @@ import Login from "./Login";
 import SignUp from "./SignUp";
 import ProtectedRoute from "./ProtectedRoute";
 import Home from "./Home";
-import NoFound from "./NotFound";
+import NotFound from "./NotFound";
 import AddNote from "./AddNote";
 
 import "../stylesheets/App.scss";
 
 class App extends Component {
-  state = { notes: [], dispatchUser: dispatchUser.bind(this) };
+  state = { notes: [], search: "", dispatchUser: dispatchUser.bind(this) };
   render() {
     return (
       <Context.Provider value={this.state}>
@@ -28,7 +28,7 @@ class App extends Component {
           <ProtectedRoute exact path="/notes/create" component={AddNote} />
 
           {/* <Route exact path="/notes/:id" component={Note} /> */}
-          <Route component={NoFound} />
+          <Route component={NotFound} />
         </Switch>
       </Context.Provider>
     );

@@ -57,9 +57,11 @@ class Notes extends Component {
   };
 
   render() {
-    const { notes } = this.context;
-    return <React.Fragment>
-      {this.renderNotes(notes)}</React.Fragment>;
+    const { notes, search } = this.context;
+    let filteredNotes = notes.filter((note) => {
+      return note.title.indexOf(search) !== -1;
+    });
+    return <React.Fragment>{this.renderNotes(filteredNotes)}</React.Fragment>;
   }
 }
 
