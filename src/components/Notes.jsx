@@ -55,7 +55,6 @@ class Notes extends Component {
  
 
   render() {
-    
     const { notes, search } = this.context;
     let filteredNotes = [
       ...new Set(
@@ -71,7 +70,7 @@ class Notes extends Component {
       ),
     ];
     return <React.Fragment>{this.renderNotes(filteredNotes)}</React.Fragment>;
-    
+
   }
 }
 

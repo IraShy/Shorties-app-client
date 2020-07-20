@@ -11,6 +11,9 @@ function dispatchUser(action, value) {
     case "search":
       this.setState({ search: value });
       break;
+    case "search":
+      this.setState({ search: value })
+      break;
     case "add":
       this.setState((state) => {
         return {
