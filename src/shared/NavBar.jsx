@@ -10,8 +10,13 @@ import Button from "react-bootstrap/Button";
 class NavBar extends Component {
   static contextType = Context;
 
+  updateSearch(event) {
+    const query = event.target.value;
+    console.log(query);
+    this.context.dispatchUser("search", query);
+  }
+
   render() {
-  
     return (
       <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
         <Navbar.Brand href="/">
@@ -30,6 +35,10 @@ class NavBar extends Component {
                 type="text"
                 placeholder="Search"
                 className="mr-sm-2 "
+                value={this.context.search}
+                onChange={(e) => {
+                  this.updateSearch(e);
+                }}
               />
               <Button variant="outline-success">
                 <img
