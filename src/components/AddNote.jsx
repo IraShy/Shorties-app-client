@@ -16,16 +16,14 @@ class AddNote extends Component {
         [event.target.id]: event.target.value,
       },
     });
-    console.log(entity, event.target.id, event.target.value);
+   
   };
 
   onFormSubmit = async (event) => {
     event.preventDefault();
     const { note } = this.state;
     const { category } = this.state;
-
-    console.log({ note, category, state: this.state });
-
+    
     const category_response = await fetch(
       `${process.env.REACT_APP_BACKEND_URL}/categories`,
       {
