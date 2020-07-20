@@ -10,11 +10,21 @@ import Button from "react-bootstrap/Button";
 class NavBar extends Component {
   static contextType = Context;
 
-  updateSearch(event) {
-    const query = event.target.value;
-    console.log(query);
-    this.context.dispatchUser("search", query);
+  onSearchChange(event) {
+    this.context.search = event.target.value;
   }
+
+  handleSearchSubmit = (event) => {
+    event.preventDefault();
+    if (this.context.search) {
+      let query = this.context.search;
+      this.context.dispatchUser("search", query);
+      this.context.search = "";
+      document.getElementById("searchInput").value = "";
+    } else {
+      alert("you forgot to enter your search");
+    }
+  };
 
   render() {
     return (
@@ -30,14 +40,14 @@ class NavBar extends Component {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
-            <Form inline className="m-2">
+            <Form inline className="m-2" onSubmit={this.handleSearchSubmit}>
               <FormControl
                 type="text"
                 placeholder="Search"
                 className="mr-sm-2 "
-                value={this.context.search}
+                id="searchInput"
                 onChange={(e) => {
-                  this.updateSearch(e);
+                  this.onSearchChange(e);
                 }}
               />
               <Button variant="outline-success">
@@ -46,6 +56,8 @@ class NavBar extends Component {
                   width="25"
                   height="25"
                   alt="icon"
+                  type="submit"
+                  onClick={this.handleSearchSubmit}
                 />
               </Button>
             </Form>
