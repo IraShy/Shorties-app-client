@@ -15,7 +15,7 @@ class AddNote extends Component {
       "note": {
         ...this.state.note,
         [event.target.id]: event.target.value,
-      },
+      }
     });
   };
 
@@ -65,11 +65,14 @@ class AddNote extends Component {
     this.props.history.push("/notes");
   };
 
+
+
+ 
+
   render() {
-    // const options = this.context.notes
-    //  .flatMap(n => n.categories)
-    //  .map(c => ({label: c, value: c}))
-    //  console.log(this.context.notes)
+   
+    const{categories} = this.context
+    const options = categories.map((c, index) => ({label: c.name, value: index}))
     return (
       <div className="container">
         <h1>Add a new Note</h1>
@@ -91,8 +94,10 @@ class AddNote extends Component {
               <CreatableSelect
                 isMulti
                 onChange={this.onCategoryChange}
-                options={[]}
+                options={ options }
+                key={options.id}              
               />
+        
             </div>
 
             <div className="form-group col-md-6">

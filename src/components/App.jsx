@@ -13,7 +13,7 @@ import AddNote from "./AddNote";
 import "../stylesheets/App.scss";
 
 class App extends Component {
-  state = { notes: [], search: "", dispatchUser: dispatchUser.bind(this) };
+  state = { notes: [], search: "", categories: [], dispatchUser: dispatchUser.bind(this) };
   render() {
     return (
       <Context.Provider value={this.state}>
