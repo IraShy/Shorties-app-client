@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../context/Context";
 
-
 class Notes extends Component {
   static contextType = Context;
 
@@ -18,22 +17,18 @@ class Notes extends Component {
   };
 
   deleteNote = async (id) => {
-    
     await fetch(`${process.env.REACT_APP_BACKEND_URL}/notes/${id}`, {
       method: "DELETE",
-       headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`}
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
     });
-   
+
     this.context.dispatchUser("delete", id);
     this.getNotes();
   };
 
-  
-
   renderNotes = (notes) => {
-    
-
     return notes.map((note, index) => {
       return (
         <div key={index}>
@@ -57,9 +52,21 @@ class Notes extends Component {
   };
 
   render() {
-    const { notes } = this.context;
-    return <React.Fragment>
-      {this.renderNotes(notes)}</React.Fragment>;
+    const { notes, search } = this.context;
+    let filteredNotes = [
+      ...new Set(
+        notes
+          .filter((note) => {
+            return note.title.indexOf(search) !== -1;
+          })
+          .concat(
+            notes.filter((note) => {
+              return note.body.indexOf(search) !== -1;
+            })
+          )
+      ),
+    ];
+    return <React.Fragment>{this.renderNotes(filteredNotes)}</React.Fragment>;
   }
 }
 

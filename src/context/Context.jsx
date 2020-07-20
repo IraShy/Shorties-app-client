@@ -5,6 +5,9 @@ function dispatchUser(action, value) {
     case "populate":
       this.setState( { notes: value.notes } )
       break;
+    case "search":
+      this.setState({ search: value })
+      break;
     case "add":
       this.setState((state) => {
         return { notes: [...state.notes, value] }
@@ -23,6 +26,7 @@ function dispatchUser(action, value) {
 
 const Context = React.createContext({
   notes: [],
+  search: "",
   dispatchUser: () => {},
   currentUser: false
 })
