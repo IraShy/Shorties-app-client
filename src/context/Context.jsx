@@ -3,10 +3,11 @@ import React from "react";
 
 function dispatchUser(action, value) {
   switch (action) {
-    case "populate":
-      this.setState({ notes: value.notes,
-      categories: value.categories });
-     
+    case "populateNotes":
+      this.setState({ notes: value.notes});     
+      break;
+    case "populateCategories":
+      this.setState({ categories: value.categories });     
       break;
     case "search":
       this.setState({ search: value });
