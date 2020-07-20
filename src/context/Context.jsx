@@ -17,7 +17,7 @@ function dispatchUser(action, value) {
       this.setState({ currentUser: value })
       break;
     default: 
-      console.log("in bookmarks")
+      console.log("in notes")
   }
 }
 

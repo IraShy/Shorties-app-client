@@ -16,16 +16,14 @@ class AddNote extends Component {
         [event.target.id]: event.target.value,
       },
     });
-    console.log(entity, event.target.id, event.target.value);
+   
   };
 
   onFormSubmit = async (event) => {
     event.preventDefault();
     const { note } = this.state;
     const { category } = this.state;
-
-    console.log({ note, category, state: this.state });
-
+    
     const category_response = await fetch(
       `${process.env.REACT_APP_BACKEND_URL}/categories`,
       {
@@ -37,6 +35,8 @@ class AddNote extends Component {
         body: JSON.stringify({ category }),
       }
     );
+
+    // use dropdown to show existed category and also have the ability to create a new category, the category default option will be other  (if not category is selected)
 
     const category_json = await category_response.json();
     note.category_id = category_json.id;
@@ -50,7 +50,7 @@ class AddNote extends Component {
       body: JSON.stringify({ note }),
     });
 
-    // console.log(category_response);
+   
 
     const newNote = await response.json();
     this.context.dispatchUser("add", newNote);

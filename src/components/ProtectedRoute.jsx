@@ -1,8 +1,8 @@
-import React from "react";
+import React, { Component } from 'react';
 import { Route, Redirect } from "react-router-dom";
 import { Context } from "../context/Context";
 
-class ProtectedRoute extends React.Component {
+class ProtectedRoute extends Component {
   static contextType = Context;
   state = {
     auth: false,
@@ -10,14 +10,11 @@ class ProtectedRoute extends React.Component {
   };
 
   getNotes = async () => {
-    const response = await fetch(
-      `${process.env.REACT_APP_BACKEND_URL}/notes`,
-      {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/notes`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     const notes = await response.json();
 
     this.context.dispatchUser("populate", { notes });
@@ -39,16 +36,18 @@ class ProtectedRoute extends React.Component {
       } else {
         const { jwt } = await response.json();
 
-        const response_user = await fetch(`${process.env.REACT_APP_BACKEND_URL}/status/user`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
-        const { user } = await response_user.json()
-        
+        const response_user = await fetch(
+          `${process.env.REACT_APP_BACKEND_URL}/status/user`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        const { user } = await response_user.json();
+
         localStorage.setItem("token", jwt);
         this.context.dispatchUser("current user", { user });
-          
 
         this.setState({
           auth: true,
@@ -61,6 +60,8 @@ class ProtectedRoute extends React.Component {
       });
     }
   }
+
+ 
 
   render() {
     const { loading, auth } = this.state;
@@ -81,3 +82,4 @@ class ProtectedRoute extends React.Component {
 }
 
 export default ProtectedRoute;
+
