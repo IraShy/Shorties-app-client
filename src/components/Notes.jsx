@@ -6,10 +6,13 @@ class Notes extends Component {
   static contextType = Context;
 
   deleteNote = async (id) => {
-    this.context.dispatch("delete", id);
+    
     await fetch(`${process.env.REACT_APP_BACKEND_URL}/notes/${id}`, {
       method: "DELETE",
+       headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`}
     });
+    this.context.dispatchUser("delete", id);
   };
 
   renderNotes = (notes) => {

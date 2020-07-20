@@ -38,6 +38,8 @@ class AddNote extends Component {
       }
     );
 
+    // use dropdown to show existed category and also have the ability to create a new category, the category default option will be other  (if not category is selected)
+
     const category_json = await category_response.json();
     note.category_id = category_json.id;
 
@@ -50,7 +52,7 @@ class AddNote extends Component {
       body: JSON.stringify({ note }),
     });
 
-    // console.log(category_response);
+   
 
     const newNote = await response.json();
     this.context.dispatchUser("add", newNote);
