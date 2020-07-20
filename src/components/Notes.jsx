@@ -53,9 +53,19 @@ class Notes extends Component {
 
   render() {
     const { notes, search } = this.context;
-    let filteredNotes = notes.filter((note) => {
-      return note.title.indexOf(search) !== -1;
-    });
+    let filteredNotes = [
+      ...new Set(
+        notes
+          .filter((note) => {
+            return note.title.indexOf(search) !== -1;
+          })
+          .concat(
+            notes.filter((note) => {
+              return note.body.indexOf(search) !== -1;
+            })
+          )
+      ),
+    ];
     return <React.Fragment>{this.renderNotes(filteredNotes)}</React.Fragment>;
   }
 }
