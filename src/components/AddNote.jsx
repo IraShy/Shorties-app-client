@@ -8,10 +8,12 @@ class AddNote extends Component {
   state = {
     note: {},
     categories: [],
+    // picture: ""
   };
 
   onInputChange = (event) => {
     if (event.target?.files) {
+      console.log(event.target.files[0]);
     this.setState({
       "note": {
         ...this.state.note,
@@ -42,6 +44,7 @@ class AddNote extends Component {
     event.preventDefault();
     const { note } = this.state;
     const { categories } = this.state;
+    // const {pictures } = this.state;
     const body = {
       categories: categories.map(c => ({name: c}))
     };
@@ -74,7 +77,7 @@ class AddNote extends Component {
       },
       // body: JSON.stringify({ note }),
       // body: data,
-      body: JSON.stringify(data)
+      body: data
     });
 
     const newNote = await response.json();
@@ -125,12 +128,12 @@ class AddNote extends Component {
                 onChange={this.onInputChange}
                 className="form-control"
               ></textarea>
-              <label htmlFor="image">Image</label>
+              <label htmlFor="picture">Picture</label>
               <input
                 type="file"
-                name="image"
-                id="image"
-                onChange={(e) => this.onInputChange("note", e)}
+                name="picture"
+                id="picture"
+                onChange={(e) => this.onInputChange}
               />
 
               <button type="submit" className="btn btn-primary mt-3 ml-1">

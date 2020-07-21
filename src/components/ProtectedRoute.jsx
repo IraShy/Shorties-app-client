@@ -15,8 +15,8 @@ class ProtectedRoute extends Component {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    const notes = await response.json();
-
+    const {notes} = await response.json();
+    console.log(notes);
     this.context.dispatchUser("populateNotes", { notes });
   };
 
