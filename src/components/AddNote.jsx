@@ -48,7 +48,6 @@ class AddNote extends Component {
     const body = {
       categories: categories.map(c => ({name: c}))
     };
-
     const category_response = await fetch(
       `${process.env.REACT_APP_BACKEND_URL}/categories`,
       {
@@ -62,13 +61,17 @@ class AddNote extends Component {
     );
 
     const category_json = await category_response.json();
-    note.category_ids = category_json.map(c => c.id);
+    note.category_ids = JSON.stringify(category_json.map(c => c.id));
 
     const data = new FormData()
-    for (let key in this.state) {
-      data.append(`note[${key}]`, this.state[key])
+    for (let key in note) {
+      data.append(`note[${key}]`, note[key])
     }
-
+    //data.append('note[category_ids]', this.state.categories)
+    // data.append('note[title]', '1234')
+    // data.append('note[body]', '1235')
+    // data.append('note[category_ids]', "[1]")
+    const dataToSend = {"note": data}
     const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/notes`, {
       method: "POST",
       headers: {
@@ -77,11 +80,15 @@ class AddNote extends Component {
       },
       // body: JSON.stringify({ note }),
       // body: data,
+      // body: JSON.stringify(dataToSend)
+      
+      // body: '{"note": {"title":"12345", "body":"ertty", "category":1}}'
       body: data
     });
 
-    const newNote = await response.json();
+    const newNote = await response.json().note;
     this.context.dispatchUser("add", newNote);
+    console.log(this.context);
     this.props.history.push("/notes");
   };
 

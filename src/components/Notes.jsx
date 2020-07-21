@@ -34,7 +34,7 @@ class Notes extends Component {
         <div key={index}>
           <h1>{note.title}</h1>
           <p>{note.body}</p>
-          <img src={note.pictures} alt=""/>
+          <img src={note.picture} alt=""/>
           <Link
             to={{
               pathname: `/notes/${note.id}`,
