@@ -16,7 +16,6 @@ class ProtectedRoute extends Component {
       },
     });
     const notes = await response.json();
-
     this.context.dispatchUser("populateNotes", { notes });
   };
 

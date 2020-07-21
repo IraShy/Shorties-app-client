@@ -26,18 +26,13 @@ class Notes extends Component {
           <Link
             to={{
               pathname: `/notes/${note.id}`,
-              state: note
+              state: {...note, test: 'test'}
             }}
           >
             <button>View note</button>
           </Link>
           
-          <Link to={{
-            pathname: `notes/${note.id}/edit`,
-            state: note
-          }}>
-           <button type="button" className="btn btn-info m-2">Edit</button></Link>
-
+         
         
           <button onClick={() => this.deleteNote(note.id)}>Delete</button>
 
