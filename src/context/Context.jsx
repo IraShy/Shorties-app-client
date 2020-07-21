@@ -18,6 +18,32 @@ function dispatchUser(action, value) {
         };
       });
       break;
+     case "delete":
+      this.setState((state) => {
+        const notes = state.notes.filter((note) => {
+          return value !== note.id;
+        });
+        return {
+          notes: notes,
+        };
+      });
+      break;
+
+    case "update":
+      this.setState((state) => {
+        const notes = state.notes.map((note) => {
+          if (value.id === note.id) {
+            return value;
+          } else {
+            console.log("NoMatch");
+            return note;
+          }
+        });
+        return {
+          notes: notes,
+        };
+      });
+      break;
     case "logout":
       this.setState({ currentUser: false, notes: [] });
       break;

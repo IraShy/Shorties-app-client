@@ -4,40 +4,38 @@ import moment from "moment";
 
 class ShowNote extends Component {
   static contextType = Context;
-  state = {categories: []}
+  state = { categories: [] };
 
-   getNoteCategories = async () => {
-   const note = this.props.location.state;
+  getNoteCategories = async () => {
+    const note = this.props.location.state;
 
-    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/notes/${note.id}`, {
-      headers: {
-        method: 'GET',
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/notes/${note.id}/show_categories`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
     const categories = await response.json();
-    this.setState({categories})
-   }
+    this.setState({ categories });
+  };
 
-   async componentDidMount() {
-     this.getNoteCategories();
-   }
+  async componentDidMount() {
+    this.getNoteCategories();
+  }
 
-   renderCategories = (categories) => {
-     return categories.map((c, index) => {
-       return (
-         
-         <div key={index}>
-          {c.name}
-         </div>
-       );
-     } )
-   }
+  renderCategories = (categories) => {
+    return categories.map((c, index) => {
+      return <div key={index}>{c.name}</div>;
+    });
+  };
 
   render() {
     const note = this.props.location.state;
-    const {categories } = this.state;
-    
+    const { categories } = this.state;
+
     return (
       <div className="card mb-3">
         <div className="card-body">
@@ -46,10 +44,10 @@ class ShowNote extends Component {
           <h5>Categories: </h5>
           {this.renderCategories(categories)}
 
-          
-       
           <p className="card-text">
-            <small className="text-muted">Created {moment(note.created_at).startOf("minute").fromNow()}</small>
+            <small className="text-muted">
+              Created {moment(note.created_at).startOf("minute").fromNow()}
+            </small>
           </p>
         </div>
       </div>
@@ -58,5 +56,3 @@ class ShowNote extends Component {
 }
 
 export default ShowNote;
-
-

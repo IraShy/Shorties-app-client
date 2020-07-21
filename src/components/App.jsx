@@ -10,7 +10,7 @@ import Home from "./Home";
 import NotFound from "./NotFound";
 import AddNote from "./AddNote";
 import ShowNote from "./ShowNote";
-import EditNotes from "./EditNotes";
+import EditNote from "./EditNote";
 
 
 import "../stylesheets/App.scss";
@@ -36,7 +36,7 @@ class App extends Component {
           <ProtectedRoute exact path="/notes" component={Notes} />
           <ProtectedRoute exact path="/notes/create" component={AddNote} />
           <ProtectedRoute exact path="/notes/:id" component={ShowNote} />
-          <ProtectedRoute exact path="/notes/:id/edit" component={EditNotes} />
+          <ProtectedRoute exact path="/notes/:id/edit" component={EditNote} />
 
           <Route component={NotFound} />
         </Switch>

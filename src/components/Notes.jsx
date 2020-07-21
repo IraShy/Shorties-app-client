@@ -5,17 +5,6 @@ import { Context } from "../context/Context";
 class Notes extends Component {
   static contextType = Context;
 
-  getNotes = async () => {
-    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/notes`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-    const notes = await response.json();
-    this.context.dispatchUser("populateNotes", { notes });
-    
-  };
-
   deleteNote = async (id) => {
     await fetch(`${process.env.REACT_APP_BACKEND_URL}/notes/${id}`, {
       method: "DELETE",
@@ -25,7 +14,7 @@ class Notes extends Component {
     });
 
     this.context.dispatchUser("delete", id);
-    this.getNotes();
+    
   };
 
   renderNotes = (notes) => {
@@ -42,9 +31,14 @@ class Notes extends Component {
           >
             <button>View note</button>
           </Link>
-
           
+          <Link to={{
+            pathname: `notes/${note.id}/edit`,
+            state: note
+          }}>
+           <button type="button" className="btn btn-info m-2">Edit</button></Link>
 
+        
           <button onClick={() => this.deleteNote(note.id)}>Delete</button>
 
           <hr />
@@ -71,7 +65,6 @@ class Notes extends Component {
           )
       ),
     ];
-  console.log(filteredNotes)
     return <React.Fragment>{this.renderNotes(filteredNotes)}</React.Fragment>;
   }
 }
