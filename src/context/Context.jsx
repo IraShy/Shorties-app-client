@@ -1,13 +1,12 @@
 import React from "react";
 
-
 function dispatchUser(action, value) {
   switch (action) {
     case "populateNotes":
-      this.setState({ notes: value.notes});     
+      this.setState({ notes: value.notes });
       break;
     case "populateCategories":
-      this.setState({ categories: value.categories });     
+      this.setState({ categories: value.categories });
       break;
     case "search":
       this.setState({ search: value });
@@ -15,7 +14,7 @@ function dispatchUser(action, value) {
     case "add":
       this.setState((state) => {
         return {
-          notes: [...state.notes, value]
+          notes: [...state.notes, value],
         };
       });
       break;

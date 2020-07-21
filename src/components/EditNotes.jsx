@@ -25,8 +25,11 @@ class EditNotes extends Component {
     event.preventDefault();
     const {name, body, completed, id} = this.state;
     const editedNote = { name, body,  completed, id}
+
+    await this.context.dispatch("update", editedNost);
+
     await fetch(`${process.env.REACT_APP_BACKEND_URL}/notes/${id}`, {
-      method: "PUT"
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`

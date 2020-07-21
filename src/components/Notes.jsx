@@ -13,7 +13,7 @@ class Notes extends Component {
     });
     const notes = await response.json();
     this.context.dispatchUser("populate", { notes });
-    console.log(this.context)
+    
   };
 
   deleteNote = async (id) => {
@@ -37,11 +37,13 @@ class Notes extends Component {
           <Link
             to={{
               pathname: `/notes/${note.id}`,
-              state: note,
+              state: note
             }}
           >
             <button>View note</button>
           </Link>
+
+          
 
           <button onClick={() => this.deleteNote(note.id)}>Delete</button>
 
