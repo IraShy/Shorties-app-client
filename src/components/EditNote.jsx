@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Context } from "../context/Context";
-import CreatableSelect from "react-select/creatable";
+
 
 class EditNote extends Component {
   static contextType = Context;
@@ -13,7 +13,7 @@ class EditNote extends Component {
       loading: true,
       categories: [],
       id: Number(this.props.match.params.id),
-    }
+    },
   };
   onInputChange = (event) => {
     this.setState({
@@ -21,43 +21,11 @@ class EditNote extends Component {
     });
   };
 
-   onCategoryChange = (newValue, actionMeta) => {
-    if (newValue) {
-      this.setState({ categories: newValue.map((i) => i.label) });
-    } else if (actionMeta.action === "remove-value") {
-      const removedValue = actionMeta.removedValue.label;
-      this.setState({
-        categories: this.state.categories.filter(
-          (category) => category !== removedValue
-        ),
-      });
-    }
-  };
 
   onFormSubmit = async (event) => {
     event.preventDefault();
     const { id, title, body, completed, categories } = this.state.note;
     const editedNote = { title, body, completed, categories };
-
-    const bodyCategory = {
-      categories: categories.map((c) => ({ name: c })),
-    };
-
-    const category_response = await fetch(
-      `${process.env.REACT_APP_BACKEND_URL}/categories`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify(bodyCategory),
-      }
-    );
-
-    const category_json = await category_response.json();
-    editedNote.category_ids = category_json.map((c) => c.id);
-
 
     await fetch(`${process.env.REACT_APP_BACKEND_URL}/notes/${id}`, {
       method: "PUT",
@@ -76,31 +44,20 @@ class EditNote extends Component {
   async componentDidMount() {
     const note = this.props.location.state;
     const { categories } = note;
-    
+
     this.setState({ note, loading: false });
-    this.setState({categories: categories}); 
-    
+    this.setState({ categories: categories });
   }
 
   renderCategories = () => {
-    const {categories} = this.state.note
-    return  categories.map((c , index) => {
-      return (
-        <span key={index}>{c.name}</span>
-        
-      )
-      console.log(c.name)
-    })
-  }
+    const { categories } = this.state.note;
+    return categories.map((c, index) => {
+      return <span key={index} className="ml-3">{c.name} {" "}</span>;
+    });
+  };
 
   render() {
-    const { title, body, loading, categories } = this.state.note;
-     const options = categories.map((c, index) => ({
-      label: c.name,
-      value: index,
-    }));
-
-    console.log(categories)
+    const { title, body, loading } = this.state.note;
 
     return (
       !loading && (
@@ -128,22 +85,10 @@ class EditNote extends Component {
                 className="form-control"
               ></textarea>
             </div>
-       
-            <p>{this.renderCategories()}</p>
-             <div className="form-group col-md-6">
-              <label htmlFor="title">category</label>
-              <p>
-                you can select multi categories and create categories you prefer
-                :)
-              </p>
-              <CreatableSelect
-                isMulti
-                onChange={this.onCategoryChange}
-                options={options}
-                key={options.id}
-              />
+            <div className="form-group col-md-6">
+              <label htmlFor="body">Categories:</label>
+              {this.renderCategories()}
             </div>
- 
             <button
               type="text"
               className="btn btn-danger mt-3 ml-1"
