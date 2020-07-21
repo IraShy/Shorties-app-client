@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
 import NavBar from "../shared/NavBar";
 import { Context, dispatchUser } from "../context/Context";
@@ -9,12 +9,18 @@ import ProtectedRoute from "./ProtectedRoute";
 import Home from "./Home";
 import NotFound from "./NotFound";
 import AddNote from "./AddNote";
+import ShowNote from "./ShowNote";
+
 
 import "../stylesheets/App.scss";
 
 class App extends Component {
-
-  state = { notes: [], search: "", categories: [], dispatchUser: dispatchUser.bind(this) };
+  state = {
+    notes: [],
+    search: "",
+    categories: [],
+    dispatchUser: dispatchUser.bind(this),
+  };
 
   render() {
     return (
@@ -28,14 +34,12 @@ class App extends Component {
           <Route exact path="/signup" component={SignUp} />
           <ProtectedRoute exact path="/notes" component={Notes} />
           <ProtectedRoute exact path="/notes/create" component={AddNote} />
-
-          {/* <Route exact path="/notes/:id" component={Note} /> */}
+          <ProtectedRoute exact path="/notes/:id" component={ShowNote} />
           <Route component={NotFound} />
         </Switch>
       </Context.Provider>
     );
   }
 }
-
 
 export default App;
