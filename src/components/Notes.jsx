@@ -12,7 +12,7 @@ class Notes extends Component {
       },
     });
     const notes = await response.json();
-    this.context.dispatchUser("populate", { notes });
+    this.context.dispatchUser("populateNotes", { notes });
     
   };
 
@@ -71,8 +71,8 @@ class Notes extends Component {
           )
       ),
     ];
+  console.log(filteredNotes)
     return <React.Fragment>{this.renderNotes(filteredNotes)}</React.Fragment>;
-
   }
 }
 

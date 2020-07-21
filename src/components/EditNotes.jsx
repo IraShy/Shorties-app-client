@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Context } from "../context/Context";
-import Notes from './Notes';
+
 
 
 class EditNotes extends Component {
@@ -26,7 +26,7 @@ class EditNotes extends Component {
     const {name, body, completed, id} = this.state;
     const editedNote = { name, body,  completed, id}
 
-    await this.context.dispatch("update", editedNost);
+    await this.context.dispatch("update", editedNote);
 
     await fetch(`${process.env.REACT_APP_BACKEND_URL}/notes/${id}`, {
       method: "PUT",
@@ -47,7 +47,7 @@ class EditNotes extends Component {
   }
 
   render() { 
-    const { name, body, categories, loading } = this.state;
+    const { name, body, loading } = this.state;
     return ( 
         !loading && (
         <div className="container">
@@ -70,7 +70,7 @@ class EditNotes extends Component {
               value={body}
             ></textarea>
 
-            <button type="submit" className="btn btn-danger mt-3 ml-1" htmlFor="completed" onClick={(true)=>this.onInputChange(true)}>
+            <button type="submit" className="btn btn-danger mt-3 ml-1" htmlFor="completed" >
                 marked as Completed
               </button>
             <button type="submit" className="btn btn-danger mt-3 ml-1">
