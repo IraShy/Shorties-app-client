@@ -91,6 +91,7 @@ class AddNote extends Component {
 
             <div className="form-group col-md-6">
               <label htmlFor="title">category</label>
+              <p>you can select multi categories and create categories you prefer :)</p>
               <CreatableSelect
                 isMulti
                 onChange={this.onCategoryChange}
