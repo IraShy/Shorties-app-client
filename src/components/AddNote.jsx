@@ -11,6 +11,7 @@ class AddNote extends Component {
   };
 
   onInputChange = (event) => {
+
     if (event.target?.files) {
       this.setState({
         note: {
@@ -61,12 +62,14 @@ class AddNote extends Component {
     );
 
     const category_json = await category_response.json();
+
     // stringify to send "[]" to backend
     note.category_ids = JSON.stringify(category_json.map((c) => c.id));
     const data = new FormData();
     for (let key in note) {
       data.append(`note[${key}]`, note[key]);
     }
+
 
     const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/notes`, {
       method: "POST",
@@ -106,6 +109,10 @@ class AddNote extends Component {
 
             <div className="form-group col-md-6">
               <label htmlFor="title">category</label>
+              <p>
+                you can select multi categories and create categories you prefer
+                :)
+              </p>
               <CreatableSelect
                 isMulti
                 onChange={this.onCategoryChange}
