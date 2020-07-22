@@ -27,7 +27,7 @@ class Notes extends Component {
           <Link
             to={{
               pathname: `/notes/${note.id}`,
-              state: {...note, test: 'test'}
+              state: note
             }}
           >
             <button>View note</button>
@@ -46,8 +46,8 @@ class Notes extends Component {
 
  
 
-  render() {
-    // const { notes, search } = this.context;
+   render() {
+    
     console.log(this.context.notes);
     if (this.context.notes)
       {

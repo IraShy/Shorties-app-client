@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Context } from "../context/Context";
 
-
 class EditNote extends Component {
   static contextType = Context;
   state = {
@@ -20,7 +19,6 @@ class EditNote extends Component {
       note: { ...this.state.note, [event.target.id]: event.target.value },
     });
   };
-
 
   onFormSubmit = async (event) => {
     event.preventDefault();
@@ -49,15 +47,34 @@ class EditNote extends Component {
     this.setState({ categories: categories });
   }
 
+  deleteCategory = async (id) => {
+    await fetch(`${process.env.REACT_APP_BACKEND_URL}/categories/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    this.context.dispatchUser("delete", id);
+  };
+
   renderCategories = () => {
     const { categories } = this.state.note;
+
     return categories.map((c, index) => {
-      return <span key={index} className="ml-3">{c.name} {" "}</span>;
+      return (
+        <div key={index} className="ml-3">
+          {c.name}{" "}
+          {/* <button onClick={() => this.deleteCategory(c.id)}>Delete</button> */}
+        </div>
+      );
     });
   };
 
   render() {
     const { title, body, loading } = this.state.note;
+    const { categories } = this.state.note;
+    
 
     return (
       !loading && (

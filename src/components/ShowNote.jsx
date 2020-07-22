@@ -14,8 +14,10 @@ class ShowNote extends Component {
 
   render() {
     const note = this.props.location.state;
-
     const { categories } = note;
+console.log(categories)
+console.log(note)
+
     if (!categories) { return null; }
 
     return (
