@@ -49,8 +49,8 @@ class Login extends Component {
     return (
       <div className="container">
         <h1>Login</h1>
-        {errMessage && <span style={{ color: "red" }}>{errMessage}</span>}
-        <form onSubmit={this.onFormSubmit}>
+        {errMessage && <span style={{ color: "red" }} data-testid="login-error">{errMessage}</span>}
+        <form onSubmit={this.onFormSubmit} id="login-form" >
           <label htmlFor="email">Email</label>
           <input
             type="email"
@@ -58,6 +58,7 @@ class Login extends Component {
             id="email"
             value={email}
             onChange={this.onInputChange}
+            data-testid="email"
           />
           <label htmlFor="password">Password</label>
           <input
@@ -66,8 +67,9 @@ class Login extends Component {
             id="password"
             value={password}
             onChange={this.onInputChange}
+            data-testid="password"
           />
-          <input type="submit" value="Submit" />
+          <input type="submit" value="Submit" data-testid="login-submit" />
         </form>
       </div>
     );
