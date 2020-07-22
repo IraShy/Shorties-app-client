@@ -24,18 +24,18 @@ describe("when clicking on signup from the homepage user", () => {
   });
 });
 
-// describe("with the incorrect login credentials user", () => {
-//   it("should receive an error message above the login form", () => {
-//     cy.visit("/login");
-//     const { username, password } = userBuilder();
-//     cy.typeInLoginCredentials(username, "", password);
-//     cy.findByTestId("signup-submit").click();
-//     cy.findByTestId("signup-error").should(
-//       "contain.text",
-//       "Incorrect credentials"
-//     );
-//   });
-// });
+describe("with the incorrect signup credentials user", () => {
+  it("should receive an error message above the signup form", () => {
+    cy.visit("/signup");
+    const { username, password } = userBuilder();
+    cy.typeInLoginCredentials(username, " ", password);
+    cy.findByTestId("signup-submit").click();
+    cy.get(Error).should(
+      "contain.text",
+      "Incorrect credentials"
+    );
+  });
+});
 
 describe("signing up as user", () => {
   it("should register as a new user", () => {
