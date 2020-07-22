@@ -23,6 +23,7 @@ class Notes extends Component {
         <div key={index}>
           <h1>{note.title}</h1>
           <p>{note.body}</p>
+          <img src={note.picture} alt=""/>
           <Link
             to={{
               pathname: `/notes/${note.id}`,
@@ -46,21 +47,31 @@ class Notes extends Component {
  
 
   render() {
-    const { notes, search } = this.context;
-    let filteredNotes = [
-      ...new Set(
-        notes
-          .filter((note) => {
-            return note.title.indexOf(search) !== -1;
-          })
-          .concat(
-            notes.filter((note) => {
-              return note.body.indexOf(search) !== -1;
+    // const { notes, search } = this.context;
+    console.log(this.context.notes);
+    if (this.context.notes)
+      {
+        const notes = this.context.notes;
+      const search = this.context.search;
+      let filteredNotes = [
+        ...new Set(
+          notes
+            .filter((note) => {
+              console.log(note);
+              return note.title.indexOf(search) !== -1;
             })
-          )
-      ),
-    ];
-    return <React.Fragment>{this.renderNotes(filteredNotes)}</React.Fragment>;
+            .concat(
+              notes.filter((note) => {
+                return note.body.indexOf(search) !== -1;
+              })
+            )
+        ),
+      ];
+      return <React.Fragment>{this.renderNotes(filteredNotes)}</React.Fragment>
+      } else {
+        return null;
+      }
+
   }
 }
 
