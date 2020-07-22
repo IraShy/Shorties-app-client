@@ -11,7 +11,6 @@ class ShowNote extends Component {
       return <div key={index}>{c.name}</div>;
     });
   };
-
   renderPic = (note) => {
     return (
     <img src={note.picture} alt="" />
@@ -52,8 +51,7 @@ class ShowNote extends Component {
           <Link
             to={{
               pathname: `/notes/${note.id}/edit`,
-              state: note,
-              state2: categories,
+              state: note
             }}
           >
             <button type="button" className="btn btn-info m-2">

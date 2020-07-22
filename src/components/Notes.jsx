@@ -14,7 +14,6 @@ class Notes extends Component {
     });
 
     this.context.dispatchUser("delete", id);
-    
   };
 
   renderNotes = (notes) => {
@@ -23,19 +22,16 @@ class Notes extends Component {
         <div key={index}>
           <h1>{note.title}</h1>
           <p>{note.body}</p>
-          <img src={note.picture} alt=""/>
+          <img src={note.picture} alt="" />
           <Link
             to={{
               pathname: `/notes/${note.id}`,
-              state: note
+              state: note,
             }}
           >
-          {console.log(note)}
             <button>View note</button>
           </Link>
-          
-         
-        
+
           <button onClick={() => this.deleteNote(note.id)}>Delete</button>
 
           <hr />
@@ -44,13 +40,9 @@ class Notes extends Component {
     });
   };
 
-
- 
-
-   render() {
-    if (this.context.notes)
-      {
-        const notes = this.context.notes;
+  render() {
+    if (this.context.notes) {
+      const notes = this.context.notes;
       const search = this.context.search;
       let filteredNotes = [
         ...new Set(
@@ -65,11 +57,10 @@ class Notes extends Component {
             )
         ),
       ];
-      return <React.Fragment>{this.renderNotes(filteredNotes)}</React.Fragment>
-      } else {
-        return null;
-      }
-
+      return <React.Fragment>{this.renderNotes(filteredNotes)}</React.Fragment>;
+    } else {
+      return null;
+    }
   }
 }
 
