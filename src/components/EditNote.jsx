@@ -65,7 +65,7 @@ class EditNote extends Component {
       return (
         <div key={index} className="ml-3">
           {c.name}{" "}
-          <button onClick={() => this.deleteCategory(c.id)}>Delete</button>
+          {/* <button onClick={() => this.deleteCategory(c.id)}>Delete</button> */}
         </div>
       );
     });

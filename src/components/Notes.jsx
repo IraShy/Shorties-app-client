@@ -47,7 +47,7 @@ class Notes extends Component {
  
 
    render() {
-    // const { notes, search } = this.context;
+    
     console.log(this.context.notes);
     if (this.context.notes)
       {
