@@ -90,8 +90,8 @@ class NavBar extends Component {
               </React.Fragment>
             ) : (
               <React.Fragment>
-                <Nav.Link href="/Login"> login</Nav.Link>
-                <Nav.Link eventKey={2} href="/sign-up">
+                <Nav.Link href="/Login" data-testid="login"> Login</Nav.Link>
+                <Nav.Link eventKey={2} href="/signup" data-testid="signup">
                   Sign Up
                 </Nav.Link>
               </React.Fragment>
