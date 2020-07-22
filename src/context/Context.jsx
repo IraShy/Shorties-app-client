@@ -17,8 +17,9 @@ function dispatchUser(action, value) {
           notes: [...state.notes, value],
         };
       });
+      console.log(value)
       break;
-     case "delete":
+    case "delete":
       this.setState((state) => {
         const notes = state.notes.filter((note) => {
           return value !== note.id;
@@ -28,13 +29,27 @@ function dispatchUser(action, value) {
         };
       });
       break;
-     case "deleteCategory":
+
+    // case "deleteNoteCategory":
+    //   this.setState((state) => {
+    //     const categories = state.notes.categories.filter((category) => {
+    //       return value !== category.id;
+    //     });
+    //     return {
+    //       categories: categories,
+    //     };
+    //   });
+    //   break;
+
+    case "deleteCategory":
       this.setState((state) => {
         const categories = state.categories.filter((category) => {
           return value !== category.id;
         });
         return {
-          categories: categories,
+          notes: {
+            categories: categories,
+          },
         };
       });
       break;
@@ -49,6 +64,7 @@ function dispatchUser(action, value) {
             return note;
           }
         });
+        console.log('update', {notes})
         return {
           notes: notes,
         };

@@ -70,7 +70,6 @@ class AddNote extends Component {
       data.append(`note[${key}]`, note[key]);
     }
 
-
     const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/notes`, {
       method: "POST",
       headers: {
@@ -119,6 +118,7 @@ class AddNote extends Component {
                 options={options}
                 key={options.id}
               />
+             
             </div>
 
             <div className="form-group col-md-6">

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Context } from "../context/Context";
+import CreatableSelect from "react-select/creatable";
 
 class EditNote extends Component {
   static contextType = Context;
@@ -15,24 +16,44 @@ class EditNote extends Component {
     },
   };
   onInputChange = (event) => {
-    this.setState({
-      note: { ...this.state.note, [event.target.id]: event.target.value },
-    });
+    if (event.target?.files) {
+      this.setState({
+        note: {
+          ...this.state.note,
+          [event.target.id]: event.target.files[0],
+        },
+      });
+    } else {
+      this.setState({
+        note: {
+          ...this.state.note,
+          [event.target.id]: event.target.value,
+        },
+      });
+    }
   };
 
   onFormSubmit = async (event) => {
     event.preventDefault();
-    const { id, title, body, completed, categories } = this.state.note;
-    const editedNote = { title, body, completed, categories };
+    const { id, title, body, completed, categories, picture } = this.state.note;
+    const requestBody = {
+      title,
+      body,
+      completed,
+      picture,
+      categories_attributes: categories,
+    };
 
-    await fetch(`${process.env.REACT_APP_BACKEND_URL}/notes/${id}`, {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/notes/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
-      body: JSON.stringify(editedNote),
+      body: JSON.stringify(requestBody),
     });
+    const editedNote = await response.json();
+    // editedNote.categories = editedNote.categories_attributes;
 
     await this.context.dispatchUser("update", { ...editedNote, id });
 
@@ -47,34 +68,42 @@ class EditNote extends Component {
     this.setState({ categories: categories });
   }
 
-  deleteCategory = async (id) => {
-    await fetch(`${process.env.REACT_APP_BACKEND_URL}/categories/${id}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-
-    this.context.dispatchUser("delete", id);
-  };
-
-  renderCategories = () => {
-    const { categories } = this.state.note;
-
-    return categories.map((c, index) => {
-      return (
-        <div key={index} className="ml-3">
-          {c.name}{" "}
-          {/* <button onClick={() => this.deleteCategory(c.id)}>Delete</button> */}
-        </div>
-      );
-    });
+  onCategoryChange = (newValue, actionMeta) => {
+    if (newValue) {
+      this.setState({
+        note: {
+          ...this.state.note,
+          categories: newValue.map((i) => ({ name: i.label })),
+        },
+      });
+    } else if (actionMeta.action === "remove-value") {
+      const removedValue = actionMeta.removedValue.label;
+      const noteCategories = this.state.note.categories;
+      this.setState({
+        note: {
+          ...this.state.note,
+          categories: noteCategories.filter(
+            (category) => category.name !== removedValue
+          ),
+        },
+      });
+    }
   };
 
   render() {
-    const { title, body, loading } = this.state.note;
-    const { categories } = this.state.note;
-    
+    const { title, body, categories, loading, picture } = this.state.note;
+    const { note } = this.state;
+
+    const options = this.context.categories.map((c) => ({
+      label: c.name,
+      value: c.name,
+    }));
+
+    const selected = categories.map((c) => ({
+      label: c.name,
+      value: c.name,
+    }));
+    console.log({ note, options, categories: this.context.categories });
 
     return (
       !loading && (
@@ -103,9 +132,41 @@ class EditNote extends Component {
               ></textarea>
             </div>
             <div className="form-group col-md-6">
-              <label htmlFor="body">Categories:</label>
-              {this.renderCategories()}
+              <label htmlFor="title">category</label>
+              <p>
+                you can select multi categories and create categories you prefer
+                :)
+              </p>
+              <CreatableSelect
+                isMulti
+                onChange={this.onCategoryChange}
+                value={selected}
+                options={options}
+                key={options.id}
+              />
+
+              {/* <input
+                name="categories"
+                id="categories"
+                onChange={this.onInputChange}
+                value={this.renderCategories()}
+                className="form-control"
+              ></input> */}
             </div>
+
+            <h5 className="card-title">Image </h5>
+            <div>
+              {" "}
+              <img src={note.picture} alt="" />
+            </div>
+            <label htmlFor="picture">Picture</label>
+            <input
+              type="file"
+              name="picture"
+              id="picture"
+              onChange={this.onInputChange}
+            />
+
             <button
               type="text"
               className="btn btn-danger mt-3 ml-1"
