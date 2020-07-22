@@ -28,6 +28,16 @@ function dispatchUser(action, value) {
         };
       });
       break;
+     case "deleteCategory":
+      this.setState((state) => {
+        const categories = state.categories.filter((category) => {
+          return value !== category.id;
+        });
+        return {
+          categories: categories,
+        };
+      });
+      break;
 
     case "update":
       this.setState((state) => {
