@@ -53,6 +53,7 @@ class SignUp extends React.Component {
             id="username"
             value={username}
             onChange={this.onInputChange}
+            data-testid="username"
           />
           <label htmlFor="email">Email</label>
           <input
@@ -61,6 +62,7 @@ class SignUp extends React.Component {
             id="email"
             value={email}
             onChange={this.onInputChange}
+            data-testid="email"
           />
           <label htmlFor="password">Password</label>
           <input
@@ -69,8 +71,9 @@ class SignUp extends React.Component {
             id="password"
             value={password}
             onChange={this.onInputChange}
+            data-testid="password"
           />
-          <input type="submit" value="Submit" />
+          <input type="submit" value="Submit" data-testid="signup-submit"/>
         </form>
       </div>
     );
