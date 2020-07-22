@@ -80,6 +80,7 @@ class AddNote extends Component {
     });
 
     const noteData = await response.json();
+    console.log(noteData)
     const noteToAdd = { ...noteData.note, picture: noteData.picture };
     this.context.dispatchUser("add", noteToAdd);
     this.props.history.push("/notes");

@@ -30,6 +30,7 @@ class Notes extends Component {
               state: note
             }}
           >
+          {console.log(note)}
             <button>View note</button>
           </Link>
           
@@ -47,8 +48,6 @@ class Notes extends Component {
  
 
    render() {
-    
-    console.log(this.context.notes);
     if (this.context.notes)
       {
         const notes = this.context.notes;
@@ -57,7 +56,6 @@ class Notes extends Component {
         ...new Set(
           notes
             .filter((note) => {
-              console.log(note);
               return note.title.indexOf(search) !== -1;
             })
             .concat(

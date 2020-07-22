@@ -12,20 +12,29 @@ class ShowNote extends Component {
     });
   };
 
+  renderPic = (note) => {
+    return (
+    <img src={note.picture} alt="" />
+    )
+  }
+
   render() {
     const note = this.props.location.state;
     const { categories } = note;
-console.log(categories)
-console.log(note)
-
-    if (!categories) { return null; }
+    console.log(note)
+    if (!categories) {
+      return null;
+    }
 
     return (
       <React.Fragment>
+      
         <div className="card mb-3">
           <div className="card-body">
             <h5 className="card-title">Title </h5>
             <p>{note.title}</p>
+            <h5 className="card-title">Image </h5>
+            <div>{this.renderPic(note)}</div>
             <h5 className="card-title">Description</h5>
             <p>{note.body}</p>
             <h5 className="card-title">Categories: </h5>
@@ -37,6 +46,8 @@ console.log(note)
               </small>
             </p>
           </div>
+
+         
 
           <Link
             to={{
@@ -50,6 +61,8 @@ console.log(note)
             </button>
           </Link>
         </div>
+
+
       </React.Fragment>
     );
   }

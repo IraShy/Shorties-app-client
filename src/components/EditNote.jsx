@@ -73,7 +73,7 @@ class EditNote extends Component {
 
   render() {
     const { title, body, loading } = this.state.note;
-    const { categories } = this.state.note;
+    // const { categories } = this.state.note;
     
 
     return (
