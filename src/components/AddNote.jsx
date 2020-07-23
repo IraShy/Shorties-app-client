@@ -11,7 +11,6 @@ class AddNote extends Component {
   };
 
   onInputChange = (event) => {
-
     if (event.target?.files) {
       this.setState({
         note: {
@@ -19,6 +18,8 @@ class AddNote extends Component {
           [event.target.id]: event.target.files[0],
         },
       });
+      console.log("on input change");
+      console.log(event.target.files[0]);
     } else {
       this.setState({
         note: {
@@ -65,10 +66,14 @@ class AddNote extends Component {
 
     // stringify to send "[]" to backend
     note.category_ids = JSON.stringify(category_json.map((c) => c.id));
+
     const data = new FormData();
     for (let key in note) {
       data.append(`note[${key}]`, note[key]);
+      console.log(note[key])
     }
+    console.log("Form Data");
+    console.log(data);
 
     const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/notes`, {
       method: "POST",
@@ -80,6 +85,9 @@ class AddNote extends Component {
 
     const noteData = await response.json();
     const noteToAdd = { ...noteData.note, picture: noteData.picture };
+
+    console.log("Note to add ");
+    console.log(noteToAdd);
     this.context.dispatchUser("add", noteToAdd);
     this.props.history.push("/notes");
   };
@@ -90,6 +98,7 @@ class AddNote extends Component {
       label: c.name,
       value: index,
     }));
+
     return (
       <div className="container">
         <h1>Add a new Note</h1>
@@ -118,11 +127,10 @@ class AddNote extends Component {
                 options={options}
                 key={options.id}
               />
-             
             </div>
 
             <div className="form-group col-md-6">
-              <label htmlFor="description">Body</label>
+              <label htmlFor="description">Description</label>
               <textarea
                 name="body"
                 id="body"
