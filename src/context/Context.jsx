@@ -8,6 +8,9 @@ function dispatchUser(action, value) {
     case "populateCategories":
       this.setState({ categories: value.categories });
       break;
+    case "populateUsers":
+      this.setState({ users: value.users });
+      break;
     case "search":
       this.setState({ search: value });
       break;
@@ -28,16 +31,6 @@ function dispatchUser(action, value) {
         };
       });
       
-      break;
-    case "delete":
-      this.setState((state) => {
-        const notes = state.notes.filter((note) => {
-          return value !== note.id;
-        });
-        return {
-          notes: notes,
-        };
-      });
       break;
 
 
@@ -76,6 +69,16 @@ function dispatchUser(action, value) {
     case "current user":
       this.setState({ currentUser: value });
       break;
+    case "addCohort":
+      this.setState((state) => {
+        return {
+          cohorts: [...state.cohorts, value],
+        };
+      });
+      break;
+    case "populateCohorts":
+      this.setState({ cohorts: value.cohorts });
+      break;
     default:
       console.log("in notes");
   }
@@ -85,6 +88,7 @@ const Context = React.createContext({
   notes: [],
   search: "",
   categories: [],
+  cohorts: [],
   dispatchUser: () => {},
   currentUser: false,
 });
