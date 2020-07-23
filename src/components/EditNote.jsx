@@ -64,10 +64,10 @@ class EditNote extends Component {
       }
     );
     const editedNote = await response.json();
-    const noteToEdit = { ...editedNote.note, picture: editedNote.picture };
+    const noteToEdit = { ...editedNote, picture: editedNote.picture };
 
     this.context.dispatchUser("update", { ...noteToEdit, id });
-    this.props.history.push("/notes");
+    this.props.history.push(`/notes`);
   };
 
   async componentDidMount() {

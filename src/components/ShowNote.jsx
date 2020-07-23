@@ -19,9 +19,9 @@ class ShowNote extends Component {
   }
 
   render() {
-    const note = this.props.location.state;
+    const {id} = this.props.location.state;
+    const note = this.context.notes.find(n => n.id === id)
     const { categories } = note;
-    console.log(note)
     if (!categories) {
       return null;
     }
