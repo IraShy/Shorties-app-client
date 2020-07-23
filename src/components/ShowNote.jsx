@@ -11,6 +11,7 @@ class ShowNote extends Component {
       return <div key={index}>{c.name}</div>;
     });
   };
+
   renderPic = (note) => {
     return (
     <img src={note.picture} alt="" />
@@ -18,9 +19,9 @@ class ShowNote extends Component {
   }
 
   render() {
-    const note = this.props.location.state;
+    const {id} = this.props.location.state;
+    const note = this.context.notes.find(n => n.id === id)
     const { categories } = note;
-    console.log(note)
     if (!categories) {
       return null;
     }
@@ -38,7 +39,7 @@ class ShowNote extends Component {
             <p>{note.body}</p>
             <h5 className="card-title">Categories: </h5>
             {this.renderCategories(categories)}
-
+            
             <p className="card-text">
               <small className="text-muted">
                 Created {moment(note.created_at).startOf("minute").fromNow()}

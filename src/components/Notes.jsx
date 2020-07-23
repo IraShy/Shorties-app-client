@@ -1,10 +1,18 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../context/Context";
+import Pagination from "../shared/Pagination";
+import { paginate } from "../shared/paginate";
 
 class Notes extends Component {
   static contextType = Context;
 
+  state = {
+    pageSize: 2,
+    currentPage: 1,
+  };
+
+  
   deleteNote = async (id) => {
     await fetch(`${process.env.REACT_APP_BACKEND_URL}/notes/${id}`, {
       method: "DELETE",
@@ -17,33 +25,68 @@ class Notes extends Component {
   };
 
   renderNotes = (notes) => {
-    return notes.map((note, index) => {
-      return (
-        <div key={index}>
-          <h1>{note.title}</h1>
-          <p>{note.body}</p>
-          <img src={note.picture} alt="" />
-          <Link
-            to={{
-              pathname: `/notes/${note.id}`,
-              state: note,
-            }}
-          >
-            <button>View note</button>
-          </Link>
+    const UncompletedNotes = notes.filter((n) => n.completed === false)
+   
+    const { pageSize, currentPage } = this.state;
+    const notesList = paginate(UncompletedNotes, currentPage, pageSize);
+    return notesList
+      .map((note, index) => {
+        return (
+          <div key={index}>
+            <h1>{note.title}</h1>
+            <p>{note.body}</p>
+            <img src={note.picture} alt="" />
+            <Link
+              to={{
+                pathname: `/notes/${note.id}`,
+                state: note,
+              }}
+            >
+              <button>View note</button>
+            </Link>
 
-          <button onClick={() => this.deleteNote(note.id)}>Delete</button>
+            <button onClick={() => this.deleteNote(note.id)}>Delete</button>
 
-          <hr />
-        </div>
-      );
-    });
+            <hr />
+          </div>
+        );
+      });
+  };
+
+  renderCompletedNotes = (notes) => {
+    return notes
+      .filter((n) => n.completed === true)
+      .map((note, index) => {
+        return (
+          <div key={index}>
+            <h1>{note.title}</h1>
+            <p>{note.body}</p>
+            <img src={note.picture} alt="" />
+            <Link
+              to={{
+                pathname: `/notes/${note.id}`,
+                state: note,
+              }}
+            >
+              <button>View note</button>
+            </Link>
+
+            <button onClick={() => this.deleteNote(note.id)}>Delete</button>
+
+            <hr />
+          </div>
+        );
+      });
+  };
+  handlePageChange = (page) => {
+    this.setState({ currentPage: page });
   };
 
   render() {
-    if (this.context.notes) {
-      const notes = this.context.notes;
-      const search = this.context.search;
+    const { notes, search } = this.context;
+    const { pageSize, currentPage } = this.state;
+    const uncompletedNotes = notes.filter((n) => n.completed === false)
+    if (notes) {
       let filteredNotes = [
         ...new Set(
           notes
@@ -57,7 +100,24 @@ class Notes extends Component {
             )
         ),
       ];
-      return <React.Fragment>{this.renderNotes(filteredNotes)}</React.Fragment>;
+
+      return (
+        <React.Fragment>
+          {this.renderNotes(filteredNotes)}
+          <Pagination
+            itemsCount={uncompletedNotes.length}
+            pageSize={pageSize}
+            currentPage={currentPage}
+            onPageChange={this.handlePageChange}
+          />
+
+           {/* <div className="completed-section">
+            <h3>Completed Notes => </h3>
+            {this.renderCompletedNotes(filteredNotes)}
+          </div> */}
+
+        </React.Fragment>
+      );
     } else {
       return null;
     }

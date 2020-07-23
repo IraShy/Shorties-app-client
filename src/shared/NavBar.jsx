@@ -29,7 +29,7 @@ class NavBar extends Component {
   render() {
     return (
       <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
-        <Navbar.Brand href="/">
+        <Navbar.Brand href="/notes">
           <img
             src={require("../assets/note_taking.png")}
             width="40"

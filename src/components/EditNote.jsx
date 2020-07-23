@@ -36,7 +36,7 @@ class EditNote extends Component {
   onFormSubmit = async (event) => {
     event.preventDefault();
     // const { note } = this.state;
-    const { id, title, body, completed, categories, picture } = this.state.note;
+    const { id, title, body, completed, picture } = this.state.note;
     const categories_attributes = this.state.note.categories;
     const note = {
       title,
@@ -64,10 +64,10 @@ class EditNote extends Component {
       }
     );
     const editedNote = await response.json();
-    const noteToEdit = { ...editedNote.note, picture: editedNote.picture };
+    const noteToEdit = { ...editedNote, picture: editedNote.picture };
 
     this.context.dispatchUser("update", { ...noteToEdit, id });
-    this.props.history.push("/notes");
+    this.props.history.push(`/notes`);
   };
 
   async componentDidMount() {
@@ -102,7 +102,7 @@ class EditNote extends Component {
   };
 
   render() {
-    const { title, body, categories, loading, picture } = this.state.note;
+    const { title, body, categories, loading } = this.state.note;
     const { note } = this.state;
 
     const options = this.context.categories.map((c) => ({
