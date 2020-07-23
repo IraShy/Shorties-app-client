@@ -1,10 +1,18 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../context/Context";
+import Pagination from "../shared/Pagination";
+import { paginate } from "../shared/paginate";
 
 class Notes extends Component {
   static contextType = Context;
 
+  state = {
+    pageSize: 4,
+    currentPage: 1,
+  };
+
+  
   deleteNote = async (id) => {
     await fetch(`${process.env.REACT_APP_BACKEND_URL}/notes/${id}`, {
       method: "DELETE",
@@ -17,8 +25,11 @@ class Notes extends Component {
   };
 
   renderNotes = (notes) => {
-    return notes
-      .filter((n) => n.completed === false)
+    const UncompletedNotes = notes.filter((n) => n.completed === false)
+   
+    const { pageSize, currentPage } = this.state;
+    const notesList = paginate(UncompletedNotes, currentPage, pageSize);
+    return notesList
       .map((note, index) => {
         return (
           <div key={index}>
@@ -67,15 +78,18 @@ class Notes extends Component {
         );
       });
   };
+  handlePageChange = (page) => {
+    this.setState({ currentPage: page });
+  };
 
   render() {
     const { notes, search } = this.context;
-    console.log(this.context.notes);
+    const { pageSize, currentPage } = this.state;
     if (notes) {
       let filteredNotes = [
         ...new Set(
           notes
-            .filter((note) => {  
+            .filter((note) => {
               return note.title.indexOf(search) !== -1;
             })
             .concat(
@@ -85,15 +99,24 @@ class Notes extends Component {
             )
         ),
       ];
-      console.log(filteredNotes)
-    return (
-      <React.Fragment>
-        {this.renderNotes(filteredNotes)}
-        {/* <div className="completed-section">
-        <h3>Completed Notes => </h3>
-        {this.renderCompletedNotes(notes)}</div> */}
-      </React.Fragment>
-    );
+
+      return (
+        <React.Fragment>
+          {this.renderNotes(filteredNotes)}
+          <Pagination
+            itemsCount={notes.length}
+            pageSize={pageSize}
+            currentPage={currentPage}
+            onPageChange={this.handlePageChange}
+          />
+
+           {/* <div className="completed-section">
+            <h3>Completed Notes => </h3>
+            {this.renderCompletedNotes(filteredNotes)}
+          </div> */}
+
+        </React.Fragment>
+      );
     } else {
       return null;
     }
