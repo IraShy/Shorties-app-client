@@ -29,7 +29,7 @@ class NavBar extends Component {
   render() {
     return (
       <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
-        <Navbar.Brand href="/">
+        <Navbar.Brand href="/notes">
           <img
             src={require("../assets/note_taking.png")}
             width="40"
@@ -91,7 +91,7 @@ class NavBar extends Component {
             ) : (
               <React.Fragment>
                 <Nav.Link href="/Login"> login</Nav.Link>
-                <Nav.Link eventKey={2} href="/sign-up">
+                <Nav.Link eventKey={2} href="/signup">
                   Sign Up
                 </Nav.Link>
               </React.Fragment>
