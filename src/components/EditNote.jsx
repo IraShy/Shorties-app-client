@@ -23,8 +23,6 @@ class EditNote extends Component {
           [event.target.id]: event.target.files[0],
         },
       });
-      console.log("on input change");
-      console.log(event.target.files[0]);
     } else {
       this.setState({
         note: {
@@ -38,38 +36,22 @@ class EditNote extends Component {
   onFormSubmit = async (event) => {
     event.preventDefault();
     // const { note } = this.state;
-    const { id, title, body, completed,categories, picture } = this.state.note;
-    const categories_attributes= this.state.note.categories
+    const { id, title, body, completed, categories, picture } = this.state.note;
+    const categories_attributes = this.state.note.categories;
     const note = {
       title,
       body,
       completed,
       picture,
-      categories_attributes
+      categories_attributes,
     };
-    
 
-    console.log("on form submit");
-    console.log(categories_attributes);
-    console.log(categories)
-    
     note.categories_attributes = JSON.stringify(categories_attributes);
-    
+
     const data = new FormData();
     for (let key in note) {
       data.append(`note[${key}]`, note[key]);
     }
-
-    // data.append(`categories[${categories_attributes}]`, categories[categories_attributes] )
-   
- 
-   
-    console.log(data)
-
-    // const requestBody = { ...data, categories_attributes: categories };
-    // console.log(requestBody)
-    // console.log(data)
-
 
     const response = await fetch(
       `${process.env.REACT_APP_BACKEND_URL}/notes/${id}`,
@@ -83,8 +65,6 @@ class EditNote extends Component {
     );
     const editedNote = await response.json();
     const noteToEdit = { ...editedNote.note, picture: editedNote.picture };
-    console.log("note to edit ");
-    console.log(noteToEdit);
 
     this.context.dispatchUser("update", { ...noteToEdit, id });
     this.props.history.push("/notes");
@@ -93,8 +73,6 @@ class EditNote extends Component {
   async componentDidMount() {
     const note = this.props.location.state;
     const { categories, picture } = note;
-    console.log("component did mount");
-    console.log(picture);
 
     this.setState({ note, loading: false });
     this.setState({ categories: categories });
@@ -126,9 +104,6 @@ class EditNote extends Component {
   render() {
     const { title, body, categories, loading, picture } = this.state.note;
     const { note } = this.state;
-
-    console.log("rendering ");
-    console.log(picture);
 
     const options = this.context.categories.map((c) => ({
       label: c.name,

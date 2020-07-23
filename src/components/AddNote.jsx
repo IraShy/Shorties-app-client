@@ -18,8 +18,6 @@ class AddNote extends Component {
           [event.target.id]: event.target.files[0],
         },
       });
-      console.log("on input change");
-      console.log(event.target.files[0]);
     } else {
       this.setState({
         note: {
@@ -70,10 +68,7 @@ class AddNote extends Component {
     const data = new FormData();
     for (let key in note) {
       data.append(`note[${key}]`, note[key]);
-      console.log(note[key])
     }
-    console.log("Form Data");
-    console.log(data);
 
     const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/notes`, {
       method: "POST",
@@ -86,8 +81,6 @@ class AddNote extends Component {
     const noteData = await response.json();
     const noteToAdd = { ...noteData.note, picture: noteData.picture };
 
-    console.log("Note to add ");
-    console.log(noteToAdd);
     this.context.dispatchUser("add", noteToAdd);
     this.props.history.push("/notes");
   };
