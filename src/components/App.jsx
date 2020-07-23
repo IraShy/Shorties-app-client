@@ -11,7 +11,9 @@ import NotFound from "./NotFound";
 import AddNote from "./AddNote";
 import ShowNote from "./ShowNote";
 import EditNote from "./EditNote";
-
+import AddCohort from "./AddCohort";
+import ProtRouteUsersCohorts from "./ProtRouteUsersCohorts";
+import Cohorts from "./Cohorts";
 
 import "../stylesheets/App.scss";
 
@@ -37,6 +39,8 @@ class App extends Component {
           <ProtectedRoute exact path="/notes/create" component={AddNote} />
           <ProtectedRoute exact path="/notes/:id" component={ShowNote} />
           <ProtectedRoute exact path="/notes/:id/edit" component={EditNote} />
+          <ProtRouteUsersCohorts exact path="/cohorts" component={Cohorts} />
+          <ProtRouteUsersCohorts exact path="/cohorts/create" component={AddCohort} />
 
           <Route component={NotFound} />
         </Switch>
