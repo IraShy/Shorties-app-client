@@ -17,37 +17,65 @@ class Notes extends Component {
   };
 
   renderNotes = (notes) => {
-    return notes.map((note, index) => {
-      return (
-        <div key={index}>
-          <h1>{note.title}</h1>
-          <p>{note.body}</p>
-          <img src={note.picture} alt="" />
-          <Link
-            to={{
-              pathname: `/notes/${note.id}`,
-              state: note,
-            }}
-          >
-            <button>View note</button>
-          </Link>
+    return notes
+      .filter((n) => n.completed === false)
+      .map((note, index) => {
+        return (
+          <div key={index}>
+            <h1>{note.title}</h1>
+            <p>{note.body}</p>
+            <img src={note.picture} alt="" />
+            <Link
+              to={{
+                pathname: `/notes/${note.id}`,
+                state: note,
+              }}
+            >
+              <button>View note</button>
+            </Link>
 
-          <button onClick={() => this.deleteNote(note.id)}>Delete</button>
+            <button onClick={() => this.deleteNote(note.id)}>Delete</button>
 
-          <hr />
-        </div>
-      );
-    });
+            <hr />
+          </div>
+        );
+      });
+  };
+
+  renderCompletedNotes = (notes) => {
+    return notes
+      .filter((n) => n.completed === true)
+      .map((note, index) => {
+        return (
+          <div key={index}>
+            <h1>{note.title}</h1>
+            <p>{note.body}</p>
+            <img src={note.picture} alt="" />
+            <Link
+              to={{
+                pathname: `/notes/${note.id}`,
+                state: note,
+              }}
+            >
+              <button>View note</button>
+            </Link>
+
+            <button onClick={() => this.deleteNote(note.id)}>Delete</button>
+
+            <hr />
+          </div>
+        );
+      });
   };
 
   render() {
-    if (this.context.notes) {
-      const notes = this.context.notes;
-      const search = this.context.search;
+    const { notes, search } = this.context;
+    console.log(this.context.notes);
+    if (notes) {
       let filteredNotes = [
         ...new Set(
           notes
-            .filter((note) => {
+            .filter((note) => {  
               return note.title.indexOf(search) !== -1;
             })
             .concat(
@@ -57,7 +85,15 @@ class Notes extends Component {
             )
         ),
       ];
-      return <React.Fragment>{this.renderNotes(filteredNotes)}</React.Fragment>;
+      console.log(filteredNotes)
+    return (
+      <React.Fragment>
+        {this.renderNotes(filteredNotes)}
+        {/* <div className="completed-section">
+        <h3>Completed Notes => </h3>
+        {this.renderCompletedNotes(notes)}</div> */}
+      </React.Fragment>
+    );
     } else {
       return null;
     }

@@ -17,7 +17,7 @@ function dispatchUser(action, value) {
           notes: [...state.notes, value],
         };
       });
-      console.log(value)
+      
       break;
     case "delete":
       this.setState((state) => {
@@ -30,16 +30,6 @@ function dispatchUser(action, value) {
       });
       break;
 
-    // case "deleteNoteCategory":
-    //   this.setState((state) => {
-    //     const categories = state.notes.categories.filter((category) => {
-    //       return value !== category.id;
-    //     });
-    //     return {
-    //       categories: categories,
-    //     };
-    //   });
-    //   break;
 
     case "deleteCategory":
       this.setState((state) => {
