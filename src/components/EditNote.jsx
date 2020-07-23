@@ -35,37 +35,48 @@ class EditNote extends Component {
 
   onFormSubmit = async (event) => {
     event.preventDefault();
+    // const { note } = this.state;
     const { id, title, body, completed, categories, picture } = this.state.note;
-    const requestBody = {
+    const categories_attributes = this.state.note.categories;
+    const note = {
       title,
       body,
       completed,
       picture,
-      categories_attributes: categories,
+      categories_attributes,
     };
 
-    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/notes/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-      body: JSON.stringify(requestBody),
-    });
+    note.categories_attributes = JSON.stringify(categories_attributes);
+
+    const data = new FormData();
+    for (let key in note) {
+      data.append(`note[${key}]`, note[key]);
+    }
+
+    const response = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/notes/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: data,
+      }
+    );
     const editedNote = await response.json();
-    // editedNote.categories = editedNote.categories_attributes;
+    const noteToEdit = { ...editedNote.note, picture: editedNote.picture };
 
-    await this.context.dispatchUser("update", { ...editedNote, id });
-
+    this.context.dispatchUser("update", { ...noteToEdit, id });
     this.props.history.push("/notes");
   };
 
   async componentDidMount() {
     const note = this.props.location.state;
-    const { categories } = note;
+    const { categories, picture } = note;
 
     this.setState({ note, loading: false });
     this.setState({ categories: categories });
+    this.setState({ picture: JSON.stringify(picture) });
   }
 
   onCategoryChange = (newValue, actionMeta) => {
@@ -103,13 +114,12 @@ class EditNote extends Component {
       label: c.name,
       value: c.name,
     }));
-    console.log({ note, options, categories: this.context.categories });
 
     return (
       !loading && (
         <div className="container">
           <h1>Edit</h1>
-          <form onSubmit={this.onFormSubmit}>
+          <form encType="multipart/form-data" onSubmit={this.onFormSubmit}>
             <div className="form-group col-md-6">
               <label htmlFor="title">Title</label>
               <input
@@ -144,14 +154,6 @@ class EditNote extends Component {
                 options={options}
                 key={options.id}
               />
-
-              {/* <input
-                name="categories"
-                id="categories"
-                onChange={this.onInputChange}
-                value={this.renderCategories()}
-                className="form-control"
-              ></input> */}
             </div>
 
             <h5 className="card-title">Image </h5>
