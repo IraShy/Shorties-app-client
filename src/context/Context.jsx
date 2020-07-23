@@ -11,6 +11,16 @@ function dispatchUser(action, value) {
     case "search":
       this.setState({ search: value });
       break;
+    case "delete": 
+      this.setState((state) => {
+        const notes = state.notes.filter((note) => {
+          return note.id !== value
+        })
+        return {
+          notes: notes
+        }
+      })
+      break;
     case "add":
       this.setState((state) => {
         return {
