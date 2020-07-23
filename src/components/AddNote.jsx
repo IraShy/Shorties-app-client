@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Context } from "../context/Context";
 import CreatableSelect from "react-select/creatable";
 
+
 class AddNote extends Component {
   static contextType = Context;
 

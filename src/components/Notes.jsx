@@ -8,7 +8,7 @@ class Notes extends Component {
   static contextType = Context;
 
   state = {
-    pageSize: 4,
+    pageSize: 2,
     currentPage: 1,
   };
 
@@ -85,6 +85,7 @@ class Notes extends Component {
   render() {
     const { notes, search } = this.context;
     const { pageSize, currentPage } = this.state;
+    const uncompletedNotes = notes.filter((n) => n.completed === false)
     if (notes) {
       let filteredNotes = [
         ...new Set(
@@ -104,7 +105,7 @@ class Notes extends Component {
         <React.Fragment>
           {this.renderNotes(filteredNotes)}
           <Pagination
-            itemsCount={notes.length}
+            itemsCount={uncompletedNotes.length}
             pageSize={pageSize}
             currentPage={currentPage}
             onPageChange={this.handlePageChange}
