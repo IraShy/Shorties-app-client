@@ -40,9 +40,10 @@ class AddNote extends Component {
     });
     this.setState({ note, errors });
   };
+
   validateNote = (note) => {
-    const options = { abortEarly: false };
-    const { error } = this.schema.validate(note, options);
+    const options = { abortEarly: true };
+    const { error } = Joi.validate(note, this.schema, options);
     if (!error) return null;
 
     const errors = {};
@@ -121,6 +122,7 @@ class AddNote extends Component {
       <div className="container">
         <h1>Add a new Note</h1>
         <form encType="multipart/form-data" onSubmit={this.onFormSubmit}>
+
           <Input
             name="title"
             label="Title"
