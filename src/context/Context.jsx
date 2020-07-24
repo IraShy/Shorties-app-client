@@ -30,11 +30,6 @@ function dispatchUser(action, value) {
           notes: [...state.notes, value],
         };
       });
-<<<<<<< HEAD
-      
-=======
-      console.log(value)
->>>>>>> 1493c82de0f9e82b11479e9360d4f3fbe3758bb7
       break;
 
 
