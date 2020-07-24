@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Context } from "../context/Context";
 import Joi from "joi-browser";
-import CreatableSelect from "react-select/creatable";
 import Input from "../shared/Input";
 import Dropdown from '../shared/Dropdown';
 
@@ -16,9 +15,9 @@ class AddNote extends Component {
   };
 
   schema = Joi.object({
-    title: Joi.string().min(2).required(),
-    body: Joi.string().min(2).required(),
-    categories: Joi.array().min(1).required(),
+    title: Joi.string().min(2).required().label("Title"),
+    body: Joi.string().min(2).required().label("Description"),
+    categories: Joi.array().min(1).required().label("Category"),
     picture: Joi.any(),
   });
 
@@ -99,14 +98,11 @@ class AddNote extends Component {
       this.setState({categories: updatedCategories});
   }
 
+ 
   render() {
     const { errors } = this.state;
     const { title, body } = this.state.note;
-    const { categories } = this.context;
-    const options = categories.map((c, index) => ({
-      label: c.name,
-      value: index,
-    }));
+    
 
     return (
       <div className="container">
@@ -121,12 +117,13 @@ class AddNote extends Component {
             error={errors && errors.title}
           />
 
-
           <Dropdown allCategories={this.context.categories}
           selected={this.state.categories}
           onCategoriesChanged={this.categoriesUpdated}
-          // errors={errors.categories}
+          errors={errors && errors.categories}
+          categoryError={this.categoryError}
           />
+         
 
           <Input
             name="body"
@@ -145,7 +142,7 @@ class AddNote extends Component {
           />
 
           <button
-            // disabled={this.state.errors}
+            disabled={this.state.errors}
             type="submit"
             className="btn btn-primary mt-3 ml-1"
           >

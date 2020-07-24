@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Context } from "../context/Context";
-import CreatableSelect from "react-select/creatable";
 import Input from "../shared/Input";
 import Dropdown from "../shared/Dropdown";
 
@@ -82,16 +81,13 @@ class EditNote extends Component {
   }
 
   categoriesUpdated = (updatedCategories) => {
-    const { categories } = this.state.note;
     this.setState({
       note: { ...this.state.note, categories: updatedCategories },
     });
-    console.log("setState");
-    console.log(categories);
   };
 
   render() {
-    const { title, body, categories, loading } = this.state.note;
+    const { title, body, loading } = this.state.note;
     const { note } = this.state;
 
     return (

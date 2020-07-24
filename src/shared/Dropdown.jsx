@@ -2,10 +2,7 @@ import React, { Component } from "react";
 import CreatableSelect from "react-select/creatable";
 
 class Dropdown extends Component {
-  state = {
-    errors: {},
-  };
-
+  
   onCategoryChange = (newValue, actionMeta) => {
     let updatedCategories;
 
@@ -22,9 +19,9 @@ class Dropdown extends Component {
   };
 
   render() {
-    const { errors } = this.state;
-    const { selected } = this.props;
-    // const { errors } = this.props.errors;
+    const { selected, errors } = this.props;
+    // this.props.categoryError(errors);
+
     const allCategories = this.props.allCategories;
 
     const options = allCategories.map((c) => ({
@@ -40,8 +37,6 @@ class Dropdown extends Component {
       }));
     }
 
-    console.log({selected})
-
     return (
       <div className="form-group col-md-6">
         <label htmlFor="categories">category</label>
@@ -53,7 +48,7 @@ class Dropdown extends Component {
           key={options.id}
           value={value}
         />
-        {errors && errors.categories && (
+        {errors && errors && (
           <div className="alert alert-danger">
             You must select as least one category
           </div>
