@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Context } from "../context/Context";
 import { Multiselect } from 'multiselect-react-dropdown';
+import CreatableSelect from "react-select/creatable";
 
 class AddCohort extends Component {
   static contextType = Context;
@@ -10,6 +11,7 @@ class AddCohort extends Component {
   onInputChange = (event) => {
     this.setState({
       cohort: {
+        ...this.state.cohort,
         [event.target.id]: event.target.value,
       },
     });
@@ -31,10 +33,12 @@ class AddCohort extends Component {
   onFormSubmit = async (event) => {
     event.preventDefault();
     const { cohort } = this.state;
-    // const { users } = this.context;
+    const { users } = this.state;
+    cohort.user_emails = users;
     // const userEmails = users.map((user) => user.email)
 
     const body = { cohort };
+    console.log(body);
     try {
       const response = await fetch(
         `${process.env.REACT_APP_BACKEND_URL}/cohorts`,
@@ -49,7 +53,7 @@ class AddCohort extends Component {
       );
       if (response.status > 400) {
         throw new Error(
-          "Incorrect credentials. The cohort name must be unique"
+          "Incorrect credentials"
         );
       } else {
         const newCohort = await response.json();
@@ -66,7 +70,7 @@ class AddCohort extends Component {
   render() {
     const { errMessage } = this.state;
     const { users } = this.context;
-    const userEmails = users.map((user) => user.email)
+    const userEmails = users.map((user, index) => ({label: user.email, value: index}))
     return (
       <div className="container">
         <h1>Add a cohort</h1>
@@ -86,12 +90,19 @@ class AddCohort extends Component {
 
             <div className="form-group col-md-6">
               <label htmlFor="users">Select users</label>
-              <MultiSelect
+              {/* <MultiSelect
                 onSelect={this.onSelect}
                 options={userEmails}
                 displayValue="name"
+              /> */}
+            <CreatableSelect
+                isMulti
+                onChange={this.onUsersChange}
+                options={userEmails}
+                key={userEmails}
               />
             </div>
+
 
             <div className="form-group col-md-6">
               <button type="submit" className="btn btn-primary mt-3 ml-1">
