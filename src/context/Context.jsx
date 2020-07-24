@@ -14,15 +14,15 @@ function dispatchUser(action, value) {
     case "search":
       this.setState({ search: value });
       break;
-    case "delete": 
+    case "delete":
       this.setState((state) => {
         const notes = state.notes.filter((note) => {
-          return note.id !== value
-        })
+          return note.id !== value;
+        });
         return {
-          notes: notes
-        }
-      })
+          notes: notes,
+        };
+      });
       break;
     case "add":
       this.setState((state) => {
@@ -31,7 +31,6 @@ function dispatchUser(action, value) {
         };
       });
       break;
-
 
     case "deleteCategory":
       this.setState((state) => {
@@ -56,7 +55,7 @@ function dispatchUser(action, value) {
             return note;
           }
         });
-        console.log('update', {notes})
+        console.log("update", { notes });
         return {
           notes: notes,
         };
@@ -77,6 +76,16 @@ function dispatchUser(action, value) {
       break;
     case "populateCohorts":
       this.setState({ cohorts: value.cohorts });
+      break;
+    case "deleteCohort":
+      this.setState((state) => {
+        const cohorts = state.cohorts.filter((cohort) => {
+          return value !== cohort.id;
+        });
+        return {
+          cohorts: cohorts,
+        };
+      });
       break;
     default:
       console.log("in notes");
