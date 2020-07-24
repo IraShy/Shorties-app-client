@@ -121,25 +121,11 @@ class AddNote extends Component {
             error={errors && errors.title}
           />
 
-          {/* <div className="form-group col-md-6">
-            <label htmlFor="categories">category</label>
-            <p>you can select multi categories and also create categories :)</p>
-            <CreatableSelect
-              isMulti
-              onChange={this.onCategoryChange}
-              options={options}
-              key={options.id}
-              error={errors && errors.categories}
-            />
-            {errors && errors.categories && (
-              <div className="alert alert-danger">
-                You must select as least one category
-              </div>
-            )}
-          </div> */}
 
           <Dropdown allCategories={this.context.categories}
+          selected={this.state.categories}
           onCategoriesChanged={this.categoriesUpdated}
+          // errors={errors.categories}
           />
 
           <Input

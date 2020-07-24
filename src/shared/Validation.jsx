@@ -14,15 +14,7 @@ class Validation extends Component {
     picture: Joi.any(),
   });
 
-   validateNote = (note) => {
-    const options = { abortEarly: true };
-    const { error } = Joi.validate(note, this.schema, options);
-    if (!error) return null;
-
-    const errors = {};
-    for (let item of error.details) errors[item.path[0]] = item.message;
-    return errors;
-  };
+  
 
 
   render() { 

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Context } from "../context/Context";
 import CreatableSelect from "react-select/creatable";
 import Input from "../shared/Input";
+import Dropdown from "../shared/Dropdown";
 
 class EditNote extends Component {
   static contextType = Context;
@@ -16,7 +17,7 @@ class EditNote extends Component {
       id: Number(this.props.match.params.id),
     },
   };
-  
+
   onInputChange = (event) => {
     if (event.target?.files) {
       this.setState({
@@ -80,41 +81,18 @@ class EditNote extends Component {
     this.setState({ picture: JSON.stringify(picture) });
   }
 
-  onCategoryChange = (newValue, actionMeta) => {
-    if (newValue) {
-      this.setState({
-        note: {
-          ...this.state.note,
-          categories: newValue.map((i) => ({ name: i.label })),
-        },
-      });
-    } else if (actionMeta.action === "remove-value") {
-      const removedValue = actionMeta.removedValue.label;
-      const noteCategories = this.state.note.categories;
-      this.setState({
-        note: {
-          ...this.state.note,
-          categories: noteCategories.filter(
-            (category) => category.name !== removedValue
-          ),
-        },
-      });
-    }
+  categoriesUpdated = (updatedCategories) => {
+    const { categories } = this.state.note;
+    this.setState({
+      note: { ...this.state.note, categories: updatedCategories },
+    });
+    console.log("setState");
+    console.log(categories);
   };
 
   render() {
     const { title, body, categories, loading } = this.state.note;
     const { note } = this.state;
-
-    const options = this.context.categories.map((c) => ({
-      label: c.name,
-      value: c.name,
-    }));
-
-    const selected = categories.map((c) => ({
-      label: c.name,
-      value: c.name,
-    }));
 
     return (
       !loading && (
@@ -135,23 +113,17 @@ class EditNote extends Component {
               value={body}
             />
 
-            <div className="form-group col-md-6">
-              <label htmlFor="categories">category</label>
-              <p>
-                you can select multi categories and also create categories :)
-              </p>
-              <CreatableSelect
-                isMulti
-                onChange={this.onCategoryChange}
-                value={selected}
-                options={options}
-                key={options.id}
-              />
-            </div>
+            <Dropdown
+              allCategories={this.context.categories}
+              selected={this.state.note.categories}
+              onCategoriesChanged={this.categoriesUpdated}
+            />
 
             <h5 className="card-title">Image </h5>
-            <div><img src={note.picture} alt="" /></div>
-   
+            <div>
+              <img src={note.picture} alt="" />
+            </div>
+
             <Input
               type="file"
               name="picture"
@@ -159,7 +131,7 @@ class EditNote extends Component {
               label="Image"
               onChange={this.onInputChange}
             />
-           
+
             <button
               type="text"
               className="btn btn-danger mt-3 ml-1"
@@ -167,7 +139,7 @@ class EditNote extends Component {
               onClick={(e) => {
                 e.preventDefault();
                 this.setState({
-                  note: { ...this.state.note, completed: true }
+                  note: { ...this.state.note, completed: true },
                 });
               }}
             >
