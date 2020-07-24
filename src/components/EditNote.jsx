@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Context } from "../context/Context";
 import CreatableSelect from "react-select/creatable";
+import Input from "../shared/Input";
 
 class EditNote extends Component {
   static contextType = Context;
@@ -120,32 +121,24 @@ class EditNote extends Component {
         <div className="container">
           <h1>Edit</h1>
           <form encType="multipart/form-data" onSubmit={this.onFormSubmit}>
+            <Input
+              name="title"
+              label="Title"
+              onChange={this.onInputChange}
+              value={title}
+            />
+
+            <Input
+              name="body"
+              label="Description"
+              onChange={this.onInputChange}
+              value={body}
+            />
+
             <div className="form-group col-md-6">
-              <label htmlFor="title">Title</label>
-              <input
-                type="text"
-                name="title"
-                id="title"
-                onChange={this.onInputChange}
-                value={title}
-                className="form-control"
-              />
-            </div>
-            <div className="form-group col-md-6">
-              <label htmlFor="body">Description</label>
-              <textarea
-                name="body"
-                id="body"
-                onChange={this.onInputChange}
-                value={body}
-                className="form-control"
-              ></textarea>
-            </div>
-            <div className="form-group col-md-6">
-              <label htmlFor="title">category</label>
+              <label htmlFor="categories">category</label>
               <p>
-                you can select multi categories and create categories you prefer
-                :)
+                you can select multi categories and also create categories :)
               </p>
               <CreatableSelect
                 isMulti
@@ -157,18 +150,16 @@ class EditNote extends Component {
             </div>
 
             <h5 className="card-title">Image </h5>
-            <div>
-              {" "}
-              <img src={note.picture} alt="" />
-            </div>
-            <label htmlFor="picture">Picture</label>
-            <input
+            <div><img src={note.picture} alt="" /></div>
+   
+            <Input
               type="file"
               name="picture"
               id="picture"
+              label="Image"
               onChange={this.onInputChange}
             />
-
+           
             <button
               type="text"
               className="btn btn-danger mt-3 ml-1"
@@ -176,7 +167,7 @@ class EditNote extends Component {
               onClick={(e) => {
                 e.preventDefault();
                 this.setState({
-                  note: { ...this.state.note, completed: true },
+                  note: { ...this.state.note, completed: true }
                 });
               }}
             >
