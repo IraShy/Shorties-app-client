@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { Context } from "../context/Context";
 import { Link } from "react-router-dom";
+import Table from 'react-bootstrap/Table'
 
 class ShowCohort extends Component {
   static contextType = Context;
-  state = { students: [] };
+  state = { students: [], show: false };
 
   getStudents = async (id) => {
     const response = await fetch(
@@ -16,7 +17,7 @@ class ShowCohort extends Component {
       }
     );
     const data = await response.json();
-    this.setState({ students: data.users });
+    this.setState({ cohort: data, students: data.users, show: true });
   };
 
   renderStudents = () => {
@@ -25,21 +26,66 @@ class ShowCohort extends Component {
     }
     return this.state.students.map((student, index) => {
       return (
-        <div key={index}>
-          <p>
-            {student.email} ({student.username || "no username"})  
-          </p>
-        </div>
+        <tr key={index}>
+          <td>{student.username || "no username"}</td>
+          <td>{student.email}</td>
+        </tr>
       );
     });
   };
+
+  deleteCohort = async (id) => {
+    await fetch(`${process.env.REACT_APP_BACKEND_URL}/cohorts/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    this.context.dispatchUser("deleteCohort", id);
+  };
+
+  findTeacher = (cohort) => {
+    return this.context.users.find((user) => user.id === cohort.user_id)
+      .username;
+  };
+
   async componentDidMount() {
     const { id } = this.props.location.state;
     this.getStudents(id);
   }
 
   render() {
-    return <React.Fragment>{this.renderStudents()}</React.Fragment>;
+    const cohort = this.state.cohort;
+    if (this.state.show) {
+      return <React.Fragment>
+        <h3>{cohort.name}</h3>
+        <h5>Teacher: {this.findTeacher(cohort)}</h5>
+        <h5>Students:</h5>
+        <Table hover bordered>
+          <thead variant="light">
+          <tr>
+            <th scope="col">Username</th>
+          <th scope="col">Email</th>
+          </tr>
+          </thead>
+          <tbody>
+        {this.renderStudents()}
+        </tbody></Table>
+        <button
+              onClick={() =>
+                window.confirm("Are you sure?")
+                  ? this.deleteCohort(cohort.id)
+                  : this.props.history.goBack
+              }
+            >
+              Delete
+            </button>
+          <button onClick={this.props.history.goBack}>Back</button>
+        </React.Fragment>;
+    }
+     else {
+      return null
+  }
   }
 }
 
