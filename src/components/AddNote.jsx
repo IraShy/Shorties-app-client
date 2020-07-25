@@ -1,11 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import { Context } from "../context/Context";
 import Joi from "joi-browser";
-import Input from "../shared/Input";
-import Dropdown from '../shared/Dropdown';
+import Validation from "../shared/Validation";
 
-
-class AddNote extends Component {
+class AddNote extends Validation {
   static contextType = Context;
 
   state = {
@@ -20,37 +18,6 @@ class AddNote extends Component {
     categories: Joi.array().min(1).required().label("Category"),
     picture: Joi.any(),
   });
-
-  onInputChange = (event) => {
-    let note;
-    if (event.target?.files) {
-      note = {
-        ...this.state.note,
-        [event.target.id]: event.target.files[0],
-      };
-    } else {
-      note = {
-        ...this.state.note,
-        [event.target.id]: event.target.value,
-      };
-    }
-
-    const errors = this.validateNote({
-      ...note,
-      categories: this.state.categories,
-    });
-    this.setState({ note, errors });
-  };
-
-  validateNote = (note) => {
-    const options = { abortEarly: true };
-    const { error } = Joi.validate(note, this.schema, options);
-    if (!error) return null;
-
-    const errors = {};
-    for (let item of error.details) errors[item.path[0]] = item.message;
-    return errors;
-  };
 
   onFormSubmit = async (event) => {
     event.preventDefault();
@@ -71,7 +38,6 @@ class AddNote extends Component {
     const category_json = await category_response.json();
 
     // stringify to send "[]" to backend
-
     note.category_ids = JSON.stringify(category_json.map((c) => c.id));
 
     const data = new FormData();
@@ -95,59 +61,20 @@ class AddNote extends Component {
   };
 
   categoriesUpdated = (updatedCategories) => {
-      this.setState({categories: updatedCategories});
-  }
+    this.setState({ categories: updatedCategories });
+  };
 
- 
   render() {
-    const { errors } = this.state;
-    const { title, body } = this.state.note;
-    
-
+    const selected = this.state.categories;
     return (
       <div className="container">
         <h1>Add a new Note</h1>
         <form encType="multipart/form-data" onSubmit={this.onFormSubmit}>
-
-          <Input
-            name="title"
-            label="Title"
-            onChange={this.onInputChange}
-            value={title}
-            error={errors && errors.title}
-          />
-
-          <Dropdown allCategories={this.context.categories}
-          selected={this.state.categories}
-          onCategoriesChanged={this.categoriesUpdated}
-          errors={errors && errors.categories}
-          categoryError={this.categoryError}
-          />
-         
-
-          <Input
-            name="body"
-            label="Description"
-            onChange={this.onInputChange}
-            value={body}
-            error={errors && errors.body}
-          />
-
-          <Input
-            type="file"
-            name="picture"
-            id="picture"
-            label="Image"
-            onChange={this.onInputChange}
-          />
-
-          <button
-            disabled={this.state.errors}
-            type="submit"
-            className="btn btn-primary mt-3 ml-1"
-          >
-            Submit
-          </button>
+          {this.renderInput("title", "Title")}
+          {this.renderDropdown(selected)}
+          {this.renderInput("body", "Description")}
+          {this.renderPicture()}
+          {this.renderButton("Submit")}
         </form>
       </div>
     );

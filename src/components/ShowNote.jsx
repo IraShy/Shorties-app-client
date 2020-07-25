@@ -13,14 +13,12 @@ class ShowNote extends Component {
   };
 
   renderPic = (note) => {
-    return (
-    <img src={note.picture} alt="" />
-    )
-  }
+    return <img src={note.picture} alt="pic" />;
+  };
 
   render() {
-    const {id} = this.props.location.state;
-    const note = this.context.notes.find(n => n.id === id)
+    const { id } = this.props.location.state;
+    const note = this.context.notes.find((n) => n.id === id);
     const { categories } = note;
     if (!categories) {
       return null;
@@ -28,7 +26,6 @@ class ShowNote extends Component {
 
     return (
       <React.Fragment>
-      
         <div className="card mb-3">
           <div className="card-body">
             <h5 className="card-title">Title </h5>
@@ -39,7 +36,7 @@ class ShowNote extends Component {
             <p>{note.body}</p>
             <h5 className="card-title">Categories: </h5>
             {this.renderCategories(categories)}
-            
+
             <p className="card-text">
               <small className="text-muted">
                 Created {moment(note.created_at).startOf("minute").fromNow()}
@@ -47,12 +44,10 @@ class ShowNote extends Component {
             </p>
           </div>
 
-         
-
           <Link
             to={{
               pathname: `/notes/${note.id}/edit`,
-              state: note
+              state: note,
             }}
           >
             <button type="button" className="btn btn-info m-2">
@@ -60,8 +55,6 @@ class ShowNote extends Component {
             </button>
           </Link>
         </div>
-
-
       </React.Fragment>
     );
   }

@@ -1,10 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import { Context } from "../context/Context";
-import Input from "../shared/Input";
-import Dropdown from "../shared/Dropdown";
 import Joi from "joi-browser";
+import Validation from "../shared/Validation";
 
-class EditNote extends Component {
+class EditNote extends Validation {
   static contextType = Context;
   state = {
     note: {
@@ -32,37 +31,6 @@ class EditNote extends Component {
     created_at: Joi.any(),
     updated_at: Joi.any(),
   });
-
-  onInputChange = (event) => {
-    let note;
-    if (event.target?.files) {
-      note = {
-        ...this.state.note,
-        [event.target.id]: event.target.files[0],
-      };
-    } else {
-      note = {
-        ...this.state.note,
-        [event.target.id]: event.target.value,
-      };
-    }
-
-    const errors = this.validateNote({
-      ...note,
-      categories: this.state.categories,
-    });
-    this.setState({ note, errors });
-  };
-
-  validateNote = (note) => {
-    const options = { abortEarly: true };
-    const { error } = Joi.validate(note, this.schema, options);
-    if (!error) return null;
-
-    const errors = {};
-    for (let item of error.details) errors[item.path[0]] = item.message;
-    return errors;
-  };
 
   onFormSubmit = async (event) => {
     event.preventDefault();
@@ -116,71 +84,24 @@ class EditNote extends Component {
   };
 
   render() {
-    const { title, body, loading } = this.state.note;
-    const { note, errors } = this.state;
-    console.log(errors);
+    const { loading } = this.state.note;
+    const { note } = this.state;
+    const selected = this.state.note.categories;
+
     return (
       !loading && (
         <div className="container">
           <h1>Edit</h1>
           <form encType="multipart/form-data" onSubmit={this.onFormSubmit}>
-            <Input
-              name="title"
-              label="Title"
-              onChange={this.onInputChange}
-              value={title}
-              error={errors && errors.title}
-            />
-
-            <Input
-              name="body"
-              label="Description"
-              onChange={this.onInputChange}
-              value={body}
-              error={errors && errors.body}
-            />
-
-            <Dropdown
-              allCategories={this.context.categories}
-              selected={this.state.note.categories}
-              onCategoriesChanged={this.categoriesUpdated}
-              categoryError={this.categoryError}
-            />
+            {this.renderInput("title", "Title")}
+            {this.renderDropdown(selected)}
 
             <h5 className="card-title">Image </h5>
-            <div>
-              <img src={note.picture} alt="" />
-            </div>
+            <img src={note.picture} alt="" width="300px" />
+            {this.renderPicture()}
 
-            <Input
-              type="file"
-              name="picture"
-              id="picture"
-              label="Image"
-              onChange={this.onInputChange}
-            />
-
-            <button
-              type="text"
-              className="btn btn-danger mt-3 ml-1"
-              htmlFor="completed"
-              onClick={(e) => {
-                e.preventDefault();
-                this.setState({
-                  note: { ...this.state.note, completed: true },
-                });
-              }}
-            >
-              marked as Completed
-            </button>
-
-            <button
-              disabled={this.state.errors}
-              type="submit"
-              className="btn btn-primary mt-3 ml-1"
-            >
-              Submit
-            </button>
+            {this.renderMarked()}
+            {this.renderButton("Submit")}
           </form>
         </div>
       )
