@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Context } from "../context/Context";
 import Input from "../shared/Input";
 import Dropdown from "../shared/Dropdown";
+import Joi from "joi-browser";
 
 class EditNote extends Component {
   static contextType = Context;
@@ -15,24 +16,52 @@ class EditNote extends Component {
       categories: [],
       id: Number(this.props.match.params.id),
     },
+    errors: {},
   };
 
+  schema = Joi.object({
+    title: Joi.string().min(2).required().label("Title"),
+    body: Joi.string().min(2).required().label("Description"),
+    categories: Joi.array().min(1).required().label("Category"),
+    picture: Joi.any(),
+    completed: Joi.any(),
+    loading: Joi.any(),
+    id: Joi.any(),
+    user_id: Joi.any(),
+    public_share: Joi.any(),
+    created_at: Joi.any(),
+    updated_at: Joi.any(),
+  });
+
   onInputChange = (event) => {
+    let note;
     if (event.target?.files) {
-      this.setState({
-        note: {
-          ...this.state.note,
-          [event.target.id]: event.target.files[0],
-        },
-      });
+      note = {
+        ...this.state.note,
+        [event.target.id]: event.target.files[0],
+      };
     } else {
-      this.setState({
-        note: {
-          ...this.state.note,
-          [event.target.id]: event.target.value,
-        },
-      });
+      note = {
+        ...this.state.note,
+        [event.target.id]: event.target.value,
+      };
     }
+
+    const errors = this.validateNote({
+      ...note,
+      categories: this.state.categories,
+    });
+    this.setState({ note, errors });
+  };
+
+  validateNote = (note) => {
+    const options = { abortEarly: true };
+    const { error } = Joi.validate(note, this.schema, options);
+    if (!error) return null;
+
+    const errors = {};
+    for (let item of error.details) errors[item.path[0]] = item.message;
+    return errors;
   };
 
   onFormSubmit = async (event) => {
@@ -88,8 +117,8 @@ class EditNote extends Component {
 
   render() {
     const { title, body, loading } = this.state.note;
-    const { note } = this.state;
-
+    const { note, errors } = this.state;
+    console.log(errors);
     return (
       !loading && (
         <div className="container">
@@ -100,6 +129,7 @@ class EditNote extends Component {
               label="Title"
               onChange={this.onInputChange}
               value={title}
+              error={errors && errors.title}
             />
 
             <Input
@@ -107,12 +137,14 @@ class EditNote extends Component {
               label="Description"
               onChange={this.onInputChange}
               value={body}
+              error={errors && errors.body}
             />
 
             <Dropdown
               allCategories={this.context.categories}
               selected={this.state.note.categories}
               onCategoriesChanged={this.categoriesUpdated}
+              categoryError={this.categoryError}
             />
 
             <h5 className="card-title">Image </h5>
@@ -141,7 +173,12 @@ class EditNote extends Component {
             >
               marked as Completed
             </button>
-            <button type="submit" className="btn btn-danger mt-3 ml-1">
+
+            <button
+              disabled={this.state.errors}
+              type="submit"
+              className="btn btn-primary mt-3 ml-1"
+            >
               Submit
             </button>
           </form>

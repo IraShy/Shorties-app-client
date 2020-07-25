@@ -14,8 +14,6 @@ class Validation extends Component {
     picture: Joi.any(),
   });
 
-  
-
 
   render() { 
     return (  );
