@@ -35,9 +35,9 @@ class Cohorts extends Component {
             <button>View cohort</button>
           </Link>
 
-          <Link to={`/cohorts/${cohort.id}/edit`}>
+          {/* <Link to={`/cohorts/${cohort.id}/edit`}>
             <button>Edit</button>
-          </Link>
+          </Link> */}
           <button
             onClick={() =>
               window.confirm("Are you sure?")
@@ -47,7 +47,6 @@ class Cohorts extends Component {
           >
             Delete
           </button>
-          <button onClick={this.props.history.goBack}>Back</button>
           <hr />
         </div>
       );
@@ -56,7 +55,12 @@ class Cohorts extends Component {
 
   render() {
     const { cohorts } = this.context;
-    return <React.Fragment>{this.renderCohorts(cohorts)}</React.Fragment>;
+    return <React.Fragment>
+      <Link to={"/cohorts/create"}>
+            <button>Create a new cohort</button>
+          </Link>
+      {this.renderCohorts(cohorts)}
+      </React.Fragment>;
   }
 }
 
