@@ -35,7 +35,19 @@ class Cohorts extends Component {
             <button>View cohort</button>
           </Link>
 
-          <button onClick={() => this.deleteCohort(cohort.id)}>Delete</button>
+          <Link to={`/cohorts/${cohort.id}/edit`}>
+            <button>Edit</button>
+          </Link>
+          <button
+            onClick={() =>
+              window.confirm("Are you sure?")
+                ? this.deleteCohort(cohort.id)
+                : this.props.history.goBack
+            }
+          >
+            Delete
+          </button>
+          <button onClick={this.props.history.goBack}>Back</button>
           <hr />
         </div>
       );
