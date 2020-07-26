@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { Context } from "../context/Context";
+import Joi from "joi-browser";
 import CreatableSelect from "react-select/creatable";
-
+// import Form from "./common/form";
+import Input from "../shared/Input";
 
 class AddNote extends Component {
   static contextType = Context;
@@ -9,6 +11,11 @@ class AddNote extends Component {
   state = {
     note: {},
     categories: [],
+    errors: {},
+  };
+
+  schema = {
+    categories: Joi.array().required().label("Category"),
   };
 
   onInputChange = (event) => {
@@ -64,6 +71,7 @@ class AddNote extends Component {
     const category_json = await category_response.json();
 
     // stringify to send "[]" to backend
+
     note.category_ids = JSON.stringify(category_json.map((c) => c.id));
 
     const data = new FormData();
@@ -87,6 +95,7 @@ class AddNote extends Component {
   };
 
   render() {
+    const { title, body } = this.state.note;
     const { categories } = this.context;
     const options = categories.map((c, index) => ({
       label: c.name,
@@ -97,53 +106,46 @@ class AddNote extends Component {
       <div className="container">
         <h1>Add a new Note</h1>
         <form encType="multipart/form-data" onSubmit={this.onFormSubmit}>
-          <div className="form-row">
-            <div className="form-group col-md-6">
-              <label htmlFor="title">Title</label>
-              <input
-                type="text"
-                name="title"
-                id="title"
-                onChange={this.onInputChange}
-                className="form-control"
-              />
-            </div>
+          <Input
+            name="title"
+            label="Title"
+            onChange={this.onInputChange}
+            value={title}
+          />
 
-            <div className="form-group col-md-6">
-              <label htmlFor="title">category</label>
-              <p>
-                you can select multi categories and create categories you prefer
-                :)
-              </p>
-              <CreatableSelect
-                isMulti
-                onChange={this.onCategoryChange}
-                options={options}
-                key={options.id}
-              />
-            </div>
-
-            <div className="form-group col-md-6">
-              <label htmlFor="description">Description</label>
-              <textarea
-                name="body"
-                id="body"
-                onChange={this.onInputChange}
-                className="form-control"
-              ></textarea>
-              <label htmlFor="picture">Picture</label>
-              <input
-                type="file"
-                name="picture"
-                id="picture"
-                onChange={this.onInputChange}
-              />
-
-              <button type="submit" className="btn btn-primary mt-3 ml-1">
-                Submit
-              </button>
-            </div>
+          <div className="form-group col-md-6">
+            <label htmlFor="categories">category</label>
+            <p>
+              you can select multi categories and create categories you prefer
+              :)
+            </p>
+            <CreatableSelect
+              isMulti
+              onChange={this.onCategoryChange}
+              options={options}
+              key={options.id}
+            />
           </div>
+
+
+          <Input
+            name="body"
+            label="Description"
+            onChange={this.onInputChange}
+            value={body}
+          />
+
+          <Input
+            type="file"
+            name="picture"
+            id="picture"
+            label="Image"
+            onChange={this.onInputChange}
+          />
+
+          <button type="submit" className="btn btn-primary mt-3 ml-1">
+            Submit
+          </button>
         </form>
       </div>
     );
