@@ -70,6 +70,7 @@ class ShowCohort extends Component {
       },
     });
     this.context.dispatchUser("deleteCohort", id);
+    this.props.history.push("/cohorts");
   };
 
   findTeacher = (cohort) => {
@@ -91,6 +92,16 @@ class ShowCohort extends Component {
           <h5>Teacher: {this.findTeacher(cohort)}</h5>
           <h5>Students:</h5>
           <p>This cohort has no students</p>
+          <button
+            onClick={() =>
+              window.confirm("Are you sure?")
+                ? this.deleteCohort(cohort.id)
+                : this.props.history.goBack
+            }
+          >
+            Delete cohort
+          </button>
+          <button onClick={this.props.history.goBack}>Back</button>
         </React.Fragment>
       ) : (
         <React.Fragment>
