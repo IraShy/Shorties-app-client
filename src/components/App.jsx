@@ -15,6 +15,8 @@ import AddCohort from "./AddCohort";
 import ProtRouteUsersCohorts from "./ProtRouteUsersCohorts";
 import Cohorts from "./Cohorts";
 import ShowCohort from "./ShowCohort";
+import Categories from "./Categories";
+import ShowCategory from "./ShowCategory";
 
 import "../stylesheets/App.scss";
 
@@ -42,8 +44,18 @@ class App extends Component {
           <ProtectedRoute exact path="/notes/:id" component={ShowNote} />
           <ProtectedRoute exact path="/notes/:id/edit" component={EditNote} />
           <ProtRouteUsersCohorts exact path="/cohorts" component={Cohorts} />
-          <ProtRouteUsersCohorts exact path="/cohorts/create" component={AddCohort} />
-          <ProtRouteUsersCohorts exact path="/cohorts/:id" component={ShowCohort} />
+          <ProtRouteUsersCohorts
+            exact
+            path="/cohorts/create"
+            component={AddCohort}
+          />
+          <ProtRouteUsersCohorts
+            exact
+            path="/cohorts/:id"
+            component={ShowCohort}
+          />
+          <ProtectedRoute exact path="/categories" component={Categories} />
+          <ProtectedRoute exact path="/categories/:id" component={ShowCategory} />
 
           <Route component={NotFound} />
         </Switch>
