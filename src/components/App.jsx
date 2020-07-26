@@ -18,6 +18,7 @@ import ShowCohort from "./ShowCohort";
 
 import "../stylesheets/App.scss";
 
+
 class App extends Component {
   state = {
     notes: [],
@@ -32,7 +33,7 @@ class App extends Component {
         <NavBar />
 
         <Switch>
-          <Route exact path="/" component={Home} />
+          <ProtectedRoute exact path="/" component={Home} />
 
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={SignUp} />
@@ -47,6 +48,7 @@ class App extends Component {
           <Route component={NotFound} />
         </Switch>
       </Context.Provider>
+
     );
   }
 }

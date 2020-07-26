@@ -16,6 +16,7 @@ class EditNote extends Component {
       id: Number(this.props.match.params.id),
     },
   };
+  
   onInputChange = (event) => {
     if (event.target?.files) {
       this.setState({
@@ -36,7 +37,6 @@ class EditNote extends Component {
 
   onFormSubmit = async (event) => {
     event.preventDefault();
-    // const { note } = this.state;
     const { id, title, body, completed, picture } = this.state.note;
     const categories_attributes = this.state.note.categories;
     const note = {

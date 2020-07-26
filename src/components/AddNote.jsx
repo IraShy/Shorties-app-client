@@ -3,6 +3,8 @@ import { Context } from "../context/Context";
 import Joi from "joi-browser";
 import CreatableSelect from "react-select/creatable";
 import Input from "../shared/Input";
+import Dropdown from '../shared/Dropdown';
+
 
 class AddNote extends Component {
   static contextType = Context;
@@ -51,27 +53,10 @@ class AddNote extends Component {
     return errors;
   };
 
-  onCategoryChange = (newValue, actionMeta) => {
-    let categories;
-    if (newValue) {
-      categories = newValue.map((i) => i.label);
-    } else if (actionMeta.action === "remove-value") {
-      const removedValue = actionMeta.removedValue.label;
-      categories = this.state.categories.filter(
-        (category) => category !== removedValue
-      );
-    }
-    const errors = this.validateNote({ ...this.state.note, categories });
-    this.setState({ categories, errors });
-  };
-
   onFormSubmit = async (event) => {
     event.preventDefault();
     const { note } = this.state;
     const { categories } = this.state;
-    const body = {
-      categories: categories.map((c) => ({ name: c })),
-    };
     const category_response = await fetch(
       `${process.env.REACT_APP_BACKEND_URL}/categories`,
       {
@@ -80,7 +65,7 @@ class AddNote extends Component {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        body: JSON.stringify(body),
+        body: JSON.stringify({ categories }),
       }
     );
 
@@ -109,6 +94,11 @@ class AddNote extends Component {
     this.context.dispatchUser("add", noteToAdd);
     this.props.history.push("/notes");
   };
+
+  categoriesUpdated = (updatedCategories) => {
+      this.setState({categories: updatedCategories});
+  }
+
   render() {
     const { errors } = this.state;
     const { title, body } = this.state.note;
@@ -131,7 +121,7 @@ class AddNote extends Component {
             error={errors && errors.title}
           />
 
-          <div className="form-group col-md-6">
+          {/* <div className="form-group col-md-6">
             <label htmlFor="categories">category</label>
             <p>you can select multi categories and also create categories :)</p>
             <CreatableSelect
@@ -146,7 +136,11 @@ class AddNote extends Component {
                 You must select as least one category
               </div>
             )}
-          </div>
+          </div> */}
+
+          <Dropdown allCategories={this.context.categories}
+          onCategoriesChanged={this.categoriesUpdated}
+          />
 
           <Input
             name="body"
@@ -165,7 +159,7 @@ class AddNote extends Component {
           />
 
           <button
-            disabled={this.state.errors}
+            // disabled={this.state.errors}
             type="submit"
             className="btn btn-primary mt-3 ml-1"
           >
