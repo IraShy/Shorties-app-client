@@ -8,18 +8,21 @@ function dispatchUser(action, value) {
     case "populateCategories":
       this.setState({ categories: value.categories });
       break;
+    case "populateUsers":
+      this.setState({ users: value.users });
+      break;
     case "search":
       this.setState({ search: value });
       break;
-    case "delete": 
+    case "delete":
       this.setState((state) => {
         const notes = state.notes.filter((note) => {
-          return note.id !== value
-        })
+          return note.id !== value;
+        });
         return {
-          notes: notes
-        }
-      })
+          notes: notes,
+        };
+      });
       break;
     case "add":
       this.setState((state) => {
@@ -27,19 +30,7 @@ function dispatchUser(action, value) {
           notes: [...state.notes, value],
         };
       });
-      
       break;
-    case "delete":
-      this.setState((state) => {
-        const notes = state.notes.filter((note) => {
-          return value !== note.id;
-        });
-        return {
-          notes: notes,
-        };
-      });
-      break;
-
 
     case "deleteCategory":
       this.setState((state) => {
@@ -64,7 +55,7 @@ function dispatchUser(action, value) {
             return note;
           }
         });
-        console.log('update', {notes})
+        console.log("update", { notes });
         return {
           notes: notes,
         };
@@ -76,6 +67,26 @@ function dispatchUser(action, value) {
     case "current user":
       this.setState({ currentUser: value });
       break;
+    case "addCohort":
+      this.setState((state) => {
+        return {
+          cohorts: [...state.cohorts, value],
+        };
+      });
+      break;
+    case "populateCohorts":
+      this.setState({ cohorts: value.cohorts });
+      break;
+    case "deleteCohort":
+      this.setState((state) => {
+        const cohorts = state.cohorts.filter((cohort) => {
+          return value !== cohort.id;
+        });
+        return {
+          cohorts: cohorts,
+        };
+      });
+      break;
     default:
       console.log("in notes");
   }
@@ -85,6 +96,7 @@ const Context = React.createContext({
   notes: [],
   search: "",
   categories: [],
+  cohorts: [],
   dispatchUser: () => {},
   currentUser: false,
 });
