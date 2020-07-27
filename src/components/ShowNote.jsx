@@ -13,7 +13,7 @@ class ShowNote extends Component {
   };
 
   renderPic = (note) => {
-    return <img src={note.picture} alt="pic" />;
+    return <img src={note.picture} alt="" />;
   };
 
   render() {
