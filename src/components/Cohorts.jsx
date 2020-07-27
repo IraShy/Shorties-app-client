@@ -54,7 +54,7 @@ class Cohorts extends Component {
   };
 
   render() {
-    const { cohorts } = this.context;
+    const { cohorts } = this.context; 
     return <React.Fragment>
       <Link to={"/cohorts/create"}>
             <button>Create a new cohort</button>
