@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Context } from "../context/Context";
-// import { Link } from "react-router-dom";
 import Table from "react-bootstrap/Table";
+import Button from "react-bootstrap/Button";
+import "../stylesheets/ShowCohort.scss";
 
 class ShowCohort extends Component {
   static contextType = Context;
@@ -47,8 +48,10 @@ class ShowCohort extends Component {
         <tr key={index}>
           <td>{student.username || "no username"}</td>
           <td>{student.email}</td>
-          <td>
-            <button
+          <td className="delcell">
+            <Button
+              variant="outline-info"
+              className="delete btn-table"
               onClick={() =>
                 window.confirm("Are you sure?")
                   ? this.deleteStudent(student.id)
@@ -56,7 +59,7 @@ class ShowCohort extends Component {
               }
             >
               Delete
-            </button>
+            </Button>
           </td>
         </tr>
       );
@@ -90,46 +93,64 @@ class ShowCohort extends Component {
     if (this.state.show) {
       return !this.state.students.length ? (
         <React.Fragment>
-          <h3>{cohort.name}</h3>
+          <h1 className="title">{cohort.name}</h1>
           <h5>Teacher: {this.findTeacher(cohort)}</h5>
           <h5>Students:</h5>
           <p>This cohort has no students</p>
-          <button
-            onClick={() =>
-              window.confirm("Are you sure?")
-                ? this.deleteCohort(cohort.id)
-                : this.props.history.goBack
-            }
-          >
-            Delete cohort
-          </button>
-          <button onClick={this.props.history.goBack}>Back</button>
+          <div className="button-block">
+            <Button
+              variant="outline-info"
+              className="delete"
+              onClick={() =>
+                window.confirm("Are you sure?")
+                  ? this.deleteCohort(cohort.id)
+                  : this.props.history.goBack
+              }
+            >
+              Delete cohort
+            </Button>
+            <button className="backbutton" onClick={this.props.history.goBack}>
+              Back
+            </button>
+          </div>
         </React.Fragment>
       ) : (
         <React.Fragment>
-          <h3>{cohort.name}</h3>
-          <h5>Teacher: {this.findTeacher(cohort)}</h5>
+          <h1 className="title">{cohort.name}</h1>
+          <div className="container">
+            <hr />
+            <h5 className="teacher">Teacher: {this.findTeacher(cohort)}</h5>
+            <hr />
+          </div>
           <h5>Students:</h5>
-          <Table hover bordered>
-            <thead variant="light">
-              <tr>
-                <th scope="col">Username</th>
-                <th scope="col">Email</th>
-                <th scope="col"></th>
-              </tr>
-            </thead>
-            <tbody>{this.renderStudents()}</tbody>
-          </Table>
-          <button
-            onClick={() =>
-              window.confirm("Are you sure?")
-                ? this.deleteCohort(cohort.id)
-                : this.props.history.goBack
-            }
-          >
-            Delete cohort
-          </button>
-          <button onClick={this.props.history.goBack}>Back</button>
+          <div className="container">
+            <Table bordered>
+              <thead variant="light">
+                <tr>
+                  <th scope="col">Username</th>
+                  <th scope="col">Email</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>{this.renderStudents()}</tbody>
+            </Table>
+          </div>
+          <div className="button-block">
+            <Button
+              variant="outline-info"
+              className="delete"
+              onClick={() =>
+                window.confirm("Are you sure?")
+                  ? this.deleteCohort(cohort.id)
+                  : this.props.history.goBack
+              }
+            >
+              Delete cohort
+            </Button>
+            <button className="backbutton" onClick={this.props.history.goBack}>
+              Back
+            </button>
+          </div>
         </React.Fragment>
       );
     } else {

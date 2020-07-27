@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { Context } from "../context/Context";
 import Pagination from "../shared/Pagination";
 import { paginate } from "../shared/paginate";
+import Button from "react-bootstrap/Button";
+import "../stylesheets/Categories.scss";
 
 class Categories extends Component {
   static contextType = Context;
@@ -28,20 +30,17 @@ class Categories extends Component {
     const categoriesList = paginate(categories, currentPage, pageSize);
     return categoriesList.map((category, index) => {
       return (
-        <div key={index}>
-          {/* <h1>{category.name}</h1> */}
+        <div className="container" key={index}>
           <Link
             to={{
               pathname: `/categories/${category.id}`,
               state: category,
             }}
           >
-            <button>{category.name}</button>
+            <Button className="category" variant="outline-secondary" size="lg" block>
+              {category.name}
+            </Button>
           </Link>
-
-          {/* <button onClick={() => this.deleteNote(note.id)}>Delete</button> */}
-
-          {/* <hr /> */}
         </div>
       );
     });
@@ -57,6 +56,7 @@ class Categories extends Component {
       const { pageSize, currentPage } = this.state;
       return (
         <React.Fragment>
+          <h1 className="title">Categories</h1>
           {this.renderCategories(categories)}
           <Pagination
             itemsCount={categories.length}
