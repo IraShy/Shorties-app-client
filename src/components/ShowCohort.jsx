@@ -18,6 +18,7 @@ class ShowCohort extends Component {
     );
     const data = await response.json();
     this.setState({ cohort: data, students: data.users, show: true});
+    
   };
 
   deleteStudent = async (user_id) => {
