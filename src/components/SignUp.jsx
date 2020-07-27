@@ -50,7 +50,7 @@ class SignUp extends Component {
         );
         const { jwt } = await response.json();
         localStorage.setItem("token", jwt);
-        this.props.history.push("/");
+        this.props.history.push("/notes");
       }
     } catch (err) {
       console.error(err.message);

@@ -20,7 +20,6 @@ class Dropdown extends Component {
 
   render() {
     const { selected, errors } = this.props;
-    // this.props.categoryError(errors);
 
     const allCategories = this.props.allCategories;
 
