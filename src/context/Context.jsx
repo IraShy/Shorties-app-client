@@ -11,6 +11,9 @@ function dispatchUser(action, value) {
     case "populateUsers":
       this.setState({ users: value.users });
       break;
+    case "populateCohortStudents":
+      this.setState({ cohortStudents: value });
+      break;
     case "search":
       this.setState({ search: value });
       break;
@@ -98,6 +101,7 @@ const Context = React.createContext({
   search: "",
   categories: [],
   cohorts: [],
+  cohortStudents: [],
   dispatchUser: () => {},
   currentUser: false,
 });

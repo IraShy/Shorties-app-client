@@ -32,10 +32,41 @@ class ProtectedRoute extends Component {
     
   };
 
+  getUsers = async () => {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/users`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    const {users} = await response.json();
+    
+    this.context.dispatchUser("populateUsers", { users });
+    
+
+  };  
+
+  getCohorts = async () => {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/cohorts`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    const {cohorts} = await response.json();
+    
+    this.context.dispatchUser("populateCohorts", { cohorts });
+  };  
+
+  
+  
+
   async componentDidMount() {
     try {
-      this.getNotes();
-      this.getCategories();
+       this.getNotes();
+       this.getCategories();
+       this.getUsers();
+       this.getCohorts();
+       
+      
 
       const response = await fetch(
         `${process.env.REACT_APP_BACKEND_URL}/status`,
@@ -78,6 +109,7 @@ class ProtectedRoute extends Component {
  
 
   render() {
+   
     const { loading, auth } = this.state;
     if (!loading && !auth) {
       return <Redirect to="/login" />;
