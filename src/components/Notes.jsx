@@ -178,7 +178,7 @@ class Notes extends Component {
             {this.renderCompletedNotes(filteredNotes)}
           </div> */}
 
-          {this.renderShareButton(cohortStudents)}
+         
         </React.Fragment>
       );
     } else {
