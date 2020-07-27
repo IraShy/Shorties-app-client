@@ -80,6 +80,9 @@ class NavBar extends Component {
                 <Nav.Link className="nav-item nav-link" href="/cohorts">
                   Cohorts
                 </Nav.Link>
+                <Nav.Link className="nav-item nav-link" href="/categories">
+                  Categories
+                </Nav.Link>
 
                 <Nav.Link
                   href="/login"
