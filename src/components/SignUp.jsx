@@ -1,7 +1,11 @@
-import React from "react";
+import React, { Component } from "react";
+import Recaptcha from "../shared/ReCaptcha";
 
-class SignUp extends React.Component {
-  state = { email: "", password: "", username: "" };
+class SignUp extends Component {
+  state = { email: "", password: "", username: "", recaptchaToken: null };
+
+
+  onRecaptchaVerify = recaptchaToken => this.setState({recaptchaToken})
 
   onInputChange = (event) => {
     const key = event.target.id;
@@ -12,31 +16,44 @@ class SignUp extends React.Component {
 
   onFormSubmit = async (event) => {
     event.preventDefault();
-    const { email, password, username } = this.state;
+    const { email, password, username, recaptchaToken } = this.state;
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/sign-up`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ user: { email, password, username }}),
-      });
-      if (response.status >= 400) {
-        throw new Error("incorrect credentials");
-      } else {
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/login`, {
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/sign-up`,
+        {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ auth: { email, password, username }}),
-        })
-        const { jwt } = await response.json()
+          body: JSON.stringify({
+            user: {
+              email,
+              password,
+              username,
+              recaptcha_token: recaptchaToken,
+            },
+          }),
+        }
+      );
+      if (response.status >= 400) {
+        throw new Error("incorrect credentials");
+      } else {
+        const response = await fetch(
+          `${process.env.REACT_APP_BACKEND_URL}/login`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ auth: { email, password, username } }),
+          }
+        );
+        const { jwt } = await response.json();
         localStorage.setItem("token", jwt);
         this.props.history.push("/");
       }
     } catch (err) {
-      console.error(err.message)
+      console.error(err.message);
     }
   };
 
@@ -73,7 +90,8 @@ class SignUp extends React.Component {
             onChange={this.onInputChange}
             data-testid="password"
           />
-          <input type="submit" value="Submit" data-testid="signup-submit"/>
+          <input type="submit" value="Submit" data-testid="signup-submit" />
+          <Recaptcha onRecaptchaVerify={this.onRecaptchaVerify} />
         </form>
       </div>
     );

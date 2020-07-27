@@ -53,25 +53,28 @@ class Cohorts extends Component {
     });
   };
 
-  renderCreateCohortButton = (users, currentUser) => {
-    if (users.filter(user => user.email === currentUser.user)){
+  renderCreateCohortButton = () => {
+    const { cohorts, currentUser, users } = this.context;
+
+    const user = users.find((i) => i.email === currentUser.user);
+
+    if (cohorts.filter((i) => i.user_id === user.id).length !== 0) {
       return (
-          <div>
-            <Link to={"/cohorts/create"}>
-              <button>Create a new cohort</button>
-            </Link>
-          </div>
-        );
+        <div>
+          <Link to={"/cohorts/create"}>
+            <button>Create a new cohort</button>
+          </Link>
+        </div>
+      );
     }
-   
   };
 
   render() {
-    const { cohorts, users, currentUser } = this.context;
-    console.log(this.context.cohorts)
+    const { cohorts } = this.context;
+
     return (
       <React.Fragment>
-        {this.renderCreateCohortButton(users, currentUser)}
+        {this.renderCreateCohortButton()}
         {this.renderCohorts(cohorts)}
       </React.Fragment>
     );
