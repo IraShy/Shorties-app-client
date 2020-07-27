@@ -95,6 +95,8 @@ class EditNote extends Validation {
           <form encType="multipart/form-data" onSubmit={this.onFormSubmit}>
             {this.renderInput("title", "Title")}
             {this.renderDropdown(selected)}
+            {this.renderInput("body", "Description")}
+
 
             <h5 className="card-title">Image </h5>
             <img src={note.picture} alt="" width="300px" />
