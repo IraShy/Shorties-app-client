@@ -8,12 +8,24 @@ class ShowCategory extends Component {
   static contextType = Context;
 
   state = {
-    pageSize: 2,
+    pageSize: 4,
     currentPage: 1,
-    notes: []
+    notes: [],
   };
 
-  
+  getNotes = async () => {
+    const response = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/categories/${this.props.location.state.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    const { notes } = await response.json();
+    this.setState({ notes: notes });
+  };
+
   deleteNote = async (id) => {
     await fetch(`${process.env.REACT_APP_BACKEND_URL}/notes/${id}`, {
       method: "DELETE",
@@ -26,32 +38,31 @@ class ShowCategory extends Component {
   };
 
   renderNotes = (notes) => {
-    const UncompletedNotes = notes.filter((n) => n.completed === false)
-   
+    const UncompletedNotes = notes.filter((n) => n.completed === false);
+
     const { pageSize, currentPage } = this.state;
     const notesList = paginate(UncompletedNotes, currentPage, pageSize);
-    return notesList
-      .map((note, index) => {
-        return (
-          <div key={index}>
-            <h1>{note.title}</h1>
-            <p>{note.body}</p>
-            <img src={note.picture} alt="" />
-            <Link
-              to={{
-                pathname: `/notes/${note.id}`,
-                state: note,
-              }}
-            >
-              <button>View note</button>
-            </Link>
+    return notesList.map((note, index) => {
+      return (
+        <div key={index}>
+          <h3>{note.title}</h3>
+          <p>{note.body}</p>
+          <img src={note.picture} alt="" />
+          <Link
+            to={{
+              pathname: `/notes/${note.id}`,
+              state: note,
+            }}
+          >
+            <button>View note</button>
+          </Link>
 
-            <button onClick={() => this.deleteNote(note.id)}>Delete</button>
+          <button onClick={() => this.deleteNote(note.id)}>Delete</button>
 
-            <hr />
-          </div>
-        );
-      });
+          <hr />
+        </div>
+      );
+    });
   };
 
   renderCompletedNotes = (notes) => {
@@ -83,24 +94,20 @@ class ShowCategory extends Component {
     this.setState({ currentPage: page });
   };
 
+  async componentDidMount() {
+    const categoryId = this.props.location.state.id;
+    this.getNotes(categoryId);
+  }
+
   render() {
-    const {id} = this.props.location.state;
-    const category = this.context.categories.find(category => category.id === id)
-    
-    console.log(this.state);
-    
-    const { notes, search } = this.context;
-    // const { search } = this.context;
-    // console.log(this.context) // -> this user's notes in the context
-    // console.log(this.context.notes) // -> -> this user's notes
-    const categoryNotes = notes.filter((note) => {return note.categories.filter((cat) => {return cat.name === category})});
-
-    // console.log(category); // -> correct
-    console.log(categoryNotes);//-> this user's all notes
-    // console.log(notes)
-
+    const { id } = this.props.location.state;
+    const category = this.context.categories.find(
+      (category) => category.id === id
+    );
+    const notes = this.state.notes;
+    const { search } = this.context;
     const { pageSize, currentPage } = this.state;
-    const uncompletedNotes = notes.filter((n) => n.completed === false)
+    const uncompletedNotes = notes.filter((n) => n.completed === false);
     if (notes) {
       let filteredNotes = [
         ...new Set(
@@ -119,6 +126,8 @@ class ShowCategory extends Component {
       return (
         <React.Fragment>
           <h1>{category.name}</h1>
+          <button onClick={this.props.history.goBack}>Back</button>
+          <hr />
           {this.renderNotes(filteredNotes)}
           <Pagination
             itemsCount={uncompletedNotes.length}
@@ -126,12 +135,6 @@ class ShowCategory extends Component {
             currentPage={currentPage}
             onPageChange={this.handlePageChange}
           />
-
-           {/* <div className="completed-section">
-            <h3>Completed Notes => </h3>
-            {this.renderCompletedNotes(filteredNotes)}
-          </div> */}
-
         </React.Fragment>
       );
     } else {
