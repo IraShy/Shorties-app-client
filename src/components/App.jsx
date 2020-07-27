@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
+import { loadReCaptcha } from "react-recaptcha-google";
+
 import NavBar from "../shared/NavBar";
 import { Context, dispatchUser } from "../context/Context";
 import Notes from "./Notes";
@@ -19,7 +21,6 @@ import ShowCategory from "./ShowCategory";
 
 import "../stylesheets/App.scss";
 
-
 class App extends Component {
   state = {
     notes: [],
@@ -27,6 +28,10 @@ class App extends Component {
     categories: [],
     dispatchUser: dispatchUser.bind(this),
   };
+
+  componentDidMount() {
+    loadReCaptcha();
+  }
 
   render() {
     return (
@@ -47,13 +52,15 @@ class App extends Component {
           <ProtectedRoute exact path="/cohorts/:id" component={ShowCohort} />
 
           <ProtectedRoute exact path="/categories" component={Categories} />
-          <ProtectedRoute exact path="/categories/:id" component={ShowCategory} />
-
+          <ProtectedRoute
+            exact
+            path="/categories/:id"
+            component={ShowCategory}
+          />
 
           <Route component={NotFound} />
         </Switch>
       </Context.Provider>
-
     );
   }
 }

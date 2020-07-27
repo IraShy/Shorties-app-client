@@ -107,8 +107,8 @@ class Notes extends Component {
       student_ids: student_ids,
     };
 
-    console.log(body);
-    const response = await fetch(
+    
+    await fetch(
       `${process.env.REACT_APP_BACKEND_URL}/notes/shared_note`,
       {
         method: "POST",
@@ -142,9 +142,6 @@ class Notes extends Component {
   }
 
   render() {
-    const { cohorts, currentUser, users, cohortStudents } = this.context;
-    console.log(this.context);
-
     const { notes, search } = this.context;
     const { pageSize, currentPage } = this.state;
     const uncompletedNotes = notes.filter((n) => n.completed === false);
