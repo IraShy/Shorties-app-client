@@ -42,7 +42,7 @@ class Notes extends Component {
           >
             <button>View note</button>
           </Link>
-          {this.renderShareButton()}
+          {this.renderShareButton(note)}
           <button onClick={() => this.deleteNote(note.id)}>Delete</button>
 
           <hr />
@@ -97,10 +97,43 @@ class Notes extends Component {
     this.context.dispatchUser("populateCohortStudents", all_students);
   };
 
-  renderShareButton = () => {
-    const {cohortStudents} = this.context;
+  handleShare = async (note) => {
+    const id = note.id;
+    const { cohortStudents } = this.context;
+    let student_ids = cohortStudents.map((i) => i.id);
+    console.log(student_ids);
+    const body = {
+      note_id: id,
+      student_ids: student_ids,
+    };
+
+    console.log(body);
+    const response = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/notes/shared_note`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+                  'Content-Type': 'application/json'
+
+        },
+        body: JSON.stringify(body),
+      }
+    );
+  };
+
+  renderShareButton = (note) => {
+    const { cohortStudents } = this.context;
     if (cohortStudents) {
-      return <button onClick={() => {}}>Share</button>;
+      return (
+        <button
+          onClick={() => {
+            this.handleShare(note);
+          }}
+        >
+          Share
+        </button>
+      );
     }
   };
 
