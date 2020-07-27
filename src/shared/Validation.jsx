@@ -77,7 +77,6 @@ class Validation extends Component {
 
   renderInput(name, label, type = "text") {
     const { note, errors } = this.state;
-    console.log(note[name]);
     return (
       <Input
         type={type}

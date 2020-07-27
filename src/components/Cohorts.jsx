@@ -68,7 +68,7 @@ class Cohorts extends Component {
 
   render() {
     const { cohorts, users, currentUser } = this.context;
-
+    console.log(this.context.cohorts)
     return (
       <React.Fragment>
         {this.renderCreateCohortButton(users, currentUser)}

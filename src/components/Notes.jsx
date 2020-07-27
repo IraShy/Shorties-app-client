@@ -12,7 +12,6 @@ class Notes extends Component {
     currentPage: 1,
   };
 
-  
   deleteNote = async (id) => {
     await fetch(`${process.env.REACT_APP_BACKEND_URL}/notes/${id}`, {
       method: "DELETE",
@@ -25,32 +24,31 @@ class Notes extends Component {
   };
 
   renderNotes = (notes) => {
-    const UncompletedNotes = notes.filter((n) => n.completed === false)
-   
+    const UncompletedNotes = notes.filter((n) => n.completed === false);
+
     const { pageSize, currentPage } = this.state;
     const notesList = paginate(UncompletedNotes, currentPage, pageSize);
-    return notesList
-      .map((note, index) => {
-        return (
-          <div key={index}>
-            <h1>{note.title}</h1>
-            <p>{note.body}</p>
-            <img src={note.picture} alt="" />
-            <Link
-              to={{
-                pathname: `/notes/${note.id}`,
-                state: note,
-              }}
-            >
-              <button>View note</button>
-            </Link>
+    return notesList.map((note, index) => {
+      return (
+        <div key={index}>
+          <h1>{note.title}</h1>
+          <p>{note.body}</p>
+          <img src={note.picture} alt="" />
+          <Link
+            to={{
+              pathname: `/notes/${note.id}`,
+              state: note,
+            }}
+          >
+            <button>View note</button>
+          </Link>
+          {this.renderShareButton()}
+          <button onClick={() => this.deleteNote(note.id)}>Delete</button>
 
-            <button onClick={() => this.deleteNote(note.id)}>Delete</button>
-
-            <hr />
-          </div>
-        );
-      });
+          <hr />
+        </div>
+      );
+    });
   };
 
   renderCompletedNotes = (notes) => {
@@ -78,15 +76,45 @@ class Notes extends Component {
         );
       });
   };
+
   handlePageChange = (page) => {
     this.setState({ currentPage: page });
   };
 
+  getCohortStudents = async () => {
+    const { currentUser, users } = this.context;
+    let user = users.find((i) => i.email === currentUser.user);
+    const response = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/cohorts/${user.id}/cohorts_students`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    const { all_students } = await response.json();
+
+    this.context.dispatchUser("populateCohortStudents", all_students);
+  };
+
+  renderShareButton = () => {
+    const {cohortStudents} = this.context;
+    if (cohortStudents) {
+      return <button onClick={() => {}}>Share</button>;
+    }
+  };
+
+  async componentDidMount() {
+    await this.getCohortStudents();
+  }
+
   render() {
-    console.log(this.context)
+    const { cohorts, currentUser, users, cohortStudents } = this.context;
+    console.log(this.context);
+
     const { notes, search } = this.context;
     const { pageSize, currentPage } = this.state;
-    const uncompletedNotes = notes.filter((n) => n.completed === false)
+    const uncompletedNotes = notes.filter((n) => n.completed === false);
     if (notes) {
       let filteredNotes = [
         ...new Set(
@@ -112,11 +140,12 @@ class Notes extends Component {
             onPageChange={this.handlePageChange}
           />
 
-           {/* <div className="completed-section">
+          {/* <div className="completed-section">
             <h3>Completed Notes => </h3>
             {this.renderCompletedNotes(filteredNotes)}
           </div> */}
 
+          {this.renderShareButton(cohortStudents)}
         </React.Fragment>
       );
     } else {

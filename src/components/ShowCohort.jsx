@@ -17,7 +17,7 @@ class ShowCohort extends Component {
       }
     );
     const data = await response.json();
-    this.setState({ cohort: data, students: data.users, show: true });
+    this.setState({ cohort: data, students: data.users, show: true});
   };
 
   deleteStudent = async (user_id) => {
@@ -84,6 +84,7 @@ class ShowCohort extends Component {
   }
 
   render() {
+    console.log(this.context)
     const cohort = this.state.cohort;
     if (this.state.show) {
       return !this.state.students.length ? (

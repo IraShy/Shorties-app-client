@@ -12,7 +12,6 @@ import AddNote from "./AddNote";
 import ShowNote from "./ShowNote";
 import EditNote from "./EditNote";
 import AddCohort from "./AddCohort";
-import ProtRouteUsersCohorts from "./ProtRouteUsersCohorts";
 import Cohorts from "./Cohorts";
 import ShowCohort from "./ShowCohort";
 
@@ -41,9 +40,9 @@ class App extends Component {
           <ProtectedRoute exact path="/notes/create" component={AddNote} />
           <ProtectedRoute exact path="/notes/:id" component={ShowNote} />
           <ProtectedRoute exact path="/notes/:id/edit" component={EditNote} />
-          <ProtRouteUsersCohorts exact path="/cohorts" component={Cohorts} />
-          <ProtRouteUsersCohorts exact path="/cohorts/create" component={AddCohort} />
-          <ProtRouteUsersCohorts exact path="/cohorts/:id" component={ShowCohort} />
+          <ProtectedRoute exact path="/cohorts" component={Cohorts} />
+          <ProtectedRoute exact path="/cohorts/create" component={AddCohort} />
+          <ProtectedRoute exact path="/cohorts/:id" component={ShowCohort} />
 
           <Route component={NotFound} />
         </Switch>
