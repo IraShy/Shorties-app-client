@@ -1,0 +1,27 @@
+@import 'buttons';
+@import 'vars';
+
+h5 {
+  text-align: center;
+}
+
+Table {
+  td.delcell{
+    display: flex;
+    justify-content: center;
+  }
+  margin-top: 15px;
+}
+
+.react-bootstrap-table table {
+  table-layout: auto;
+}
+
+.teacher {
+  padding-top: 0.15rem;
+}
+
+Button.btn-table {
+  margin-right: auto;
+  margin-left: auto;
+}

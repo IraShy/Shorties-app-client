@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Context } from "../context/Context";
 import Pagination from "../shared/Pagination";
 import { paginate } from "../shared/paginate";
+import "../stylesheets/ShowCategory.scss";
 
 class ShowCategory extends Component {
   static contextType = Context;
@@ -125,8 +126,12 @@ class ShowCategory extends Component {
 
       return (
         <React.Fragment>
-          <h1>{category.name}</h1>
-          <button onClick={this.props.history.goBack}>Back</button>
+          <h1 className="title">{category.name}</h1>
+          <div className="button-block">
+            <button className="backbutton" onClick={this.props.history.goBack}>
+              Back
+            </button>
+          </div>
           <hr />
           {this.renderNotes(filteredNotes)}
           <Pagination
