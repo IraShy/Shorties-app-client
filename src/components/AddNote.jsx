@@ -1,149 +1,53 @@
-import React, { Component } from "react";
+import React from "react";
 import { Context } from "../context/Context";
-import CreatableSelect from "react-select/creatable";
+import Joi from "joi-browser";
+import Validation from "../shared/Validation";
+import Client from "./Client"
 
-
-class AddNote extends Component {
+class AddNote extends Validation {
   static contextType = Context;
 
   state = {
-    note: {},
+    note: { title: "", body: "" },
     categories: [],
+    errors: {},
   };
 
-  onInputChange = (event) => {
-    if (event.target?.files) {
-      this.setState({
-        note: {
-          ...this.state.note,
-          [event.target.id]: event.target.files[0],
-        },
-      });
-    } else {
-      this.setState({
-        note: {
-          ...this.state.note,
-          [event.target.id]: event.target.value,
-        },
-      });
-    }
-  };
+  schema = Joi.object({
+    title: Joi.string().min(2).required().label("Title"),
+    body: Joi.string().min(2).required().label("Description"),
+    categories: Joi.array().min(1).required().label("Category"),
+    picture: Joi.any(),
+  });
 
-  onCategoryChange = (newValue, actionMeta) => {
-    if (newValue) {
-      this.setState({ categories: newValue.map((i) => i.label) });
-    } else if (actionMeta.action === "remove-value") {
-      const removedValue = actionMeta.removedValue.label;
-      this.setState({
-        categories: this.state.categories.filter(
-          (category) => category !== removedValue
-        ),
-      });
-    }
-  };
+  client = new Client();
 
   onFormSubmit = async (event) => {
     event.preventDefault();
     const { note } = this.state;
     const { categories } = this.state;
-    const body = {
-      categories: categories.map((c) => ({ name: c })),
-    };
-    const category_response = await fetch(
-      `${process.env.REACT_APP_BACKEND_URL}/categories`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify(body),
-      }
-    );
 
-    const category_json = await category_response.json();
+    const createdNote = await this.client.createNote(note, categories);
 
-    // stringify to send "[]" to backend
-    note.category_ids = JSON.stringify(category_json.map((c) => c.id));
-
-    const data = new FormData();
-    for (let key in note) {
-      data.append(`note[${key}]`, note[key]);
-    }
-
-    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/notes`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-      body: data,
-    });
-
-    const noteData = await response.json();
-    const noteToAdd = { ...noteData.note, picture: noteData.picture };
-
-    this.context.dispatchUser("add", noteToAdd);
+    this.context.dispatchUser("add", createdNote);
     this.props.history.push("/notes");
   };
 
-  render() {
-    const { categories } = this.context;
-    const options = categories.map((c, index) => ({
-      label: c.name,
-      value: index,
-    }));
+  categoriesUpdated = (updatedCategories) => {
+    this.setState({ categories: updatedCategories });
+  };
 
+  render() {
+    const selected = this.state.categories;
     return (
       <div className="container">
         <h1>Add a new Note</h1>
         <form encType="multipart/form-data" onSubmit={this.onFormSubmit}>
-          <div className="form-row">
-            <div className="form-group col-md-6">
-              <label htmlFor="title">Title</label>
-              <input
-                type="text"
-                name="title"
-                id="title"
-                onChange={this.onInputChange}
-                className="form-control"
-              />
-            </div>
-
-            <div className="form-group col-md-6">
-              <label htmlFor="title">category</label>
-              <p>
-                you can select multi categories and create categories you prefer
-                :)
-              </p>
-              <CreatableSelect
-                isMulti
-                onChange={this.onCategoryChange}
-                options={options}
-                key={options.id}
-              />
-            </div>
-
-            <div className="form-group col-md-6">
-              <label htmlFor="description">Description</label>
-              <textarea
-                name="body"
-                id="body"
-                onChange={this.onInputChange}
-                className="form-control"
-              ></textarea>
-              <label htmlFor="picture">Picture</label>
-              <input
-                type="file"
-                name="picture"
-                id="picture"
-                onChange={this.onInputChange}
-              />
-
-              <button type="submit" className="btn btn-primary mt-3 ml-1">
-                Submit
-              </button>
-            </div>
-          </div>
+          {this.renderInput("title", "Title")}
+          {this.renderDropdown(selected)}
+          {this.renderInput("body", "Description")}
+          {this.renderPicture()}
+          {this.renderButton("Submit")}
         </form>
       </div>
     );

@@ -1,13 +1,17 @@
-import React from "react";
+import React, { Component } from 'react';
+import { Context } from "../context/Context";
 
 
-const Home = () => {
-  return (
-    <>
-      <h1>Home</h1>
-      
-    </>
-  );
-};
-
+class Home extends Component {
+  static contextType = Context;
+ 
+  render() { 
+    return ( 
+      <>
+     
+      </>
+     );
+  }
+}
+ 
 export default Home;

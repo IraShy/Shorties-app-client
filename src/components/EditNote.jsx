@@ -1,8 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import { Context } from "../context/Context";
-import CreatableSelect from "react-select/creatable";
+import Joi from "joi-browser";
+import Validation from "../shared/Validation";
 
-class EditNote extends Component {
+class EditNote extends Validation {
   static contextType = Context;
   state = {
     note: {
@@ -14,28 +15,25 @@ class EditNote extends Component {
       categories: [],
       id: Number(this.props.match.params.id),
     },
+    errors: {},
   };
-  onInputChange = (event) => {
-    if (event.target?.files) {
-      this.setState({
-        note: {
-          ...this.state.note,
-          [event.target.id]: event.target.files[0],
-        },
-      });
-    } else {
-      this.setState({
-        note: {
-          ...this.state.note,
-          [event.target.id]: event.target.value,
-        },
-      });
-    }
-  };
+
+  schema = Joi.object({
+    title: Joi.string().min(2).required().label("Title"),
+    body: Joi.string().min(2).required().label("Description"),
+    categories: Joi.array().min(1).required().label("Category"),
+    picture: Joi.any(),
+    completed: Joi.any(),
+    loading: Joi.any(),
+    id: Joi.any(),
+    user_id: Joi.any(),
+    public_share: Joi.any(),
+    created_at: Joi.any(),
+    updated_at: Joi.any(),
+  });
 
   onFormSubmit = async (event) => {
     event.preventDefault();
-    // const { note } = this.state;
     const { id, title, body, completed, picture } = this.state.note;
     const categories_attributes = this.state.note.categories;
     const note = {
@@ -79,112 +77,31 @@ class EditNote extends Component {
     this.setState({ picture: JSON.stringify(picture) });
   }
 
-  onCategoryChange = (newValue, actionMeta) => {
-    if (newValue) {
-      this.setState({
-        note: {
-          ...this.state.note,
-          categories: newValue.map((i) => ({ name: i.label })),
-        },
-      });
-    } else if (actionMeta.action === "remove-value") {
-      const removedValue = actionMeta.removedValue.label;
-      const noteCategories = this.state.note.categories;
-      this.setState({
-        note: {
-          ...this.state.note,
-          categories: noteCategories.filter(
-            (category) => category.name !== removedValue
-          ),
-        },
-      });
-    }
+  categoriesUpdated = (updatedCategories) => {
+    this.setState({
+      note: { ...this.state.note, categories: updatedCategories },
+    });
   };
 
   render() {
-    const { title, body, categories, loading } = this.state.note;
+    const { loading } = this.state.note;
     const { note } = this.state;
-
-    const options = this.context.categories.map((c) => ({
-      label: c.name,
-      value: c.name,
-    }));
-
-    const selected = categories.map((c) => ({
-      label: c.name,
-      value: c.name,
-    }));
+    const selected = this.state.note.categories;
 
     return (
       !loading && (
         <div className="container">
           <h1>Edit</h1>
           <form encType="multipart/form-data" onSubmit={this.onFormSubmit}>
-            <div className="form-group col-md-6">
-              <label htmlFor="title">Title</label>
-              <input
-                type="text"
-                name="title"
-                id="title"
-                onChange={this.onInputChange}
-                value={title}
-                className="form-control"
-              />
-            </div>
-            <div className="form-group col-md-6">
-              <label htmlFor="body">Description</label>
-              <textarea
-                name="body"
-                id="body"
-                onChange={this.onInputChange}
-                value={body}
-                className="form-control"
-              ></textarea>
-            </div>
-            <div className="form-group col-md-6">
-              <label htmlFor="title">category</label>
-              <p>
-                you can select multi categories and create categories you prefer
-                :)
-              </p>
-              <CreatableSelect
-                isMulti
-                onChange={this.onCategoryChange}
-                value={selected}
-                options={options}
-                key={options.id}
-              />
-            </div>
+            {this.renderInput("title", "Title")}
+            {this.renderDropdown(selected)}
 
             <h5 className="card-title">Image </h5>
-            <div>
-              {" "}
-              <img src={note.picture} alt="" />
-            </div>
-            <label htmlFor="picture">Picture</label>
-            <input
-              type="file"
-              name="picture"
-              id="picture"
-              onChange={this.onInputChange}
-            />
+            <img src={note.picture} alt="" width="300px" />
+            {this.renderPicture()}
 
-            <button
-              type="text"
-              className="btn btn-danger mt-3 ml-1"
-              htmlFor="completed"
-              onClick={(e) => {
-                e.preventDefault();
-                this.setState({
-                  note: { ...this.state.note, completed: true },
-                });
-              }}
-            >
-              marked as Completed
-            </button>
-            <button type="submit" className="btn btn-danger mt-3 ml-1">
-              Submit
-            </button>
+            {this.renderMarked()}
+            {this.renderButton("Submit")}
           </form>
         </div>
       )

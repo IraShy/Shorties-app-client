@@ -30,6 +30,7 @@ function dispatchUser(action, value) {
           notes: [...state.notes, value],
         };
       });
+
       break;
 
     case "deleteCategory":

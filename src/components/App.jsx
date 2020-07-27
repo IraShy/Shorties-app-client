@@ -18,6 +18,7 @@ import ShowCohort from "./ShowCohort";
 
 import "../stylesheets/App.scss";
 
+
 class App extends Component {
   state = {
     notes: [],
@@ -47,6 +48,7 @@ class App extends Component {
           <Route component={NotFound} />
         </Switch>
       </Context.Provider>
+
     );
   }
 }

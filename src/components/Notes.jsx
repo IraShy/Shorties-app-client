@@ -8,7 +8,7 @@ class Notes extends Component {
   static contextType = Context;
 
   state = {
-    pageSize: 2,
+    pageSize: 4,
     currentPage: 1,
   };
 
