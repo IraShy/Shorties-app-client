@@ -83,6 +83,7 @@ class Notes extends Component {
   };
 
   render() {
+    console.log(this.context)
     const { notes, search } = this.context;
     const { pageSize, currentPage } = this.state;
     const uncompletedNotes = notes.filter((n) => n.completed === false)

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Context } from "../context/Context";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 
 class ShowCohort extends Component {
