@@ -55,11 +55,10 @@ function dispatchUser(action, value) {
           if (value.id === note.id) {
             return value;
           } else {
-            console.log("NoMatch");
             return note;
           }
         });
-        console.log("update", { notes });
+
         return {
           notes: notes,
         };

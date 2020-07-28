@@ -1,18 +1,64 @@
 @import "custom";
-@import 'ShowCohort.scss';
-
+@import "ShowCohort.scss";
 
 // .dropdown-toggle::after {
 //     display:none;
 // }
 
-.completed-section{
+.completed-section {
   background-color: rgba(216, 208, 208, 0.925);
 }
 
+.shownote_container {
+  display: flex;
+  justify-content: center;
+  margin-top:10px;
+  
+  
+
+  text-align: left;
+  width: 400px;
+
+  span {
+    color: grey;
+    font-size: medium;
+    margin-right: 15px;
+  }
+  #show_note_categories {
+    color: black;
+  }
+
+  .card-text {
+    text-align: justify;
+    font-size: 20px;
+  }
+
+  .text-muted {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+    font-size: 13px;
+    text-align: center;
+  }
+  a {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 20px;
+   button {
+     margin-bottom: 10px;
+   }
+  }
+}
+
+.edit_image {
+  margin-left: 15px;
+  margin-bottom: 10px;
+}
+
+
+
 h1.title {
   padding: 10px;
-  color: rgb(70,142,175);
+  color: rgb(70, 142, 175);
   text-align: center;
-  
 }

@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { Context } from "../context/Context";
 import Pagination from "../shared/Pagination";
 import { paginate } from "../shared/paginate";
+import moment from "moment";
+
 
 class Notes extends Component {
   static contextType = Context;
@@ -34,6 +36,11 @@ class Notes extends Component {
           <h1>{note.title}</h1>
           <p>{note.body}</p>
           <img src={note.picture} alt="" />
+           <p className="card-text">
+              <small className="text-muted">
+                Updated {moment(note.updated_at).startOf("minute").fromNow()}
+              </small>
+            </p>
           <Link
             to={{
               pathname: `/notes/${note.id}`,
@@ -162,7 +169,7 @@ class Notes extends Component {
 
       return (
         <React.Fragment>
-          {this.renderNotes(uncompletedNotes)}
+          {this.renderNotes(filteredNotes)}
           
           <Pagination
             itemsCount={uncompletedNotes.length}

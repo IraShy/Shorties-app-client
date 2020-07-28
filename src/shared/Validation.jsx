@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Dropdown from "../shared/Dropdown";
 import Input from "../shared/Input";
 import Joi from "joi-browser";
-import Categories from '../components/Categories';
 
 class Validation extends Component {
   state = {
@@ -44,12 +43,6 @@ class Validation extends Component {
     return errors;
   };
 
-  // categoriesUpdated = (updatedCategories) => {
-  //   const {note} = this.state;
-  //   this.setState({ categories: updatedCategories });
-  //   this.validateNote(note);
-  // };
-
 
   renderDropdown(selected) {
     const { errors } = this.state;
@@ -79,7 +72,7 @@ class Validation extends Component {
 
   renderButton(label) {
     return (
-      <button disabled={this.state.errors} className="btn btn-primary">
+      <button disabled={this.state.errors} className="btn btn-primary ">
         {label}
       </button>
     );
@@ -88,7 +81,7 @@ class Validation extends Component {
   renderButtonEdit(label) {
     const{note} = this.state;
     return (
-      <button disabled={this.validateNote(note)} className="btn btn-primary">
+      <button disabled={this.validateNote(note)} className="btn btn-info ml-5">
         {label}
       </button>
     );
@@ -108,16 +101,18 @@ class Validation extends Component {
     );
   }
   renderMarked() {
+    
     return (
       <button
         type="text"
-        className="btn btn-danger mt-3 ml-1"
+        className="btn btn-primary ml-3 mr-5"
         htmlFor="completed"
         onClick={(e) => {
           e.preventDefault();
           this.setState({
             note: { ...this.state.note, completed: true },
           });
+          
         }}
       >
         marked as Completed
