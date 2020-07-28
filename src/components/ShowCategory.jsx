@@ -36,6 +36,7 @@ class ShowCategory extends Component {
     });
 
     this.context.dispatchUser("delete", id);
+    this.getNotes();
   };
 
   renderNotes = (notes) => {
