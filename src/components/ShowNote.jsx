@@ -66,7 +66,7 @@ class ShowNote extends Component {
                 state: note,
               }}
             >
-              <button type="button" className="btn btn-success">
+              <button type="button" className="btn btn-warning">
                 Edit
               </button>
             </Link>
