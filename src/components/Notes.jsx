@@ -8,7 +8,7 @@ class Notes extends Component {
   static contextType = Context;
 
   state = {
-    pageSize: 4,
+    pageSize: 2,
     currentPage: 1,
   };
 
@@ -162,7 +162,8 @@ class Notes extends Component {
 
       return (
         <React.Fragment>
-          {this.renderNotes(filteredNotes)}
+          {this.renderNotes(uncompletedNotes)}
+          
           <Pagination
             itemsCount={uncompletedNotes.length}
             pageSize={pageSize}
@@ -170,11 +171,13 @@ class Notes extends Component {
             onPageChange={this.handlePageChange}
           />
 
-          {/* <div className="completed-section">
+          {/* <button onClick={this.renderCompletedNotes(filteredNotes)}>Completed Notes</button> */}
+
+          <div className="completed-section">
             <h3>Completed Notes => </h3>
             {this.renderCompletedNotes(filteredNotes)}
-          </div> */}
-
+          </div>
+          
          
         </React.Fragment>
       );
