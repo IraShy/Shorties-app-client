@@ -102,7 +102,7 @@ class EditNote extends Validation {
             {this.renderPicture()}
             
             <div className="form-group col-md-6" id="edit_buttons">
-            {this.renderBack()}
+            {this.renderBackEdit()}
             {this.renderMarked()}
             {this.renderButtonEdit("submit")}
             </div>

@@ -57,7 +57,10 @@ class AddNote extends Validation {
           {this.renderDropdown(selected)}
           {this.renderInput("body", "Description")}
           {this.renderPicture()}
+          <div className="addnote_buttons">
+          {this.renderBack()}
           {this.renderButton("Submit")}
+          </div>
         </form>
       </div>
     );

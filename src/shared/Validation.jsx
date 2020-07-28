@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Dropdown from "../shared/Dropdown";
 import Input from "../shared/Input";
 import Joi from "joi-browser";
+import { Link } from "react-router-dom";
 
 class Validation extends Component {
   state = {
@@ -67,7 +68,6 @@ class Validation extends Component {
       />
     );
   }
-  
 
   renderButton(label) {
     return (
@@ -124,9 +124,18 @@ class Validation extends Component {
       <button
         className="btn btn-outline-secondary mr-2 "
         onClick={this.props.history.goBack}
+        id="add_back_button"
       >
         {"<<"}
       </button>
+    );
+  };
+
+  renderBackEdit = () => {
+    return (
+      <Link to={`/notes`}>
+        <button className="btn btn-outline-secondary mr-2 ">{"<<"}</button>
+      </Link>
     );
   };
 }
