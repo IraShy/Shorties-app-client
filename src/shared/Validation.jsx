@@ -72,16 +72,18 @@ class Validation extends Component {
 
   renderButton(label) {
     return (
-      <button disabled={this.state.errors} className="btn btn-primary ">
+      <div className="form-group col-md-6" id="addnote_button" >
+      <button disabled={this.state.errors} className="btn btn-primary">
         {label}
       </button>
+      </div>
     );
   }
 
   renderButtonEdit(label) {
     const{note} = this.state;
     return (
-      <button disabled={this.validateNote(note)} className="btn btn-info ml-5">
+      <button disabled={this.validateNote(note)} className="btn btn-info">
         {label}
       </button>
     );
@@ -105,7 +107,7 @@ class Validation extends Component {
     return (
       <button
         type="text"
-        className="btn btn-primary ml-3 mr-5"
+        className="btn btn-primary"
         htmlFor="completed"
         onClick={(e) => {
           e.preventDefault();

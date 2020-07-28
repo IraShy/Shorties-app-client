@@ -39,7 +39,7 @@ class Dropdown extends Component {
     return (
       <div className="form-group col-md-6">
         <label htmlFor="categories">category</label>
-        <p>you can select multi categories and also create categories :)</p>
+        <p id="category_note">you can select multi categories and also create categories :)</p>
         <CreatableSelect
           isMulti
           onChange={this.onCategoryChange}

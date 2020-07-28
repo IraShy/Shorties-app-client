@@ -2,7 +2,7 @@ import React from "react";
 import { Context } from "../context/Context";
 import Joi from "joi-browser";
 import Validation from "../shared/Validation";
-import Client from "./Client"
+import Client from "./Client";
 
 class AddNote extends Validation {
   static contextType = Context;
@@ -34,25 +34,24 @@ class AddNote extends Validation {
   };
 
   categoriesUpdated = (updatedCategories) => {
-    const {note} = this.state;
+    const { note } = this.state;
     const updatedNote = {
       ...note,
-      categories: updatedCategories
+      categories: updatedCategories,
     };
     const errors = this.validateNote(updatedNote);
 
-        this.setState({ 
-          categories: updatedCategories,
-          errors
-           });
-
+    this.setState({
+      categories: updatedCategories,
+      errors,
+    });
   };
 
   render() {
     const selected = this.state.categories;
     return (
       <div className="container">
-        <h1>Add a new Note</h1>
+        <h3 id="addnote_title">Add a new Note</h3>
         <form encType="multipart/form-data" onSubmit={this.onFormSubmit}>
           {this.renderInput("title", "Title")}
           {this.renderDropdown(selected)}

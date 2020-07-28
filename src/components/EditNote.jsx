@@ -97,11 +97,14 @@ class EditNote extends Validation {
             {this.renderDropdown(selected)}
             {this.renderInput("body", "Description")}
 
-            <img src={note.picture} alt="" width="350px" className="edit_image"/>
+            <div className="form-group col-md-6" id="image_container">
+            <img src={note.picture} alt=""  className="edit_image"/></div>
             {this.renderPicture()}
+            
+            <div className="form-group col-md-6" id="edit_buttons">
             {this.renderMarked()}
             {this.renderButtonEdit("submit")}
-            
+            </div>
           </form>
         </div>
       )
