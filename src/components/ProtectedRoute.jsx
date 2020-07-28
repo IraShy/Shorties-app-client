@@ -60,12 +60,12 @@ class ProtectedRoute extends Component {
 
   async componentDidMount() {
     try {
-      await Promise.all(
-        this.getNotes(),
-        this.getCategories(),
-        this.getUsers(),
-        this.getCohorts()
-      );
+      
+        this.getNotes();
+        this.getCategories();
+        this.getUsers();
+        this.getCohorts();
+     
 
       const response = await fetch(
         `${process.env.REACT_APP_BACKEND_URL}/status`,

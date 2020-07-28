@@ -90,7 +90,7 @@
   font-weight: 300;
 }
 
-.addnote_buttons{
+#addnote_buttons{
   display:flex;
   justify-content: space-between;
  
@@ -98,7 +98,6 @@
 
  #add_back_button{
     height: 40px;
-    margin-left: 15px;
   }
 
 #addnote_title {
