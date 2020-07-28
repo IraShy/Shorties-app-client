@@ -4,7 +4,7 @@ import { Context } from "../context/Context";
 import Pagination from "../shared/Pagination";
 import { paginate } from "../shared/paginate";
 import moment from "moment";
-import Categories from "./Categories";
+
 
 class Notes extends Component {
   static contextType = Context;

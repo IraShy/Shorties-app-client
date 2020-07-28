@@ -9,13 +9,25 @@
   background-color: rgba(216, 208, 208, 0.925);
 }
 
+//Shownote
 .shownote_container {
   display: flex;
   justify-content: center;
   margin-top: 10px;
 
   text-align: left;
-  width: 400px;
+ .card-img-top{
+   width:400px;
+ }
+
+  .shownote_buttons {
+    display: flex;
+    justify-content: space-between;
+
+    #back_button{
+      height: 40px;
+    }
+  }
 
   span {
     color: grey;
@@ -118,6 +130,8 @@
   margin: 10px 0px;
 }
 
+
+
 .pagination_container {
   position: absolute;
   left: 0;
@@ -126,8 +140,6 @@
   margin-left: 90px;
   margin-bottom: 50px;
 }
-
-
 
 h1.title {
   padding: 10px;

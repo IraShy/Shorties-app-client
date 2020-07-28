@@ -8,7 +8,11 @@ class ShowNote extends Component {
 
   renderCategories = (categories) => {
     return categories.map((c, index) => {
-      return <span key={index} id="show_note_categories">{c.name}</span>;
+      return (
+        <span key={index} id="show_note_categories">
+          {c.name}
+        </span>
+      );
     });
   };
 
@@ -28,10 +32,16 @@ class ShowNote extends Component {
       <div className="shownote_container">
         <div className="card ">
           <div className="card-body">
-            <h5 className="card-text"><span>Title: </span> {note.title} </h5>
-            <h5 className="card-text"><span>Description: </span>{note.body}</h5>
             <h5 className="card-text">
-            <span>Categories: </span>{this.renderCategories(categories)}
+              <span>Title: </span> {note.title}{" "}
+            </h5>
+            <h5 className="card-text">
+              <span>Description: </span>
+              {note.body}
+            </h5>
+            <h5 className="card-text">
+              <span>Categories: </span>
+              {this.renderCategories(categories)}
             </h5>
           </div>
           <img src={note.picture} className="card-img-top" alt="" />
@@ -42,16 +52,25 @@ class ShowNote extends Component {
               Created {moment(note.created_at).startOf("minute").fromNow()}
             </small>
           </p>
-          <Link
-            to={{
-              pathname: `/notes/${note.id}/edit`,
-              state: note,
-            }}
-          >
-            <button type="button" className="btn btn-warning m-2">
-              Edit
+          <div className="shownote_buttons">
+            <button
+              className="btn btn-outline-secondary ml-2"
+              onClick={this.props.history.goBack}
+              id="back_button"
+            >
+              {"<<"}
             </button>
-          </Link>
+            <Link
+              to={{
+                pathname: `/notes/${note.id}/edit`,
+                state: note,
+              }}
+            >
+              <button type="button" className="btn btn-success">
+                Edit
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
     );

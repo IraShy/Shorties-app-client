@@ -10,7 +10,6 @@ class Validation extends Component {
     errors: {},
   };
 
-
   onInputChange = (event) => {
     let note;
     if (event.target?.files) {
@@ -32,10 +31,10 @@ class Validation extends Component {
     this.setState({ note, errors });
   };
 
-  validateNote = (note) => {  
+  validateNote = (note) => {
     const options = { abortEarly: true };
     const { error } = Joi.validate(note, this.schema, options);
-   
+
     if (!error) return null;
 
     const errors = {};
@@ -43,10 +42,9 @@ class Validation extends Component {
     return errors;
   };
 
-
   renderDropdown(selected) {
     const { errors } = this.state;
-    
+
     return (
       <Dropdown
         selected={selected}
@@ -69,19 +67,20 @@ class Validation extends Component {
       />
     );
   }
+  
 
   renderButton(label) {
     return (
-      <div className="form-group col-md-6" id="addnote_button" >
-      <button disabled={this.state.errors} className="btn btn-primary">
-        {label}
-      </button>
+      <div className="form-group col-md-6" id="addnote_button">
+        <button disabled={this.state.errors} className="btn btn-primary">
+          {label}
+        </button>
       </div>
     );
   }
 
   renderButtonEdit(label) {
-    const{note} = this.state;
+    const { note } = this.state;
     return (
       <button disabled={this.validateNote(note)} className="btn btn-info">
         {label}
@@ -103,7 +102,6 @@ class Validation extends Component {
     );
   }
   renderMarked() {
-    
     return (
       <button
         type="text"
@@ -114,14 +112,23 @@ class Validation extends Component {
           this.setState({
             note: { ...this.state.note, completed: true },
           });
-          
         }}
       >
         marked as Completed
       </button>
     );
   }
- 
+
+  renderBack = () => {
+    return (
+      <button
+        className="btn btn-outline-secondary mr-2 "
+        onClick={this.props.history.goBack}
+      >
+        {"<<"}
+      </button>
+    );
+  };
 }
 
 export default Validation;
