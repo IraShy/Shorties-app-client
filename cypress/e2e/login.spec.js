@@ -19,8 +19,9 @@ describe("when clicking on login from the homepage user", () => {
 
   it("should be able to type into inputs", () => {
     const { email, password } = userBuilder();
-    cy.typeInLoginCredentials(email, password);
+    cy.typeInLoginCredentials2(email, password);
     cy.findByTestId("email").should("contain.value", email);
+   
   });
 });
 
@@ -28,7 +29,8 @@ describe("with the incorrect login credentials user", () => {
   it("should receive an error message above the login form", () => {
     cy.visit("/login");
     const { email, password } = userBuilder();
-    cy.typeInLoginCredentials(email, password);
+    cy.typeInLoginCredentials2(email, password);
+
     cy.findByTestId("login-submit").click();
     cy.findByTestId("login-error").should(
       "contain.text",
@@ -41,7 +43,7 @@ describe("with the correct login credentials user", () => {
   it("should be able to click on submit and be navigated to /notes", () => {
     cy.getUser().then(({ email, password }) => {
       cy.visit("/login");
-      cy.typeInLoginCredentials(email, password);
+      cy.typeInLoginCredentials2("teacher1@g.com", "123456");
       cy.findByTestId("login-submit").click();
       cy.url()
         .should("eql", "http://localhost:8080/notes")
