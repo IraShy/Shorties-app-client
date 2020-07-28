@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Dropdown from "../shared/Dropdown";
 import Input from "../shared/Input";
 import Joi from "joi-browser";
+import Categories from '../components/Categories';
 
 class Validation extends Component {
   state = {
@@ -9,6 +10,7 @@ class Validation extends Component {
     categories: [],
     errors: {},
   };
+
 
   onInputChange = (event) => {
     let note;
@@ -31,9 +33,10 @@ class Validation extends Component {
     this.setState({ note, errors });
   };
 
-  validateNote = (note) => {
+  validateNote = (note) => {  
     const options = { abortEarly: true };
     const { error } = Joi.validate(note, this.schema, options);
+   
     if (!error) return null;
 
     const errors = {};
@@ -41,9 +44,16 @@ class Validation extends Component {
     return errors;
   };
 
+  // categoriesUpdated = (updatedCategories) => {
+  //   const {note} = this.state;
+  //   this.setState({ categories: updatedCategories });
+  //   this.validateNote(note);
+  // };
+
+
   renderDropdown(selected) {
     const { errors } = this.state;
-
+    
     return (
       <Dropdown
         selected={selected}
@@ -69,7 +79,16 @@ class Validation extends Component {
 
   renderButton(label) {
     return (
-      <button disabled={this.validateNote()} className="btn btn-primary">
+      <button disabled={this.state.errors} className="btn btn-primary">
+        {label}
+      </button>
+    );
+  }
+
+  renderButtonEdit(label) {
+    const{note} = this.state;
+    return (
+      <button disabled={this.validateNote(note)} className="btn btn-primary">
         {label}
       </button>
     );
@@ -105,6 +124,7 @@ class Validation extends Component {
       </button>
     );
   }
+ 
 }
 
 export default Validation;

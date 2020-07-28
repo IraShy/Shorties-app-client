@@ -34,7 +34,18 @@ class AddNote extends Validation {
   };
 
   categoriesUpdated = (updatedCategories) => {
-    this.setState({ categories: updatedCategories });
+    const {note} = this.state;
+    const updatedNote = {
+      ...note,
+      categories: updatedCategories
+    };
+    const errors = this.validateNote(updatedNote);
+
+        this.setState({ 
+          categories: updatedCategories,
+          errors
+           });
+
   };
 
   render() {

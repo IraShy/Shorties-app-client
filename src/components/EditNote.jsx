@@ -101,9 +101,9 @@ class EditNote extends Validation {
             <h5 className="card-title">Image </h5>
             <img src={note.picture} alt="" width="300px" />
             {this.renderPicture()}
-
             {this.renderMarked()}
-            {this.renderButton("Submit")}
+            {this.renderButtonEdit("Submit")}
+            
           </form>
         </div>
       )
