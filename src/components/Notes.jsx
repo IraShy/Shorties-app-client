@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 import { Context } from "../context/Context";
 import Pagination from "../shared/Pagination";
 import { paginate } from "../shared/paginate";
+import moment from "moment";
+
 
 class Notes extends Component {
   static contextType = Context;
 
   state = {
-    pageSize: 4,
+    pageSize: 2,
     currentPage: 1,
   };
 
@@ -24,28 +26,47 @@ class Notes extends Component {
   };
 
   renderNotes = (notes) => {
-    const UncompletedNotes = notes.filter((n) => n.completed === false);
+    const uncompletedNotes = notes.filter((n) => n.completed === false);
+    let sorted = uncompletedNotes.sort(
+      (a, b) =>
+        new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
+    );
 
     const { pageSize, currentPage } = this.state;
-    const notesList = paginate(UncompletedNotes, currentPage, pageSize);
+    const notesList = paginate(sorted, currentPage, pageSize);
     return notesList.map((note, index) => {
       return (
         <div key={index}>
-          <h1>{note.title}</h1>
-          <p>{note.body}</p>
-          <img src={note.picture} alt="" />
-          <Link
-            to={{
-              pathname: `/notes/${note.id}`,
-              state: note,
-            }}
-          >
-            <button>View note</button>
-          </Link>
-          {this.renderShareButton(note)}
-          <button onClick={() => this.deleteNote(note.id)}>Delete</button>
-
-          <hr />
+          <h2 id="note_title">{note.title}</h2>
+          <img src={note.picture} alt="" id="note_image" />
+          <p className="card-text">
+            <small className="text-muted">
+              Updated {moment(note.updated_at).startOf("minute").fromNow()}
+            </small>
+          </p>
+          <div className="note_buttons">
+            <button
+              className="btn btn-outline-secondary mr-2 "
+              onClick={this.props.history.goBack}
+            >
+              {"<<"}
+            </button>
+            <Link
+              to={{
+                pathname: `/notes/${note.id}`,
+                state: note,
+              }}
+            >
+              <button className="btn btn-outline-info mr-2">View</button>
+            </Link>
+            {this.renderShareButton(note)}
+            <button
+              className="btn btn-outline-danger"
+              onClick={() => this.deleteNote(note.id)}
+            >
+              Delete
+            </button>
+          </div>
         </div>
       );
     });
@@ -107,19 +128,14 @@ class Notes extends Component {
       student_ids: student_ids,
     };
 
-    
-    await fetch(
-      `${process.env.REACT_APP_BACKEND_URL}/notes/shared_note`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-                  'Content-Type': 'application/json'
-
-        },
-        body: JSON.stringify(body),
-      }
-    );
+    await fetch(`${process.env.REACT_APP_BACKEND_URL}/notes/shared_note`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
   };
 
   renderShareButton = (note) => {
@@ -145,6 +161,7 @@ class Notes extends Component {
     const { notes, search } = this.context;
     const { pageSize, currentPage } = this.state;
     const uncompletedNotes = notes.filter((n) => n.completed === false);
+
     if (notes) {
       let filteredNotes = [
         ...new Set(
@@ -162,7 +179,9 @@ class Notes extends Component {
 
       return (
         <React.Fragment>
-          {this.renderNotes(filteredNotes)}
+          <div className="container" id="note_container">
+            {this.renderNotes(filteredNotes)}
+          </div>
           <Pagination
             itemsCount={uncompletedNotes.length}
             pageSize={pageSize}
@@ -170,12 +189,12 @@ class Notes extends Component {
             onPageChange={this.handlePageChange}
           />
 
+          {/* <button onClick={this.renderCompletedNotes(filteredNotes)}>Completed Notes</button> */}
+
           {/* <div className="completed-section">
             <h3>Completed Notes => </h3>
             {this.renderCompletedNotes(filteredNotes)}
           </div> */}
-
-         
         </React.Fragment>
       );
     } else {

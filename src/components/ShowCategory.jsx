@@ -36,31 +36,38 @@ class ShowCategory extends Component {
     });
 
     this.context.dispatchUser("delete", id);
+    this.getNotes();
   };
 
   renderNotes = (notes) => {
-    const UncompletedNotes = notes.filter((n) => n.completed === false);
+    const uncompletedNotes = notes.filter((n) => n.completed === false);
 
     const { pageSize, currentPage } = this.state;
-    const notesList = paginate(UncompletedNotes, currentPage, pageSize);
+    const notesList = paginate(uncompletedNotes, currentPage, pageSize);
     return notesList.map((note, index) => {
       return (
         <div key={index}>
-          <h3>{note.title}</h3>
-          <p>{note.body}</p>
-          <img src={note.picture} alt="" />
+          <h2 id="note_title">{note.title}</h2>
+          <img src={note.picture} alt="" id="note_image" />
+          <div className="note_buttons mt-3">
+            <button
+              className="btn btn-outline-secondary mr-2 "
+              onClick={this.props.history.goBack}
+            >
+              {"<<"}
+            </button>
           <Link
             to={{
               pathname: `/notes/${note.id}`,
               state: note,
             }}
           >
-            <button>View note</button>
+            <button className="btn btn-outline-info mr-2">View</button>
           </Link>
 
-          <button onClick={() => this.deleteNote(note.id)}>Delete</button>
+          <button  className="btn btn-outline-danger" onClick={() => this.deleteNote(note.id)}>Delete</button>
 
-          <hr />
+          </div>
         </div>
       );
     });
@@ -133,7 +140,9 @@ class ShowCategory extends Component {
             </button>
           </div>
           <hr />
+          <div className="container" id="note_container">
           {this.renderNotes(filteredNotes)}
+          </div>
           <Pagination
             itemsCount={uncompletedNotes.length}
             pageSize={pageSize}

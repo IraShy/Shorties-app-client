@@ -1,18 +1,29 @@
 @import "custom";
-@import 'ShowCohort.scss';
+@import "ShowCohort.scss";
+@import "Notes.scss";
 
+
+
+
+
+#signup_buttons{
+  display: flex;
+  justify-content: space-between;
+}
+
+#login_button{
+   display: flex;
+   justify-content: flex-end;
+}
 
 // .dropdown-toggle::after {
 //     display:none;
 // }
 
-.completed-section{
-  background-color: rgba(216, 208, 208, 0.925);
-}
 
-h1.title {
-  padding: 10px;
-  color: rgb(70,142,175);
-  text-align: center;
-  
-}
+
+// h1.title {
+//   padding: 10px;
+//   color: rgb(70, 142, 175);
+//   text-align: center;
+// }

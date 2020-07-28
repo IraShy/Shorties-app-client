@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Dropdown from "../shared/Dropdown";
 import Input from "../shared/Input";
 import Joi from "joi-browser";
-import Categories from '../components/Categories';
+import { Link } from "react-router-dom";
 
 class Validation extends Component {
   state = {
@@ -10,7 +10,6 @@ class Validation extends Component {
     categories: [],
     errors: {},
   };
-
 
   onInputChange = (event) => {
     let note;
@@ -33,10 +32,10 @@ class Validation extends Component {
     this.setState({ note, errors });
   };
 
-  validateNote = (note) => {  
+  validateNote = (note) => {
     const options = { abortEarly: true };
     const { error } = Joi.validate(note, this.schema, options);
-   
+
     if (!error) return null;
 
     const errors = {};
@@ -44,16 +43,9 @@ class Validation extends Component {
     return errors;
   };
 
-  // categoriesUpdated = (updatedCategories) => {
-  //   const {note} = this.state;
-  //   this.setState({ categories: updatedCategories });
-  //   this.validateNote(note);
-  // };
-
-
   renderDropdown(selected) {
     const { errors } = this.state;
-    
+
     return (
       <Dropdown
         selected={selected}
@@ -79,16 +71,18 @@ class Validation extends Component {
 
   renderButton(label) {
     return (
-      <button disabled={this.state.errors} className="btn btn-primary">
-        {label}
-      </button>
+      <div className="form-group col-md-6" id="addnote_button">
+        <button disabled={this.state.errors} className="btn btn-primary">
+          {label}
+        </button>
+      </div>
     );
   }
 
   renderButtonEdit(label) {
-    const{note} = this.state;
+    const { note } = this.state;
     return (
-      <button disabled={this.validateNote(note)} className="btn btn-primary">
+      <button disabled={this.validateNote(note)} className="btn btn-info">
         {label}
       </button>
     );
@@ -111,7 +105,7 @@ class Validation extends Component {
     return (
       <button
         type="text"
-        className="btn btn-danger mt-3 ml-1"
+        className="btn btn-primary"
         htmlFor="completed"
         onClick={(e) => {
           e.preventDefault();
@@ -124,7 +118,26 @@ class Validation extends Component {
       </button>
     );
   }
- 
+
+  renderBack = () => {
+    return (
+      <button
+        className="btn btn-outline-secondary mr-2 "
+        onClick={this.props.history.goBack}
+        id="add_back_button"
+      >
+        {"<<"}
+      </button>
+    );
+  };
+
+  renderBackEdit = () => {
+    return (
+      <Link to={`/notes`}>
+        <button className="btn btn-outline-secondary mr-2 ">{"<<"}</button>
+      </Link>
+    );
+  };
 }
 
 export default Validation;

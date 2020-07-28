@@ -1,11 +1,13 @@
 
-
-
 /* make the customizations */
 $theme-colors: (
-    "info": tomato,
-    "danger": teal,
-    "primary": rgb(241, 166, 79)
+    "info": rgb(79, 90, 241),
+    "danger": rgb(141, 33, 136),
+    "primary": rgb(241, 142, 28),
+    "warning": rgb(114, 212, 114),
+    "secondary": #cfc7c7,
+    "success": rgb(141, 191, 219),
+    "link": rgb(77, 172, 77),
 );
 
 /* import bootstrap to set changes */

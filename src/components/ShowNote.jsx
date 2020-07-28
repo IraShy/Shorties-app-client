@@ -8,7 +8,11 @@ class ShowNote extends Component {
 
   renderCategories = (categories) => {
     return categories.map((c, index) => {
-      return <div key={index}>{c.name}</div>;
+      return (
+        <span key={index} id="show_note_categories">
+          {c.name}
+        </span>
+      );
     });
   };
 
@@ -25,37 +29,50 @@ class ShowNote extends Component {
     }
 
     return (
-      <React.Fragment>
-        <div className="card mb-3">
+      <div className="shownote_container">
+        <div className="card ">
           <div className="card-body">
-            <h5 className="card-title">Title </h5>
-            <p>{note.title}</p>
-            <h5 className="card-title">Image </h5>
-            <div>{this.renderPic(note)}</div>
-            <h5 className="card-title">Description</h5>
-            <p>{note.body}</p>
-            <h5 className="card-title">Categories: </h5>
-            {this.renderCategories(categories)}
-
-            <p className="card-text">
-              <small className="text-muted">
-                Created {moment(note.created_at).startOf("minute").fromNow()}
-              </small>
-            </p>
+            <h5 className="card-text">
+              <span>Title: </span> {note.title}{" "}
+            </h5>
+            <h5 className="card-text">
+              <span>Description: </span>
+              {note.body}
+            </h5>
+            <h5 className="card-text">
+              <span>Categories: </span>
+              {this.renderCategories(categories)}
+            </h5>
           </div>
-
-          <Link
-            to={{
-              pathname: `/notes/${note.id}/edit`,
-              state: note,
-            }}
-          >
-            <button type="button" className="btn btn-info m-2">
-              Edit
+          <img src={note.picture} className="card-img-top" alt="" />
+          <p className="card-text">
+            <small className="text-muted">
+              Updated {moment(note.updated_at).startOf("minute").fromNow()}
+              <small className="text-muted"></small>
+              Created {moment(note.created_at).startOf("minute").fromNow()}
+            </small>
+          </p>
+          <div className="shownote_buttons">
+            <button
+              className="btn btn-outline-secondary ml-2"
+              onClick={this.props.history.goBack}
+              id="back_button"
+            >
+              {"<<"}
             </button>
-          </Link>
+            <Link
+              to={{
+                pathname: `/notes/${note.id}/edit`,
+                state: note,
+              }}
+            >
+              <button type="button" className="btn btn-success">
+                Edit
+              </button>
+            </Link>
+          </div>
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }

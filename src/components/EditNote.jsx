@@ -95,15 +95,17 @@ class EditNote extends Validation {
           <form encType="multipart/form-data" onSubmit={this.onFormSubmit}>
             {this.renderInput("title", "Title")}
             {this.renderDropdown(selected)}
-            {this.renderInput("body", "Description")}
+            {this.renderInput("body", "Description", "textarea")}
 
-
-            <h5 className="card-title">Image </h5>
-            <img src={note.picture} alt="" width="300px" />
+            <div className="form-group col-md-6" id="image_container">
+            <img src={note.picture} alt=""  className="edit_image"/></div>
             {this.renderPicture()}
-            {this.renderMarked()}
-            {this.renderButtonEdit("Submit")}
             
+            <div className="form-group col-md-6" id="edit_buttons">
+            {this.renderBackEdit()}
+            {this.renderMarked()}
+            {this.renderButtonEdit("submit")}
+            </div>
           </form>
         </div>
       )
