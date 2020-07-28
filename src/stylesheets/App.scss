@@ -1,159 +1,29 @@
 @import "custom";
 @import "ShowCohort.scss";
+@import "Notes.scss";
+
+
+
+
+
+#signup_buttons{
+  display: flex;
+  justify-content: space-between;
+}
+
+#login_button{
+   display: flex;
+   justify-content: flex-end;
+}
 
 // .dropdown-toggle::after {
 //     display:none;
 // }
 
-.completed-section {
-  background-color: rgba(216, 208, 208, 0.925);
-}
-
-//Shownote
-.shownote_container {
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
-
-  text-align: left;
- .card-img-top{
-   width:400px;
- }
-
-  .shownote_buttons {
-    display: flex;
-    justify-content: space-between;
-
-    #back_button{
-      height: 40px;
-    }
-  }
-
-  span {
-    color: grey;
-    font-size: medium;
-    margin-right: 15px;
-  }
-  #show_note_categories {
-    color: black;
-  }
-
-  .card-text {
-    text-align: justify;
-    font-size: 20px;
-  }
-
-  .text-muted {
-    display: flex;
-    flex-direction: column;
-    margin-top: 5px;
-    font-size: 13px;
-    text-align: center;
-  }
-  a {
-    display: flex;
-    justify-content: flex-end;
-    margin-right: 20px;
-    button {
-      margin-bottom: 10px;
-    }
-  }
-}
-
-// EditNote
-
-#image_container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-  margin-top: 20px;
-
-  .edit_image {
-    width: 300px;
-  }
-}
-
-#edit_buttons {
-  display: flex;
-  justify-content: space-between;
-}
-
-#picture {
-  color: rgb(41, 55, 139);
-  height: 45px;
-  text-align: center;
-}
-
-#file-upload-button {
-  background-color: pink;
-}
-
-#category_note {
-  font-size: 13px;
-  text-align: center;
-}
-
-#input_label {
-  font-weight: 300;
-}
-
-.addnote_buttons{
-  display:flex;
-  justify-content: space-between;
- 
-}
-
- #add_back_button{
-    height: 40px;
-    margin-left: 15px;
-  }
-
-#addnote_title {
-  margin: 20px;
-}
-#addnote_button {
-  display: flex;
-  justify-content: flex-end;
-}
-
-// notes
-
-#note_container {
-  display: flex;
-  flex-direction: column;
-  justify-items: center;
-  align-items: center;
-  margin: 10px;
-  margin-bottom: 30px;
-}
-
-#note_image {
-  width: 250px;
-}
-
-.note_buttons {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 15px;
-}
-
-#note_title {
-  margin: 10px 0px;
-}
 
 
-
-.pagination_container {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  margin-left: 90px;
-  margin-bottom: 50px;
-}
-
-h1.title {
-  padding: 10px;
-  color: rgb(70, 142, 175);
-  text-align: center;
-}
+// h1.title {
+//   padding: 10px;
+//   color: rgb(70, 142, 175);
+//   text-align: center;
+// }

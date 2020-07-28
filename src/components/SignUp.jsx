@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import Recaptcha from "../shared/ReCaptcha";
+import Input from "../shared/Input";
 
 class SignUp extends Component {
   state = { email: "", password: "", username: "", recaptchaToken: null };
 
-
-  onRecaptchaVerify = recaptchaToken => this.setState({recaptchaToken})
+  onRecaptchaVerify = (recaptchaToken) => this.setState({ recaptchaToken });
 
   onInputChange = (event) => {
     const key = event.target.id;
@@ -61,10 +61,9 @@ class SignUp extends Component {
     const { email, password, username } = this.state;
     return (
       <div className="container">
-        <h1>Sign Up</h1>
+        <h1 className="ml-4 mt-5">Sign Up</h1>
         <form onSubmit={this.onFormSubmit}>
-          <label htmlFor="username">Username</label>
-          <input
+          <Input
             type="username"
             name="username"
             id="username"
@@ -72,8 +71,7 @@ class SignUp extends Component {
             onChange={this.onInputChange}
             data-testid="username"
           />
-          <label htmlFor="email">Email</label>
-          <input
+          <Input
             type="email"
             name="email"
             id="email"
@@ -81,8 +79,7 @@ class SignUp extends Component {
             onChange={this.onInputChange}
             data-testid="email"
           />
-          <label htmlFor="password">Password</label>
-          <input
+          <Input
             type="password"
             name="password"
             id="password"
@@ -90,8 +87,43 @@ class SignUp extends Component {
             onChange={this.onInputChange}
             data-testid="password"
           />
-          <input type="submit" value="Submit" data-testid="signup-submit" />
-          <Recaptcha onRecaptchaVerify={this.onRecaptchaVerify} />
+
+          {/* <label htmlFor="username">Username</label>
+          <input
+            type="username"
+            name="username"
+            id="username"
+            value={username}
+            onChange={this.onInputChange}
+            data-testid="username"
+          /> */}
+          {/* <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            value={email}
+            onChange={this.onInputChange}
+            data-testid="email"
+          /> */}
+          {/* <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            value={password}
+            onChange={this.onInputChange}
+            data-testid="password"
+          /> */}
+          <div className="form-group col-md-6" id="signup_buttons">
+            <Recaptcha onRecaptchaVerify={this.onRecaptchaVerify} />
+            <input
+              className=" btn btn-info"
+              type="submit"
+              value="Submit"
+              data-testid="signup-submit"
+            />
+          </div>
         </form>
       </div>
     );
