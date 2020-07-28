@@ -71,11 +71,9 @@ class Validation extends Component {
 
   renderButton(label) {
     return (
-      <div className="form-group col-md-6" id="addnote_button">
-        <button disabled={this.state.errors} className="btn btn-primary">
-          {label}
-        </button>
-      </div>
+      <button disabled={this.state.errors} className="btn btn-primary">
+        {label}
+      </button>
     );
   }
 
@@ -122,7 +120,7 @@ class Validation extends Component {
   renderBack = () => {
     return (
       <button
-        className="btn btn-outline-secondary mr-2 "
+        className="btn btn-outline-secondary mt-2 "
         onClick={this.props.history.goBack}
         id="add_back_button"
       >

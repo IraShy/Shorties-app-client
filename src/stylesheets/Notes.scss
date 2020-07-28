@@ -90,7 +90,7 @@
   font-weight: 300;
 }
 
-.addnote_buttons{
+#addnote_buttons{
   display:flex;
   justify-content: space-between;
  
@@ -98,7 +98,6 @@
 
  #add_back_button{
     height: 40px;
-    margin-left: 15px;
   }
 
 #addnote_title {
@@ -121,7 +120,7 @@
 }
 
 #note_image {
-  width: 250px;
+  width: 280px;
 }
 
 .note_buttons {
@@ -141,6 +140,7 @@
   left: 0;
   bottom: 0;
   right: 0;
-  margin-left: 90px;
-  margin-bottom: 50px;
+  margin-left: 40px;
+
+ 
 }

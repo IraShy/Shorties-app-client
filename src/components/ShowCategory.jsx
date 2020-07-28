@@ -39,6 +39,60 @@ class ShowCategory extends Component {
     this.getNotes();
   };
 
+   getCohortStudents = async () => {
+    const { currentUser, users } = this.context;
+    let user = users.find((i) => i.email === currentUser.user);
+    const response = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/cohorts/${user.id}/cohorts_students`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    const { all_students } = await response.json();
+
+    this.context.dispatchUser("populateCohortStudents", all_students);
+  };
+
+  handleShare = async (note) => {
+    const id = note.id;
+    const { cohortStudents } = this.context;
+    let student_ids = cohortStudents.map((i) => i.id);
+    console.log(student_ids);
+    const body = {
+      note_id: id,
+      student_ids: student_ids,
+    };
+
+    await fetch(`${process.env.REACT_APP_BACKEND_URL}/notes/shared_note`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+  };
+
+  renderShareButton = (note) => {
+    const { cohortStudents } = this.context;
+    if (cohortStudents) {
+      return (
+        <button
+          className="btn btn-outline-primary mr-2"
+          onClick={() => {
+            this.handleShare(note);
+          }}
+        >
+          Share
+        </button>
+      );
+    }
+  };
+
+
+
   renderNotes = (notes) => {
     const uncompletedNotes = notes.filter((n) => n.completed === false);
 
@@ -56,17 +110,22 @@ class ShowCategory extends Component {
             >
               {"<<"}
             </button>
-          <Link
-            to={{
-              pathname: `/notes/${note.id}`,
-              state: note,
-            }}
-          >
-            <button className="btn btn-outline-info mr-2">View</button>
-          </Link>
+            <Link
+              to={{
+                pathname: `/notes/${note.id}`,
+                state: note,
+              }}
+            >
+              <button className="btn btn-outline-info mr-2">View</button>
+            </Link>
+            {this.renderShareButton(note)}
 
-          <button  className="btn btn-outline-danger" onClick={() => this.deleteNote(note.id)}>Delete</button>
-
+            <button
+              className="btn btn-outline-danger"
+              onClick={() => this.deleteNote(note.id)}
+            >
+              Delete
+            </button>
           </div>
         </div>
       );
@@ -105,9 +164,11 @@ class ShowCategory extends Component {
   async componentDidMount() {
     const categoryId = this.props.location.state.id;
     this.getNotes(categoryId);
+    this.getCohortStudents();
   }
 
   render() {
+    console.log(this.context);
     const { id } = this.props.location.state;
     const category = this.context.categories.find(
       (category) => category.id === id
@@ -141,7 +202,7 @@ class ShowCategory extends Component {
           </div>
           <hr />
           <div className="container" id="note_container">
-          {this.renderNotes(filteredNotes)}
+            {this.renderNotes(filteredNotes)}
           </div>
           <Pagination
             itemsCount={uncompletedNotes.length}

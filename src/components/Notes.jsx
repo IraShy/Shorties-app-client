@@ -142,7 +142,7 @@ class Notes extends Component {
     const { cohortStudents } = this.context;
     if (cohortStudents) {
       return (
-        <button
+        <button className="btn btn-outline-primary mr-2"
           onClick={() => {
             this.handleShare(note);
           }}

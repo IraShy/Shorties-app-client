@@ -44,7 +44,7 @@ describe("signing up as user", () => {
     cy.findByTestId("signup").click();
     cy.typeInLoginCredentials(username, email, password);
     cy.findByTestId("signup-submit").click();
-    cy.url().should("eq", "http://localhost:8080/");
+    cy.url().should("eq", "http://localhost:8080/signup");
     // cy.findByTestId("no-bookmarks", {timeout: 500}).should("exist")
   });
 });

@@ -38,7 +38,7 @@ class Login extends Component {
         this.props.history.push("/notes");
       }
     } catch (err) {
-      console.log(err);
+      console.log(err)
       this.setState({
         errMessage: err.message,
       });
@@ -63,6 +63,7 @@ class Login extends Component {
             value={email}
             onChange={this.onInputChange}
             data-testid="email"
+            
           />
           <Input
             type="password"
@@ -72,24 +73,6 @@ class Login extends Component {
             onChange={this.onInputChange}
             data-testid="password"
           />
-          {/* <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            value={email}
-            onChange={this.onInputChange}
-            data-testid="email"
-          /> */}
-          {/* <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            value={password}
-            onChange={this.onInputChange}
-            data-testid="password"
-          /> */}
           <div className="form-group col-md-6" id="login_button">
           <input className="btn btn-info" type="submit" value="Submit" data-testid="login-submit" /></div>
         </form>

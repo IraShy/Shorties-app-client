@@ -87,34 +87,7 @@ class SignUp extends Component {
             onChange={this.onInputChange}
             data-testid="password"
           />
-
-          {/* <label htmlFor="username">Username</label>
-          <input
-            type="username"
-            name="username"
-            id="username"
-            value={username}
-            onChange={this.onInputChange}
-            data-testid="username"
-          /> */}
-          {/* <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            value={email}
-            onChange={this.onInputChange}
-            data-testid="email"
-          /> */}
-          {/* <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            value={password}
-            onChange={this.onInputChange}
-            data-testid="password"
-          /> */}
+          
           <div className="form-group col-md-6" id="signup_buttons">
             <Recaptcha onRecaptchaVerify={this.onRecaptchaVerify} />
             <input

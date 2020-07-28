@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { Context } from "../context/Context";
 
@@ -15,21 +15,22 @@ class ProtectedRoute extends Component {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    const {notes} = await response.json();
-    
+    const { notes } = await response.json();
+
     this.context.dispatchUser("populateNotes", { notes });
   };
 
   getCategories = async () => {
-    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/categories`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/categories`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
     const categories = await response.json();
     this.context.dispatchUser("populateCategories", { categories });
-    
-    
   };
 
   getUsers = async () => {
@@ -38,35 +39,33 @@ class ProtectedRoute extends Component {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    const {users} = await response.json();
-    
-    this.context.dispatchUser("populateUsers", { users });
-    
+    const { users } = await response.json();
 
-  };  
+    this.context.dispatchUser("populateUsers", { users });
+  };
 
   getCohorts = async () => {
-    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/cohorts`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-    const {cohorts} = await response.json();
-    
-    this.context.dispatchUser("populateCohorts", { cohorts });
-  };  
+    const response = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/cohorts`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    const { cohorts } = await response.json();
 
-  
-  
+    this.context.dispatchUser("populateCohorts", { cohorts });
+  };
 
   async componentDidMount() {
     try {
-       this.getNotes();
-       this.getCategories();
-       this.getUsers();
-       this.getCohorts();
-       
       
+        this.getNotes();
+        this.getCategories();
+        this.getUsers();
+        this.getCohorts();
+     
 
       const response = await fetch(
         `${process.env.REACT_APP_BACKEND_URL}/status`,
@@ -106,10 +105,7 @@ class ProtectedRoute extends Component {
     }
   }
 
- 
-
   render() {
-   
     const { loading, auth } = this.state;
     if (!loading && !auth) {
       return <Redirect to="/login" />;
@@ -128,4 +124,3 @@ class ProtectedRoute extends Component {
 }
 
 export default ProtectedRoute;
-
