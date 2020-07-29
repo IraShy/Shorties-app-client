@@ -4,6 +4,7 @@ import { Context } from "../context/Context";
 import Pagination from "../shared/Pagination";
 import { paginate } from "../shared/paginate";
 import moment from "moment";
+import ConfirmPopover from '../shared/ConfirmPopover';
 
 class Notes extends Component {
   static contextType = Context;
@@ -50,6 +51,8 @@ class Notes extends Component {
               </small>
             </p>
             <div className="note_buttons">
+              {this.renderShareButton(note)}
+
               <img
                 src={require("../assets/back.png")}
                 width="25"
@@ -86,7 +89,6 @@ class Notes extends Component {
                     : this.props.history.goBack
                 }
               />
-              {this.renderShareButton(note)}
             </div>
           </div>
         </div>
@@ -161,20 +163,15 @@ class Notes extends Component {
 
   renderShareButton = (note) => {
     const { cohortStudents } = this.context;
-    if (cohortStudents) {
-      return (
-        <button
-          className="btn btn-outline-primary btn-sm ml-2 "
-          id="share_button"
-          onClick={() => {
-            this.handleShare(note);
-          }}
-        >
-          share
-        </button>
-      );
+    if(cohortStudents) {
+      return <ConfirmPopover 
+        onCompleted={() => this.handleShare(note)} 
+          buttonText="share"
+          confirmText="Share with your students"
+          id="share_popover"
+        />
     }
-  };
+  }
 
   async componentDidMount() {
     await this.getCohortStudents();

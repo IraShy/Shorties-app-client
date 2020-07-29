@@ -118,23 +118,6 @@ class Validation extends Component {
     );
   }
 
-  renderMarked() {
-    
-    return (
-      <button
-        type="text"
-        className="btn btn-info"
-        htmlFor="completed"
-        onClick={() => 
-          this.setState({
-            note: { ...this.state.note, completed: true },
-          }) 
-        }
-      >
-        marked as completed
-      </button>
-    );
-  }
 
   renderBack = () => {
     return (
@@ -154,8 +137,8 @@ class Validation extends Component {
       <Link to={`/notes`}>
         <img
           src={require("../assets/back.png")}
-          width="35"
-          height="35"
+          width="40"
+          height="40"
           alt="icon"
           id="back_icon"
         />

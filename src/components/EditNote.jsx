@@ -2,7 +2,7 @@ import React from "react";
 import { Context } from "../context/Context";
 import Joi from "joi-browser";
 import Validation from "../shared/Validation";
-import CompletedButton from "../shared/CompletedButton";
+import ConfirmPopover from "../shared/ConfirmPopover";
 
 class EditNote extends Validation {
   static contextType = Context;
@@ -111,8 +111,11 @@ class EditNote extends Validation {
             {this.renderPicture()}
             <div className="form-group" id="edit_buttons">
               {this.renderBackEdit()}
-              {/* {this.renderMarked()} */}
-              <CompletedButton onCompleted={this.onCompleted} />
+              <ConfirmPopover
+                onCompleted={this.onCompleted}
+                confirmText="Don't need this note for now"
+                buttonText="marked as completed"
+              />
               {this.renderButtonEdit("submit")}
             </div>
           </form>
