@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Context } from "../context/Context";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import moment from "moment";
 
 class ShowNote extends Component {
@@ -21,6 +21,9 @@ class ShowNote extends Component {
   };
 
   render() {
+    if (!this.props.location.state) {
+      return <Redirect to="/notfound" />;
+    }
     const { id } = this.props.location.state;
     const note = this.context.notes.find((n) => n.id === id);
     const { categories } = note;
