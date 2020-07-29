@@ -21,12 +21,12 @@ class NavBar extends Component {
       this.context.dispatchUser("search", query);
       this.context.search = "";
       document.getElementById("searchInput").value = "";
-    } else {
-      alert("you forgot to enter your search");
-    }
+    } 
   };
 
   render() {
+    const path = window.location.pathname;
+    console.log(this.context)
     return (
       <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
         <Navbar.Brand href="/notes">
@@ -40,6 +40,7 @@ class NavBar extends Component {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
+            {path === "/notes" && (
             <Form inline className="m-2" onSubmit={this.handleSearchSubmit}>
               <FormControl
                 type="text"
@@ -60,7 +61,9 @@ class NavBar extends Component {
                   onClick={this.handleSearchSubmit}
                 />
               </Button>
-            </Form>
+            </Form> 
+            )
+  }
           </Nav>
 
           <Nav>
