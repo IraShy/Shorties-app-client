@@ -93,10 +93,10 @@ class ShowCohort extends Component {
     if (this.state.show) {
       return !this.state.students.length ? (
         <React.Fragment>
-          <h1 className="title">{cohort.name}</h1>
+          <h1 className="cohort-title">{cohort.name}</h1>
           <h5>Teacher: {this.findTeacher(cohort)}</h5>
           <h5>Students:</h5>
-          <p>This cohort has no students</p>
+          <p className="cohort-p">This cohort has no students</p>
           <div className="button-block">
             <Button
               variant="outline-info"
@@ -116,7 +116,7 @@ class ShowCohort extends Component {
         </React.Fragment>
       ) : (
         <React.Fragment>
-          <h1 className="title">{cohort.name}</h1>
+          <h1 className="cohort-title">{cohort.name}</h1>
           <div className="container">
             <hr />
             <h5 className="teacher">Teacher: {this.findTeacher(cohort)}</h5>
