@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Context } from "../context/Context";
 import Pagination from "../shared/Pagination";
 import { paginate } from "../shared/paginate";
+import moment from "moment";
 import "../stylesheets/ShowCategory.scss";
 
 class ShowCategory extends Component {
@@ -59,7 +60,7 @@ class ShowCategory extends Component {
     const id = note.id;
     const { cohortStudents } = this.context;
     let student_ids = cohortStudents.map((i) => i.id);
-    console.log(student_ids);
+   
     const body = {
       note_id: id,
       student_ids: student_ids,
@@ -80,52 +81,78 @@ class ShowCategory extends Component {
     if (cohortStudents) {
       return (
         <button
-          className="btn btn-outline-primary mr-2"
+          className="btn btn-outline-primary btn-sm ml-2"
+          id="share_button"
           onClick={() => {
             this.handleShare(note);
           }}
         >
-          Share
+          share
         </button>
       );
     }
   };
 
 
-
-  renderNotes = (notes) => {
+ renderNotes = (notes) => {
     const uncompletedNotes = notes.filter((n) => n.completed === false);
+    let sorted = uncompletedNotes.sort(
+      (a, b) =>
+        new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
+    );
 
     const { pageSize, currentPage } = this.state;
-    const notesList = paginate(uncompletedNotes, currentPage, pageSize);
+    const notesList = paginate(sorted, currentPage, pageSize);
     return notesList.map((note, index) => {
       return (
-        <div key={index}>
-          <h2 id="note_title">{note.title}</h2>
-          <img src={note.picture} alt="" id="note_image" />
-          <div className="note_buttons mt-3">
-            <button
-              className="btn btn-outline-secondary mr-2 "
-              onClick={this.props.history.goBack}
-            >
-              {"<<"}
-            </button>
-            <Link
-              to={{
-                pathname: `/notes/${note.id}`,
-                state: note,
-              }}
-            >
-              <button className="btn btn-outline-info mr-2">View</button>
-            </Link>
-            {this.renderShareButton(note)}
+        <div key={index} className="card border-secondary">
+          <div className="card-header" id="note_title">
+            {note.title}
+          </div>
 
-            <button
-              className="btn btn-outline-danger"
-              onClick={() => this.deleteNote(note.id)}
-            >
-              Delete
-            </button>
+          <p className="card-text ml-2 mt-2">{note.body}</p>
+          <img src={note.picture} alt="" id="note_image" />
+          <div className="note_card">
+            <p className="card-text">
+              <small className="text-muted">
+                Updated {moment(note.updated_at).startOf("minute").fromNow()}
+              </small>
+            </p>
+            <div className="note_buttons">
+              <img
+                src={require("../assets/back.png")}
+                width="25"
+                height="25"
+                alt="icon"
+                id="back_icon"
+                onClick={this.props.history.goBack}
+              />
+
+              <Link
+                to={{
+                  pathname: `/notes/${note.id}`,
+                  state: note,
+                }}
+              >
+                <img
+                  src={require("../assets/view.png")}
+                  width="25"
+                  height="25"
+                  alt="icon"
+                  id="view_note_icon"
+                />
+              </Link>
+
+              <img
+                src={require("../assets/delete.png")}
+                width="30"
+                height="30"
+                alt="icon"
+                id="delete_icon"
+                onClick={() => this.deleteNote(note.id)}
+              />
+              {this.renderShareButton(note)}
+            </div>
           </div>
         </div>
       );

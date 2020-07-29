@@ -71,7 +71,7 @@ class Validation extends Component {
 
   renderButton(label) {
     return (
-      <button disabled={this.state.errors} className="btn btn-primary">
+      <button disabled={this.state.errors} className="btn btn-warning">
         {label}
       </button>
     );
@@ -80,7 +80,7 @@ class Validation extends Component {
   renderButtonEdit(label) {
     const { note } = this.state;
     return (
-      <button disabled={this.validateNote(note)} className="btn btn-info">
+      <button disabled={this.validateNote(note)} className="btn btn-warning">
         {label}
       </button>
     );
@@ -103,7 +103,7 @@ class Validation extends Component {
     return (
       <button
         type="text"
-        className="btn btn-primary"
+        className="btn btn-info"
         htmlFor="completed"
         onClick={(e) => {
           e.preventDefault();
@@ -112,27 +112,34 @@ class Validation extends Component {
           });
         }}
       >
-        marked as Completed
+        marked as completed
       </button>
     );
   }
 
   renderBack = () => {
     return (
-      <button
-        className="btn btn-outline-secondary mt-2 "
+      <img
+        src={require("../assets/back.png")}
+        width="35"
+        height="35"
+        alt="icon"
+        id="back_icon"
         onClick={this.props.history.goBack}
-        id="add_back_button"
-      >
-        {"<<"}
-      </button>
+      />
     );
   };
 
   renderBackEdit = () => {
     return (
       <Link to={`/notes`}>
-        <button className="btn btn-outline-secondary mr-2 ">{"<<"}</button>
+        <img
+          src={require("../assets/back.png")}
+          width="35"
+          height="35"
+          alt="icon"
+          id="back_icon"
+        />
       </Link>
     );
   };
