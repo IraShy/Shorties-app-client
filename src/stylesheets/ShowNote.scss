@@ -1,0 +1,65 @@
+//showNote
+.shownote_container {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  margin: 20px;
+  margin-top: 50px;
+
+  text-align: left;
+  .shownote_pic {
+    display: flex;
+    justify-content: center;
+    .card-img-top {
+      width: 300px;
+    }
+  }
+
+  .shownote_buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 10px;
+    #back_icon {
+      margin-top: 10px;
+    }
+  }
+
+  span {
+    color: grey;
+    font-size: medium;
+    margin-right: 15px;
+  }
+  #show_note_categories {
+    color: black;
+  }
+
+  .card-text {
+    text-align: justify;
+    font-size: 20px;
+  }
+
+  .text-muted {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+    font-size: 13px;
+    text-align: center;
+  }
+  a {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 20px;
+    button {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .shownote_container {
+    .card {
+      width: 700px;
+      height: 300px;
+    }
+  }
+}

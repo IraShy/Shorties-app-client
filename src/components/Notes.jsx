@@ -197,7 +197,7 @@ class Notes extends Component {
 
       return (
         <React.Fragment>
-          <div className="container" id="note_container">
+          <div className="notes_container">
             {this.renderNotes(filteredNotes)}
           </div>
           <Pagination

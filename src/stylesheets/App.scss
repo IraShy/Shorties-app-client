@@ -1,9 +1,14 @@
 @import "custom";
 @import "ShowCohort.scss";
 @import "Notes.scss";
+@import "ShowNote.scss";
+@import "EditAddNote.scss";
 
 
 
+form{
+  width: 400px
+}
 
 
 #signup_buttons{

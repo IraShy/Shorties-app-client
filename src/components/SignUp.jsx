@@ -64,6 +64,7 @@ class SignUp extends Component {
         <h1 className="ml-4 mt-5">Sign Up</h1>
         <form onSubmit={this.onFormSubmit}>
           <Input
+            label="username"
             type="username"
             name="username"
             id="username"
@@ -72,6 +73,7 @@ class SignUp extends Component {
             data-testid="username"
           />
           <Input
+            label="email"
             type="email"
             name="email"
             id="email"
@@ -80,6 +82,7 @@ class SignUp extends Component {
             data-testid="email"
           />
           <Input
+            label="password"
             type="password"
             name="password"
             id="password"
@@ -87,8 +90,8 @@ class SignUp extends Component {
             onChange={this.onInputChange}
             data-testid="password"
           />
-          
-          <div className="form-group col-md-6" id="signup_buttons">
+
+          <div className="form-group" id="signup_buttons">
             <Recaptcha onRecaptchaVerify={this.onRecaptchaVerify} />
             <input
               className=" btn btn-info"

@@ -1,0 +1,61 @@
+
+// EditNote & addNote
+
+#image_container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  margin-top: 20px;
+
+  .edit_image {
+    width: 300px;
+  }
+}
+
+#edit_buttons {
+  display: flex;
+  justify-content: space-between;
+  #back_icon {
+    margin-top: 5px;
+  }
+}
+
+#picture {
+  color: rgb(41, 55, 139);
+  height: 45px;
+  text-align: center;
+}
+
+#category_note {
+  font-size: 13px;
+  text-align: center;
+}
+
+#input_label {
+  font-weight: 300;
+}
+
+#addnote_buttons {
+  display: flex;
+  justify-content: space-between;
+  #back_icon {
+    margin-top: 10px;
+  }
+}
+
+
+#addnote_button {
+  display: flex;
+  justify-content: flex-end;
+}
+
+
+
+.addnote_container, .editnote_container{
+    
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    
+    // margin: 0 auto;
+  }

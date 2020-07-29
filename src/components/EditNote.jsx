@@ -90,21 +90,22 @@ class EditNote extends Validation {
 
     return (
       !loading && (
-        <div className="container">
-          <h1 className="ml-3 mt-5 mb-3">Edit</h1>
+        <div className="editnote_container">
           <form encType="multipart/form-data" onSubmit={this.onFormSubmit}>
+            <h1 className="ml-1 mt-5 mb-3">Edit</h1>
             {this.renderInput("title", "Title")}
             {this.renderDropdown(selected)}
             {this.renderInput("body", "Description", "textarea")}
 
-            <div className="form-group col-md-6" id="image_container">
-            <img src={note.picture} alt=""  className="edit_image"/></div>
+            <div className="form-group" id="image_container">
+              <img src={note.picture} alt="" className="edit_image" />
+            </div>
             {this.renderPicture()}
-            
-            <div className="form-group col-md-6" id="edit_buttons">
-            {this.renderBackEdit()}
-            {this.renderMarked()}
-            {this.renderButtonEdit("submit")}
+
+            <div className="form-group" id="edit_buttons">
+              {this.renderBackEdit()}
+              {this.renderMarked()}
+              {this.renderButtonEdit("submit")}
             </div>
           </form>
         </div>
