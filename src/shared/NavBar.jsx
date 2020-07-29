@@ -34,7 +34,7 @@ class NavBar extends Component {
         variant="light"
         className="navbar_container"
       >
-        <Navbar.Brand href="/notes">
+        <Navbar.Brand href="/">
           <img
             src={require("../assets/note_taking.png")}
             width="40"
