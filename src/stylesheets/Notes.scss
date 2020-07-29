@@ -1,9 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Merienda&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap");
 
-.completed-section {
-  background-color: rgba(216, 208, 208, 0.925);
-}
 
 // notes
 .notes_container {
@@ -17,36 +14,34 @@
 }
 
 #popover-container {
-  padding:10px;
-  height:70px;
+  padding: 10px;
+  height: 70px;
   display: flex;
   align-content: center;
   font-family: "Raleway", sans-serif;
-  
 }
 
-#share_complete_buttons{
+#share_complete_buttons {
   font-size: 13px;
   margin-right: 10px;
   height: 30px;
   padding-top: 5px;
-  
 }
 
-.c_notes_link{
+.c_notes_link {
   text-decoration: none;
-   margin-top: 50px;
-    margin-left: 270px;
-    color: grey;
+  margin-top: 20px;
+  margin-left: 170px;
+  color: grey;
 }
-.c_notes_link:hover{
+.c_notes_link:hover {
   background-color: rgba(216, 208, 208, 0.26);
 }
 
 .card.border-secondary {
   padding: 0px 6px;
   padding-top: 10px;
-  width: 450px;
+  width: 350px;
 
   .card-header {
     background-color: rgba(107, 121, 223, 0.336);
@@ -84,7 +79,6 @@
 }
 
 #delete_icon:hover {
-  
   background-color: rgb(206, 62, 62);
   border-radius: 5px;
 }
@@ -122,9 +116,8 @@
     margin-bottom: 50px;
   }
 
-  .c_notes_link{
-   
+  .c_notes_link {
+    margin-top: 50px;
     margin-left: 480px;
-  
-}
+  }
 }

@@ -104,16 +104,17 @@ class CompletedNotes extends Component {
 
     return (
       <React.Fragment>
-        <div className="notes_container">
-          <h3 className="mt-5 mb-5">Completed Notes </h3>
+        <div className="notes_container ">
+          <h3 className="mb-2">Completed Notes </h3>
           {this.renderCompletedNotes(completedNotes)}
           <img
             src={require("../assets/back.png")}
-            width="55"
-            height="55"
+            width="35"
+            height="35"
             alt="icon"
             id="back_icon"
             onClick={this.props.history.goBack}
+            className="c_back_icon "
           />
         </div>
 
