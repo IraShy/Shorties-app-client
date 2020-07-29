@@ -110,7 +110,6 @@ class ProtectedRoute extends Component {
 
   render() {
     const { loading, auth } = this.state;
-    console.log(this.props)
     if (!loading && !auth) {
       return <Redirect to="/login" />;
     } else {
