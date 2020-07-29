@@ -26,7 +26,6 @@ class NavBar extends Component {
 
   render() {
     const path = window.location.pathname;
-    console.log(this.context)
     return (
       <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
         <Navbar.Brand href="/notes">
