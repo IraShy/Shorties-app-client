@@ -59,49 +59,52 @@ class ProtectedRoute extends Component {
   };
 
   async componentDidMount() {
-    try {
-      
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
         this.getNotes();
         this.getCategories();
         this.getUsers();
         this.getCohorts();
-     
 
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/status`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-      if (response.status >= 400) {
-        throw new Error("not authorized");
-      } else {
-        const { jwt } = await response.json();
-
-        const response_user = await fetch(
-          `${process.env.REACT_APP_BACKEND_URL}/status/user`,
+        const response = await fetch(
+          `${process.env.REACT_APP_BACKEND_URL}/status`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
           }
         );
-        const { user } = await response_user.json();
+        if (response.status >= 400) {
+          throw new Error("not authorized");
+        } else {
+          const { jwt } = await response.json();
 
-        localStorage.setItem("token", jwt);
-        this.context.dispatchUser("current user", { user });
+          const response_user = await fetch(
+            `${process.env.REACT_APP_BACKEND_URL}/status/user`,
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            }
+          );
 
+          const { user, is_teacher } = await response_user.json();
+          localStorage.setItem("token", jwt);
+
+          this.context.dispatchUser("current user", { user });
+          this.context.dispatchUser("is_teacher", is_teacher);
+
+          this.setState({
+            auth: true,
+            loading: false,
+          });
+        }
+      } catch (err) {
         this.setState({
-          auth: true,
           loading: false,
         });
       }
-    } catch (err) {
-      this.setState({
-        loading: false,
-      });
     }
   }
 
