@@ -1,29 +1,25 @@
 @import "custom";
 @import "ShowCohort.scss";
 @import "Notes.scss";
+@import "ShowNote.scss";
+@import "EditAddNote.scss";
+@import "NavBar.scss";
+@import "LoginSingup.scss";
 
 
 
 
 
-#signup_buttons{
+
+
+
+#signup_buttons {
   display: flex;
   justify-content: space-between;
 }
 
-#login_button{
-   display: flex;
-   justify-content: flex-end;
+#login_button {
+  display: flex;
+  justify-content: flex-end;
 }
 
-// .dropdown-toggle::after {
-//     display:none;
-// }
-
-
-
-// h1.title {
-//   padding: 10px;
-//   color: rgb(70, 142, 175);
-//   text-align: center;
-// }

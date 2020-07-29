@@ -228,7 +228,7 @@ class ShowCategory extends Component {
             </button>
           </div>
           <hr />
-          <div className="container" id="note_container">
+          <div className="notes_container">
             {this.renderNotes(filteredNotes)}
           </div>
           <Pagination

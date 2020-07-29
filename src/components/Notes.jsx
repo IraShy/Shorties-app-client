@@ -39,8 +39,7 @@ class Notes extends Component {
           <div className="card-header" id="note_title">
             {note.title}
           </div>
-
-          <p className="card-text ml-2 mt-2">{note.body}</p>
+          <p className="card-text ml-2 mt-2" id="note_body">{note.body}</p>
           <img src={note.picture} alt="" id="note_image" />
           <div className="note_card">
             <p className="card-text">
@@ -159,7 +158,7 @@ class Notes extends Component {
     if (cohortStudents) {
       return (
         <button
-          className="btn btn-outline-primary btn-sm ml-2"
+          className="btn btn-outline-primary btn-sm ml-2 "
           id="share_button"
           onClick={() => {
             this.handleShare(note);
@@ -197,7 +196,7 @@ class Notes extends Component {
 
       return (
         <React.Fragment>
-          <div className="container" id="note_container">
+          <div className="notes_container">
             {this.renderNotes(filteredNotes)}
           </div>
           <Pagination

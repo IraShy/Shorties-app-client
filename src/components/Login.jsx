@@ -38,7 +38,7 @@ class Login extends Component {
         this.props.history.push("/notes");
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
       this.setState({
         errMessage: err.message,
       });
@@ -48,24 +48,25 @@ class Login extends Component {
   render() {
     const { email, password, errMessage } = this.state;
     return (
-      <div className="container">
-        <h1 className="ml-4 mt-5">Login</h1>
+      <div className="login_container">
+        <form onSubmit={this.onFormSubmit} id="login-form">
+        <h1 className="ml-1 mt-5 mb-3">Login</h1>
         {errMessage && (
           <span style={{ color: "red" }} data-testid="login-error">
             {errMessage}
           </span>
         )}
-        <form onSubmit={this.onFormSubmit} id="login-form">
           <Input
+            label="email"
             type="email"
             name="email"
             id="email"
             value={email}
             onChange={this.onInputChange}
             data-testid="email"
-            
           />
           <Input
+            label="password"
             type="password"
             name="password"
             id="password"
@@ -73,8 +74,14 @@ class Login extends Component {
             onChange={this.onInputChange}
             data-testid="password"
           />
-          <div className="form-group col-md-6" id="login_button">
-          <input className="btn btn-info" type="submit" value="Submit" data-testid="login-submit" /></div>
+          <div className="form-group" id="login_button">
+            <input
+              className="btn btn-info"
+              type="submit"
+              value="Submit"
+              data-testid="login-submit"
+            />
+          </div>
         </form>
       </div>
     );

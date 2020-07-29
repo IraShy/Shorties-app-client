@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Context } from "../context/Context";
-
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Form from "react-bootstrap/Form";
@@ -27,7 +26,7 @@ class NavBar extends Component {
   render() {
     const path = window.location.pathname;
     return (
-      <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
+      <Navbar collapseOnSelect expand="lg" bg="light" variant="light" className="navbar_container">
         <Navbar.Brand href="/notes">
           <img
             src={require("../assets/note_taking.png")}
@@ -73,8 +72,8 @@ class NavBar extends Component {
                 <Nav.Link href="/notes/create">
                   <img
                     src={require("../assets/add_note.png")}
-                    width="30"
-                    height="30"
+                    width="35"
+                    height="35"
                     alt="icon"
                   />
                 </Nav.Link>

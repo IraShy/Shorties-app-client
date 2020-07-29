@@ -1,0 +1,19 @@
+@import url("https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap");
+
+.navbar_container {
+  font-family: "Amatic SC", cursive;
+  font-size: 25px;
+  a {
+    margin-left: 10px;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .navbar_container {
+    font-size: 20px;
+  }
+  #searchInput {
+    width: 200px;
+    margin-right: 5px;
+  }
+}

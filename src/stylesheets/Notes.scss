@@ -1,129 +1,28 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Merienda&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap');
+
+
 .completed-section {
   background-color: rgba(216, 208, 208, 0.925);
 }
 
-//showNote
-.shownote_container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 10px;
-
-  text-align: left;
-  .shownote_pic {
-    display: flex;
-    justify-content: center;
-    .card-img-top {
-      width: 300px;
-    }
-  }
-
-  .shownote_buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-left: 10px;
-    #back_icon {
-      margin-top: 10px;
-    }
-  }
-
-  span {
-    color: grey;
-    font-size: medium;
-    margin-right: 15px;
-  }
-  #show_note_categories {
-    color: black;
-  }
-
-  .card-text {
-    text-align: justify;
-    font-size: 20px;
-  }
-
-  .text-muted {
-    display: flex;
-    flex-direction: column;
-    margin-top: 5px;
-    font-size: 13px;
-    text-align: center;
-  }
-  a {
-    display: flex;
-    justify-content: flex-end;
-    margin-right: 20px;
-    button {
-      margin-bottom: 10px;
-    }
-  }
-}
-
-// EditNote & addNote
-
-#image_container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-  margin-top: 20px;
-
-  .edit_image {
-    width: 300px;
-  }
-}
-
-#edit_buttons {
-  display: flex;
-  justify-content: space-between;
-  #back_icon {
-    margin-top: 5px;
-  }
-}
-
-#picture {
-  color: rgb(41, 55, 139);
-  height: 45px;
-  text-align: center;
-}
-
-#category_note {
-  font-size: 13px;
-  text-align: center;
-}
-
-#input_label {
-  font-weight: 300;
-}
-
-#addnote_buttons {
-  display: flex;
-  justify-content: space-between;
-  #back_icon {
-    margin-top: 5px;
-  }
-}
-
-#addnote_title {
-  margin: 20px;
-}
-#addnote_button {
-  display: flex;
-  justify-content: flex-end;
-}
-
 // notes
-
-#note_container {
+.notes_container {
   display: flex;
+
   flex-direction: column;
   justify-items: center;
   align-items: center;
-  margin: 10px;
-  margin-bottom: 30px;
+  margin: 20px;
+  margin-top: 30px;
+  font-family: 'Merienda', cursive;
 }
 
 .card.border-secondary {
   padding: 10px;
   width: 370px;
+
 
   .card-header {
     background-color: rgba(107, 121, 223, 0.336);
@@ -133,11 +32,16 @@
     display: flex;
     justify-content: space-around;
   }
+
+  #note_body{
+    font-family: 'Raleway', sans-serif;
+  }
 }
 
 #note_image {
   width: 70px;
   margin-left: 20px;
+  margin-bottom:10px;
 }
 
 .note_buttons {
@@ -148,6 +52,7 @@
 #back_icon {
   margin-right: 7px;
 }
+
 
 #view_note_icon:hover {
   background-color: rgba(156, 156, 214, 0.445);
@@ -164,10 +69,34 @@
   border-radius: 5px;
 }
 
+
 .pagination_container {
   position: absolute;
   left: 0;
   bottom: 0;
   right: 0;
   margin-left: 25px;
+}
+
+#share_button{
+  height: 30px;
+}
+
+@media screen and (min-width: 850px) {
+  .notes_container {
+    margin-top: 40px;
+    .card {
+      margin-bottom: 20px;
+    
+    }
+    .card.border-secondary {
+      width: 650px;
+    }
+  }
+
+  .pagination_container {
+    margin-left: 100px;
+    margin-bottom: 50px;
+  }
+
 }
