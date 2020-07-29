@@ -48,14 +48,14 @@ class Login extends Component {
   render() {
     const { email, password, errMessage } = this.state;
     return (
-      <div className="container">
-        <h1 className="ml-4 mt-5">Login</h1>
+      <div className="login_container">
+        <form onSubmit={this.onFormSubmit} id="login-form">
+        <h1 className="ml-1 mt-5 mb-3">Login</h1>
         {errMessage && (
           <span style={{ color: "red" }} data-testid="login-error">
             {errMessage}
           </span>
         )}
-        <form onSubmit={this.onFormSubmit} id="login-form">
           <Input
             label="email"
             type="email"

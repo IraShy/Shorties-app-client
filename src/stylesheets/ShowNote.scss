@@ -1,5 +1,6 @@
 //showNote
 .shownote_container {
+  font-family: "Raleway", sans-serif;
   display: flex;
   justify-content: center;
   align-content: center;
@@ -59,7 +60,6 @@
   .shownote_container {
     .card {
       width: 700px;
-      height: 300px;
     }
   }
 }

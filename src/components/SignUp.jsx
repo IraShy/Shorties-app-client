@@ -60,9 +60,9 @@ class SignUp extends Component {
   render() {
     const { email, password, username } = this.state;
     return (
-      <div className="container">
-        <h1 className="ml-4 mt-5">Sign Up</h1>
-        <form onSubmit={this.onFormSubmit}>
+      <div className="signup_container">
+        <form onSubmit={this.onFormSubmit} id="signup-form">
+        <h1 className="ml-1 mt-5 mb-3">Sign Up</h1>
           <Input
             label="username"
             type="username"
@@ -94,10 +94,11 @@ class SignUp extends Component {
           <div className="form-group" id="signup_buttons">
             <Recaptcha onRecaptchaVerify={this.onRecaptchaVerify} />
             <input
-              className=" btn btn-info"
+              className=" btn btn-info mt-3"
               type="submit"
               value="Submit"
               data-testid="signup-submit"
+              
             />
           </div>
         </form>

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
 import { loadReCaptcha } from "react-recaptcha-google";
-
 import NavBar from "../shared/NavBar";
 import { Context, dispatchUser } from "../context/Context";
 import Notes from "./Notes";

@@ -1,6 +1,11 @@
 
 // EditNote & addNote
 
+form {
+  width: 390px;
+}
+
+
 #image_container {
   display: flex;
   justify-content: center;
@@ -51,11 +56,10 @@
 
 
 
-.addnote_container, .editnote_container{
-    
+.addnote_container, .editnote_container{ 
+    font-family: 'Raleway', sans-serif;
     display: flex;
     justify-content: center;
     align-content: center;
-    
-    // margin: 0 auto;
+   
   }
