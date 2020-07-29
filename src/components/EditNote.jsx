@@ -30,7 +30,7 @@ class EditNote extends Validation {
     public_share: Joi.any(),
     created_at: Joi.any(),
     updated_at: Joi.any(),
-    jwt: Joi.any()
+    jwt: Joi.any(),
   });
 
   onFormSubmit = async (event) => {
@@ -96,13 +96,12 @@ class EditNote extends Validation {
             <h1 className="ml-1 mt-5 mb-3">Edit</h1>
             {this.renderInput("title", "Title")}
             {this.renderDropdown(selected)}
-            {this.renderInput("body", "Description", "textarea")}
+            {this.renderTextarea()}
 
             <div className="form-group" id="image_container">
               <img src={note.picture} alt="" className="edit_image" />
             </div>
             {this.renderPicture()}
-
             <div className="form-group" id="edit_buttons">
               {this.renderBackEdit()}
               {this.renderMarked()}

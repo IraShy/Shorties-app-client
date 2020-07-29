@@ -30,7 +30,7 @@ class Validation extends Component {
       categories: this.state.categories,
     });
     this.setState({ note, errors });
-    console.log(errors)
+    console.log(errors);
   };
 
   validateNote = (note) => {
@@ -100,6 +100,24 @@ class Validation extends Component {
       />
     );
   }
+
+  renderTextarea() {
+    const {note} = this.state;
+    return (
+      <div className="form-group">
+        <label htmlfor="textarea">Description </label>
+        <textarea
+          name="body"
+          onChange={this.onInputChange}
+          value={note.body}
+          class="form-control"
+          id="body"
+          rows="3"
+        ></textarea>
+      </div>
+    );
+  }
+
   renderMarked() {
     return (
       <button
