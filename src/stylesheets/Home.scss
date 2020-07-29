@@ -1,0 +1,62 @@
+@import "vars";
+
+body {
+  height: 100vh;
+
+  #root {
+    height: 80%;
+  }
+
+  span.code {
+    padding: 0.07em 0.15em;
+    border-radius: 2px;
+    border: 1px solid rgba(68, 70, 71, 0.781);
+  }
+  #code-2 {
+    margin-right: 0.8em;
+  }
+
+  h1.home {
+    text-align: center;
+    margin-top: 3rem;
+    margin-bottom: 1em;
+    font-weight: bold;
+    font-family: "Rock Salt", cursive;
+    color: rgba(107, 121, 223, 0.75);
+  }
+
+  .ext {
+    height: 100%;
+    .home-container {
+      height: 90%;
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+      margin-left: 0.5rem;
+      margin-right: 0.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      #home-span {
+        margin-bottom: 7em;
+      }
+
+      p {
+        font-family: "Open Sans", sans-serif;
+        justify-content: space-evenly;
+      }
+      p#question {
+        line-height: 1.8em;
+        text-align: center;
+        span.question {
+          font-family: "Annie Use Your Telescope", cursive;
+          font-size: 2em;
+        }
+      }
+
+      #first-in-home {
+        text-align: center;
+      }
+    }
+  }
+}
