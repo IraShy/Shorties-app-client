@@ -30,6 +30,7 @@ class EditNote extends Validation {
     public_share: Joi.any(),
     created_at: Joi.any(),
     updated_at: Joi.any(),
+    jwt: Joi.any()
   });
 
   onFormSubmit = async (event) => {
