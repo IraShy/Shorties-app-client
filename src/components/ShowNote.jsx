@@ -36,15 +36,16 @@ class ShowNote extends Component {
               <span>Title: </span> {note.title}{" "}
             </h5>
             <h5 className="card-text">
-              <span>Description: </span>
-              {note.body}
-            </h5>
-            <h5 className="card-text">
               <span>Categories: </span>
               {this.renderCategories(categories)}
             </h5>
+            <h5 className="card-text">
+              <span>Description: </span>
+              {note.body}
+            </h5>
           </div>
-          <img src={note.picture} className="card-img-top" alt="" />
+          <div className="shownote_pic">
+          <img src={note.picture} className="card-img-top" alt="" /></div>
           <p className="card-text">
             <small className="text-muted">
               Updated {moment(note.updated_at).startOf("minute").fromNow()}
@@ -53,21 +54,23 @@ class ShowNote extends Component {
             </small>
           </p>
           <div className="shownote_buttons">
-            <button
-              className="btn btn-outline-secondary ml-2"
-              onClick={this.props.history.goBack}
-              id="back_button"
-            >
-              {"<<"}
-            </button>
+            <img
+                src={require("../assets/back.png")}
+                width="25"
+                height="25"
+                alt="icon"
+                id="back_icon"
+                onClick={this.props.history.goBack}
+              />
+
             <Link
               to={{
                 pathname: `/notes/${note.id}/edit`,
                 state: note,
               }}
             >
-              <button type="button" className="btn btn-warning">
-                Edit
+              <button type="button" className="btn btn-info">
+                edit
               </button>
             </Link>
           </div>

@@ -59,7 +59,7 @@ class AddNote extends Validation {
           {this.renderPicture()}
           <div className="form-group col-md-6" id="addnote_buttons">
           {this.renderBack()}
-          {this.renderButton("Submit")}
+          {this.renderButton("submit")}
           </div>
         </form>
       </div>

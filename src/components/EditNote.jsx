@@ -91,7 +91,7 @@ class EditNote extends Validation {
     return (
       !loading && (
         <div className="container">
-          <h1>Edit</h1>
+          <h1 className="ml-3 mt-5 mb-3">Edit</h1>
           <form encType="multipart/form-data" onSubmit={this.onFormSubmit}>
             {this.renderInput("title", "Title")}
             {this.renderDropdown(selected)}
