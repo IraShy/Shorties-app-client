@@ -70,6 +70,9 @@ function dispatchUser(action, value) {
     case "current user":
       this.setState({ currentUser: value });
       break;
+    case "is_teacher":
+      this.setState({ isTeacher: value });
+      break;
     case "addCohort":
       this.setState((state) => {
         return {
@@ -103,6 +106,7 @@ const Context = React.createContext({
   cohortStudents: [],
   dispatchUser: () => {},
   currentUser: false,
+  isTeacher: false,
 });
 
 export { Context, dispatchUser };
