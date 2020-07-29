@@ -39,7 +39,6 @@ class Notes extends Component {
           <div className="card-header" id="note_title">
             {note.title}
           </div>
-
           <p className="card-text ml-2 mt-2" id="note_body">{note.body}</p>
           <img src={note.picture} alt="" id="note_image" />
           <div className="note_card">
