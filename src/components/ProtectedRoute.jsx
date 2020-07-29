@@ -88,10 +88,12 @@ class ProtectedRoute extends Component {
               },
             }
           );
-          const { user } = await response_user.json();
 
+          const { user, is_teacher } = await response_user.json();
           localStorage.setItem("token", jwt);
+
           this.context.dispatchUser("current user", { user });
+          this.context.dispatchUser("is_teacher", is_teacher);
 
           this.setState({
             auth: true,

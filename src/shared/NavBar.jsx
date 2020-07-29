@@ -21,7 +21,7 @@ class NavBar extends Component {
       this.context.dispatchUser("search", query);
       this.context.search = "";
       document.getElementById("searchInput").value = "";
-    } 
+    }
   };
 
   render() {
@@ -40,29 +40,28 @@ class NavBar extends Component {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
             {path === "/notes" && (
-            <Form inline className="m-2" onSubmit={this.handleSearchSubmit}>
-              <FormControl
-                type="text"
-                placeholder="Search"
-                className="mr-sm-2 "
-                id="searchInput"
-                onChange={(e) => {
-                  this.onSearchChange(e);
-                }}
-              />
-              <Button variant="outline-success">
-                <img
-                  src={require("../assets/search.png")}
-                  width="25"
-                  height="25"
-                  alt="icon"
-                  type="submit"
-                  onClick={this.handleSearchSubmit}
+              <Form inline className="m-2" onSubmit={this.handleSearchSubmit}>
+                <FormControl
+                  type="text"
+                  placeholder="Search"
+                  className="mr-sm-2 "
+                  id="searchInput"
+                  onChange={(e) => {
+                    this.onSearchChange(e);
+                  }}
                 />
-              </Button>
-            </Form> 
-            )
-  }
+                <Button variant="outline-success">
+                  <img
+                    src={require("../assets/search.png")}
+                    width="25"
+                    height="25"
+                    alt="icon"
+                    type="submit"
+                    onClick={this.handleSearchSubmit}
+                  />
+                </Button>
+              </Form>
+            )}
           </Nav>
 
           <Nav>
@@ -79,9 +78,11 @@ class NavBar extends Component {
                     alt="icon"
                   />
                 </Nav.Link>
-                <Nav.Link className="nav-item nav-link" href="/cohorts">
-                  Cohorts
-                </Nav.Link>
+                {this.context.isTeacher && (
+                  <Nav.Link className="nav-item nav-link" href="/cohorts">
+                    Cohorts
+                  </Nav.Link>
+                )}
                 <Nav.Link className="nav-item nav-link" href="/categories">
                   Categories
                 </Nav.Link>
@@ -98,7 +99,10 @@ class NavBar extends Component {
               </React.Fragment>
             ) : (
               <React.Fragment>
-                <Nav.Link href="/Login" data-testid="login"> Login</Nav.Link>
+                <Nav.Link href="/Login" data-testid="login">
+                  {" "}
+                  Login
+                </Nav.Link>
                 <Nav.Link eventKey={2} href="/signup" data-testid="signup">
                   Sign Up
                 </Nav.Link>
