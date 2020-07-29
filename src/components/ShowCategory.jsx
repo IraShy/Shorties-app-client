@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Context } from "../context/Context";
 import Pagination from "../shared/Pagination";
 import { paginate } from "../shared/paginate";
+import ConfirmPopover from "../shared/ConfirmPopover";
 import moment from "moment";
 import "../stylesheets/ShowCategory.scss";
 
@@ -40,7 +41,7 @@ class ShowCategory extends Component {
     this.getNotes();
   };
 
-   getCohortStudents = async () => {
+  getCohortStudents = async () => {
     const { currentUser, users } = this.context;
     let user = users.find((i) => i.email === currentUser.user);
     const response = await fetch(
@@ -60,7 +61,7 @@ class ShowCategory extends Component {
     const id = note.id;
     const { cohortStudents } = this.context;
     let student_ids = cohortStudents.map((i) => i.id);
-   
+
     const body = {
       note_id: id,
       student_ids: student_ids,
@@ -80,21 +81,21 @@ class ShowCategory extends Component {
     const { cohortStudents } = this.context;
     if (cohortStudents) {
       return (
-        <button
-          className="btn btn-outline-primary btn-sm ml-2"
-          id="share_button"
-          onClick={() => {
+        <ConfirmPopover
+          onCompleted={() => {
             this.handleShare(note);
+            this.forceUpdate();
+            alert("The note is shared with your students");
           }}
-        >
-          share
-        </button>
+          buttonText="share"
+          confirmText="Share with your students"
+          id="share_popover"
+        />
       );
     }
   };
 
-
- renderNotes = (notes) => {
+  renderNotes = (notes) => {
     const uncompletedNotes = notes.filter((n) => n.completed === false);
     let sorted = uncompletedNotes.sort(
       (a, b) =>
@@ -119,6 +120,7 @@ class ShowCategory extends Component {
               </small>
             </p>
             <div className="note_buttons">
+              {this.renderShareButton(note)}
               <img
                 src={require("../assets/back.png")}
                 width="25"
@@ -151,7 +153,6 @@ class ShowCategory extends Component {
                 id="delete_icon"
                 onClick={() => this.deleteNote(note.id)}
               />
-              {this.renderShareButton(note)}
             </div>
           </div>
         </div>

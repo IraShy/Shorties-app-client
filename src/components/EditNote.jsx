@@ -2,6 +2,7 @@ import React from "react";
 import { Context } from "../context/Context";
 import Joi from "joi-browser";
 import Validation from "../shared/Validation";
+import ConfirmPopover from "../shared/ConfirmPopover";
 
 class EditNote extends Validation {
   static contextType = Context;
@@ -30,7 +31,7 @@ class EditNote extends Validation {
     public_share: Joi.any(),
     created_at: Joi.any(),
     updated_at: Joi.any(),
-    jwt: Joi.any()
+    jwt: Joi.any(),
   });
 
   onFormSubmit = async (event) => {
@@ -84,6 +85,12 @@ class EditNote extends Validation {
     });
   };
 
+  onCompleted = () => {
+    this.setState({
+      note: { ...this.state.note, completed: true },
+    });
+  };
+
   render() {
     const { loading } = this.state.note;
     const { note } = this.state;
@@ -96,16 +103,19 @@ class EditNote extends Validation {
             <h1 className="ml-1 mt-5 mb-3">Edit</h1>
             {this.renderInput("title", "Title")}
             {this.renderDropdown(selected)}
-            {this.renderInput("body", "Description", "textarea")}
+            {this.renderTextarea()}
 
             <div className="form-group" id="image_container">
               <img src={note.picture} alt="" className="edit_image" />
             </div>
             {this.renderPicture()}
-
             <div className="form-group" id="edit_buttons">
               {this.renderBackEdit()}
-              {this.renderMarked()}
+              <ConfirmPopover
+                onCompleted={this.onCompleted}
+                confirmText="Don't need this note for now"
+                buttonText="marked as completed"
+              />
               {this.renderButtonEdit("submit")}
             </div>
           </form>

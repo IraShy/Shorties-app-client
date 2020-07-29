@@ -55,7 +55,7 @@ class AddNote extends Validation {
           <h3 className="mt-5 mb-4 ml-1">Add a new Note</h3>
           {this.renderInput("title", "Title")}
           {this.renderDropdown(selected)}
-          {this.renderInput("body", "Description")}
+          {this.renderTextarea()}
           {this.renderPicture()}
           <div className="form-group" id="addnote_buttons">
             {this.renderBack()}

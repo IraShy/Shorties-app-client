@@ -19,10 +19,10 @@ form {
 
 #edit_buttons {
   display: flex;
+  align-items: flex-end;
   justify-content: space-between;
-  #back_icon {
-    margin-top: 5px;
-  }
+  
+
 }
 
 #picture {

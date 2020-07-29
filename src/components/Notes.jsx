@@ -4,6 +4,8 @@ import { Context } from "../context/Context";
 import Pagination from "../shared/Pagination";
 import { paginate } from "../shared/paginate";
 import moment from "moment";
+import ConfirmPopover from "../shared/ConfirmPopover";
+
 
 class Notes extends Component {
   static contextType = Context;
@@ -39,7 +41,9 @@ class Notes extends Component {
           <div className="card-header" id="note_title">
             {note.title}
           </div>
-          <p className="card-text ml-2 mt-2" id="note_body">{note.body}</p>
+          <p className="card-text ml-2 mt-2" id="note_body">
+            {note.body}
+          </p>
           <img src={note.picture} alt="" id="note_image" />
           <div className="note_card">
             <p className="card-text">
@@ -48,6 +52,8 @@ class Notes extends Component {
               </small>
             </p>
             <div className="note_buttons">
+              {this.renderShareButton(note)}
+
               <img
                 src={require("../assets/back.png")}
                 width="25"
@@ -78,40 +84,17 @@ class Notes extends Component {
                 height="30"
                 alt="icon"
                 id="delete_icon"
-                onClick={() => this.deleteNote(note.id)}
+                onClick={() =>
+                  window.confirm("Are you sure?")
+                    ? this.deleteNote(note.id)
+                    : this.props.history.goBack
+                }
               />
-              {this.renderShareButton(note)}
             </div>
           </div>
         </div>
       );
     });
-  };
-
-  renderCompletedNotes = (notes) => {
-    return notes
-      .filter((n) => n.completed === true)
-      .map((note, index) => {
-        return (
-          <div key={index}>
-            <h1>{note.title}</h1>
-            <p>{note.body}</p>
-            <img src={note.picture} alt="" />
-            <Link
-              to={{
-                pathname: `/notes/${note.id}`,
-                state: note,
-              }}
-            >
-              <button>View note</button>
-            </Link>
-
-            <button onClick={() => this.deleteNote(note.id)}>Delete</button>
-
-            <hr />
-          </div>
-        );
-      });
   };
 
   handlePageChange = (page) => {
@@ -157,15 +140,16 @@ class Notes extends Component {
     const { cohortStudents } = this.context;
     if (cohortStudents) {
       return (
-        <button
-          className="btn btn-outline-primary btn-sm ml-2 "
-          id="share_button"
-          onClick={() => {
+        <ConfirmPopover
+          onCompleted={() => {
             this.handleShare(note);
+            this.forceUpdate();
+            alert("The note is shared with your students");
           }}
-        >
-          share
-        </button>
+          buttonText="share"
+          confirmText="Share with your students"
+          id="share_popover"
+        />
       );
     }
   };
@@ -198,7 +182,9 @@ class Notes extends Component {
         <React.Fragment>
           <div className="notes_container">
             {this.renderNotes(filteredNotes)}
+          <Link to="/notes/completed" className=" c_notes_link">see completed notes</Link>
           </div>
+          
           <Pagination
             itemsCount={uncompletedNotes.length}
             pageSize={pageSize}
@@ -206,12 +192,6 @@ class Notes extends Component {
             onPageChange={this.handlePageChange}
           />
 
-          {/* <button onClick={this.renderCompletedNotes(filteredNotes)}>Completed Notes</button> */}
-
-          {/* <div className="completed-section">
-            <h3>Completed Notes => </h3>
-            {this.renderCompletedNotes(filteredNotes)}
-          </div> */}
         </React.Fragment>
       );
     } else {
