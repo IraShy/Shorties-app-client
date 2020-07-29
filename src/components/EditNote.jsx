@@ -2,6 +2,7 @@ import React from "react";
 import { Context } from "../context/Context";
 import Joi from "joi-browser";
 import Validation from "../shared/Validation";
+import CompletedButton from "../shared/CompletedButton";
 
 class EditNote extends Validation {
   static contextType = Context;
@@ -84,6 +85,12 @@ class EditNote extends Validation {
     });
   };
 
+  onCompleted = () => {
+    this.setState({
+      note: { ...this.state.note, completed: true },
+    });
+  };
+
   render() {
     const { loading } = this.state.note;
     const { note } = this.state;
@@ -104,7 +111,8 @@ class EditNote extends Validation {
             {this.renderPicture()}
             <div className="form-group" id="edit_buttons">
               {this.renderBackEdit()}
-              {this.renderMarked()}
+              {/* {this.renderMarked()} */}
+              <CompletedButton onCompleted={this.onCompleted} />
               {this.renderButtonEdit("submit")}
             </div>
           </form>

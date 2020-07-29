@@ -39,7 +39,9 @@ class Notes extends Component {
           <div className="card-header" id="note_title">
             {note.title}
           </div>
-          <p className="card-text ml-2 mt-2" id="note_body">{note.body}</p>
+          <p className="card-text ml-2 mt-2" id="note_body">
+            {note.body}
+          </p>
           <img src={note.picture} alt="" id="note_image" />
           <div className="note_card">
             <p className="card-text">
@@ -78,7 +80,11 @@ class Notes extends Component {
                 height="30"
                 alt="icon"
                 id="delete_icon"
-                onClick={() => this.deleteNote(note.id)}
+                onClick={() =>
+                  window.confirm("Are you sure?")
+                    ? this.deleteNote(note.id)
+                    : this.props.history.goBack
+                }
               />
               {this.renderShareButton(note)}
             </div>

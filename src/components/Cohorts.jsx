@@ -83,7 +83,7 @@ class Cohorts extends Component {
       );
     }
   };
-
+  
   render() {
     const { cohorts } = this.context;
 

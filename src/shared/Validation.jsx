@@ -105,12 +105,12 @@ class Validation extends Component {
     const {note} = this.state;
     return (
       <div className="form-group">
-        <label htmlfor="textarea">Description </label>
+        <label htmlFor="textarea">Description </label>
         <textarea
           name="body"
           onChange={this.onInputChange}
           value={note.body}
-          class="form-control"
+          className="form-control"
           id="body"
           rows="3"
         ></textarea>
@@ -119,17 +119,17 @@ class Validation extends Component {
   }
 
   renderMarked() {
+    
     return (
       <button
         type="text"
         className="btn btn-info"
         htmlFor="completed"
-        onClick={(e) => {
-          e.preventDefault();
+        onClick={() => 
           this.setState({
             note: { ...this.state.note, completed: true },
-          });
-        }}
+          }) 
+        }
       >
         marked as completed
       </button>
