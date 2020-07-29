@@ -4,7 +4,8 @@ import { Context } from "../context/Context";
 import Pagination from "../shared/Pagination";
 import { paginate } from "../shared/paginate";
 import moment from "moment";
-import ConfirmPopover from '../shared/ConfirmPopover';
+import ConfirmPopover from "../shared/ConfirmPopover";
+
 
 class Notes extends Component {
   static contextType = Context;
@@ -96,32 +97,6 @@ class Notes extends Component {
     });
   };
 
-  renderCompletedNotes = (notes) => {
-    return notes
-      .filter((n) => n.completed === true)
-      .map((note, index) => {
-        return (
-          <div key={index}>
-            <h1>{note.title}</h1>
-            <p>{note.body}</p>
-            <img src={note.picture} alt="" />
-            <Link
-              to={{
-                pathname: `/notes/${note.id}`,
-                state: note,
-              }}
-            >
-              <button>View note</button>
-            </Link>
-
-            <button onClick={() => this.deleteNote(note.id)}>Delete</button>
-
-            <hr />
-          </div>
-        );
-      });
-  };
-
   handlePageChange = (page) => {
     this.setState({ currentPage: page });
   };
@@ -163,19 +138,21 @@ class Notes extends Component {
 
   renderShareButton = (note) => {
     const { cohortStudents } = this.context;
-    if(cohortStudents) {
-      return <ConfirmPopover 
-        onCompleted={() => {
+    if (cohortStudents) {
+      return (
+        <ConfirmPopover
+          onCompleted={() => {
             this.handleShare(note);
             this.forceUpdate();
-            alert("The note is shared with your students")
-        }} 
+            alert("The note is shared with your students");
+          }}
           buttonText="share"
           confirmText="Share with your students"
           id="share_popover"
         />
+      );
     }
-  }
+  };
 
   async componentDidMount() {
     await this.getCohortStudents();
@@ -205,7 +182,9 @@ class Notes extends Component {
         <React.Fragment>
           <div className="notes_container">
             {this.renderNotes(filteredNotes)}
+          <Link to="/notes/completed" className=" c_notes_link">see completed notes</Link>
           </div>
+          
           <Pagination
             itemsCount={uncompletedNotes.length}
             pageSize={pageSize}
@@ -213,12 +192,6 @@ class Notes extends Component {
             onPageChange={this.handlePageChange}
           />
 
-          {/* <button onClick={this.renderCompletedNotes(filteredNotes)}>Completed Notes</button> */}
-
-          {/* <div className="completed-section">
-            <h3>Completed Notes => </h3>
-            {this.renderCompletedNotes(filteredNotes)}
-          </div> */}
         </React.Fragment>
       );
     } else {

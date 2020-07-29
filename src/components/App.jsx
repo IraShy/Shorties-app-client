@@ -17,7 +17,7 @@ import Cohorts from "./Cohorts";
 import ShowCohort from "./ShowCohort";
 import Categories from "./Categories";
 import ShowCategory from "./ShowCategory";
-
+import CompletedNotes from "./CompletedNotes";
 import "../stylesheets/App.scss";
 
 class App extends Component {
@@ -44,6 +44,11 @@ class App extends Component {
           <Route exact path="/signup" component={SignUp} />
           <ProtectedRoute exact path="/notes" component={Notes} />
           <ProtectedRoute exact path="/notes/create" component={AddNote} />
+          <ProtectedRoute
+            exact
+            path="/notes/completed"
+            component={CompletedNotes}
+          />
           <ProtectedRoute exact path="/notes/:id" component={ShowNote} />
           <ProtectedRoute exact path="/notes/:id/edit" component={EditNote} />
           <ProtectedRoute exact path="/cohorts" component={Cohorts} />

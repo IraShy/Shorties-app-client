@@ -33,10 +33,20 @@
   
 }
 
+.c_notes_link{
+  text-decoration: none;
+   margin-top: 50px;
+    margin-left: 270px;
+    color: grey;
+}
+.c_notes_link:hover{
+  background-color: rgba(216, 208, 208, 0.26);
+}
+
 .card.border-secondary {
   padding: 0px 6px;
   padding-top: 10px;
-  width: 370px;
+  width: 450px;
 
   .card-header {
     background-color: rgba(107, 121, 223, 0.336);
@@ -111,4 +121,10 @@
     margin-left: 100px;
     margin-bottom: 50px;
   }
+
+  .c_notes_link{
+   
+    margin-left: 480px;
+  
+}
 }
