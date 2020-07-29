@@ -11,7 +11,7 @@ class ShowCategory extends Component {
   static contextType = Context;
 
   state = {
-    pageSize: 4,
+    pageSize: 3,
     currentPage: 1,
     notes: [],
   };

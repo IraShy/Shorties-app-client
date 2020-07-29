@@ -8,7 +8,7 @@ import moment from "moment";
 class CompletedNotes extends Component {
   static contextType = Context;
   state = {
-    pageSize: 2,
+    pageSize: 3,
     currentPage: 1,
   };
 
@@ -98,7 +98,7 @@ class CompletedNotes extends Component {
   };
 
   render() {
-    const { notes, search } = this.context;
+    const { notes } = this.context;
     const { pageSize, currentPage } = this.state;
     const completedNotes = notes.filter((n) => n.completed === true);
 
