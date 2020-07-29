@@ -165,7 +165,11 @@ class Notes extends Component {
     const { cohortStudents } = this.context;
     if(cohortStudents) {
       return <ConfirmPopover 
-        onCompleted={() => this.handleShare(note)} 
+        onCompleted={() => {
+            this.handleShare(note);
+            this.forceUpdate();
+            alert("The note is shared with your students")
+        }} 
           buttonText="share"
           confirmText="Share with your students"
           id="share_popover"

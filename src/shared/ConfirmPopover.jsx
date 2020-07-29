@@ -8,14 +8,14 @@ const ConfirmPopover = (props) => {
     <Popover id="popover-container">
       <Popover.Title as="h3">{props.confirmText}</Popover.Title>
       <Popover.Content>
-        <button
+        <Button
           type="text"
           className="btn btn-primary"
-          htmlFor="completed"
+          htmlFor=""
           onClick={props.onCompleted}
         >
           confirm
-        </button>
+        </Button>
       </Popover.Content>
     </Popover>
   );
