@@ -196,7 +196,6 @@ class ShowCategory extends Component {
   }
 
   render() {
-    console.log(this.context);
     const { id } = this.props.location.state;
     const category = this.context.categories.find(
       (category) => category.id === id
