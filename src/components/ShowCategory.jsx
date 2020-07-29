@@ -77,22 +77,24 @@ class ShowCategory extends Component {
     });
   };
 
- renderShareButton = (note) => {
+  renderShareButton = (note) => {
     const { cohortStudents } = this.context;
-    if(cohortStudents) {
-      return <ConfirmPopover 
-        onCompleted={() => {
+    if (cohortStudents) {
+      return (
+        <ConfirmPopover
+          onCompleted={() => {
             this.handleShare(note);
             this.forceUpdate();
-            alert("The note is shared with your students")
-        }} 
+            alert("The note is shared with your students");
+          }}
           buttonText="share"
           confirmText="Share with your students"
           id="share_popover"
         />
+      );
     }
-  }
-  
+  };
+
   renderNotes = (notes) => {
     const uncompletedNotes = notes.filter((n) => n.completed === false);
     let sorted = uncompletedNotes.sort(
@@ -118,6 +120,7 @@ class ShowCategory extends Component {
               </small>
             </p>
             <div className="note_buttons">
+              {this.renderShareButton(note)}
               <img
                 src={require("../assets/back.png")}
                 width="25"
@@ -150,7 +153,6 @@ class ShowCategory extends Component {
                 id="delete_icon"
                 onClick={() => this.deleteNote(note.id)}
               />
-              {this.renderShareButton(note)}
             </div>
           </div>
         </div>
