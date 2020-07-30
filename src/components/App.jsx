@@ -38,7 +38,7 @@ class App extends Component {
         <NavBar />
 
         <Switch>
-          <ProtectedRoute exact path="/" component={Home} />
+          <Route exact path="/" component={Home} />
 
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={SignUp} />
@@ -62,7 +62,7 @@ class App extends Component {
             component={ShowCategory}
           />
 
-          <ProtectedRoute component={NotFound} />
+          <Route component={NotFound} />
         </Switch>
       </Context.Provider>
     );
