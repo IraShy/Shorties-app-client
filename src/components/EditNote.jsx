@@ -93,7 +93,7 @@ class EditNote extends Validation {
 
   render() {
     const { loading } = this.state.note;
-    const { note } = this.state;
+    const { note, errors } = this.state;
     const selected = this.state.note.categories;
 
     return (
@@ -103,7 +103,7 @@ class EditNote extends Validation {
             <h1 className="ml-1 mt-5 mb-3">Edit</h1>
             {this.renderInput("title", "Title")}
             {this.renderDropdown(selected)}
-            {this.renderTextarea()}
+            {this.renderTextarea(errors)}
 
             <div className="form-group" id="image_container">
               <img src={note.picture} alt="" className="edit_image" />
