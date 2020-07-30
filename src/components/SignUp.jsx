@@ -62,7 +62,7 @@ class SignUp extends Component {
     return (
       <div className="signup_container">
         <form onSubmit={this.onFormSubmit} id="signup-form">
-        <h1 className="ml-1 mt-5 mb-3">Sign Up</h1>
+          <h1 className="ml-1 mt-5 mb-3">Sign Up</h1>
           <Input
             label="username"
             type="username"
@@ -98,7 +98,6 @@ class SignUp extends Component {
               type="submit"
               value="Submit"
               data-testid="signup-submit"
-              
             />
           </div>
         </form>

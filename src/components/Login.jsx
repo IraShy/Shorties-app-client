@@ -50,12 +50,12 @@ class Login extends Component {
     return (
       <div className="login_container">
         <form onSubmit={this.onFormSubmit} id="login-form">
-        <h1 className="ml-1 mt-5 mb-3">Login</h1>
-        {errMessage && (
-          <span style={{ color: "red" }} data-testid="login-error">
-            {errMessage}
-          </span>
-        )}
+          <h1 className="ml-1 mt-5 mb-3">Login</h1>
+          {errMessage && (
+            <span style={{ color: "red" }} data-testid="login-error">
+              {errMessage}
+            </span>
+          )}
           <Input
             label="email"
             type="email"

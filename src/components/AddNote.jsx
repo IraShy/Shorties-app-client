@@ -34,7 +34,7 @@ class AddNote extends Validation {
   };
 
   categoriesUpdated = (updatedCategories) => {
-    const { note} = this.state;
+    const { note } = this.state;
     const updatedNote = {
       ...note,
       categories: updatedCategories,
@@ -49,7 +49,7 @@ class AddNote extends Validation {
 
   render() {
     const selected = this.state.categories;
-    const {errors} = this.state;
+    const { errors } = this.state;
     return (
       <div className="addnote_container">
         <form encType="multipart/form-data" onSubmit={this.onFormSubmit}>

@@ -1,10 +1,8 @@
-
 // EditNote & addNote
 
 form {
   width: 390px;
 }
-
 
 #image_container {
   display: flex;
@@ -21,8 +19,6 @@ form {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  
-
 }
 
 #picture {
@@ -48,18 +44,15 @@ form {
   }
 }
 
-
 #addnote_button {
   display: flex;
   justify-content: flex-end;
 }
 
-
-
-.addnote_container, .editnote_container{ 
-    font-family: 'Raleway', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-content: center;
-   
-  }
+.addnote_container,
+.editnote_container {
+  font-family: "Raleway", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}

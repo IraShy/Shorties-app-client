@@ -48,7 +48,8 @@ class ShowNote extends Component {
             </h5>
           </div>
           <div className="shownote_pic">
-          <img src={note.picture} className="card-img-top" alt="" /></div>
+            <img src={note.picture} className="card-img-top" alt="" />
+          </div>
           <p className="card-text">
             <small className="text-muted">
               Updated {moment(note.updated_at).startOf("minute").fromNow()}
@@ -58,13 +59,13 @@ class ShowNote extends Component {
           </p>
           <div className="shownote_buttons">
             <img
-                src={require("../assets/back.png")}
-                width="25"
-                height="25"
-                alt="icon"
-                id="back_icon"
-                onClick={this.props.history.goBack}
-              />
+              src={require("../assets/back.png")}
+              width="25"
+              height="25"
+              alt="icon"
+              id="back_icon"
+              onClick={this.props.history.goBack}
+            />
 
             <Link
               to={{

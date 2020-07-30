@@ -1,6 +1,7 @@
-@import 'vars';
+@import "vars";
 
-button.backbutton, button.viewbutton {
+button.backbutton,
+button.viewbutton {
   color: $grey-col;
   background-color: transparent;
   font-size: 1em;
@@ -9,7 +10,7 @@ button.backbutton, button.viewbutton {
   border: 1px solid $grey-col;
   border-radius: 3px;
   padding: 0.375rem 0.75rem;
-};
+}
 
 div.button-block {
   display: flex;
@@ -22,6 +23,3 @@ Button.delete:hover {
   background-color: transparent;
 }
 
-// button.viewbutton {
-
-// }

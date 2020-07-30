@@ -35,8 +35,6 @@ class Client {
 
     return newNote;
   };
-
-  
 }
 
 export default Client;

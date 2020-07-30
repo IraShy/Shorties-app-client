@@ -6,7 +6,6 @@ import { paginate } from "../shared/paginate";
 import moment from "moment";
 import ConfirmPopover from "../shared/ConfirmPopover";
 
-
 class Notes extends Component {
   static contextType = Context;
 
@@ -182,16 +181,17 @@ class Notes extends Component {
         <React.Fragment>
           <div className="notes_container">
             {this.renderNotes(filteredNotes)}
-          <Link to="/notes/completed" className=" c_notes_link">see completed notes</Link>
+            <Link to="/notes/completed" className=" c_notes_link">
+              see completed notes
+            </Link>
           </div>
-          
+
           <Pagination
             itemsCount={uncompletedNotes.length}
             pageSize={pageSize}
             currentPage={currentPage}
             onPageChange={this.handlePageChange}
           />
-
         </React.Fragment>
       );
     } else {

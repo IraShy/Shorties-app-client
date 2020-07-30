@@ -5,7 +5,6 @@ import Joi from "joi-browser";
 import { Link } from "react-router-dom";
 import _ from "lodash";
 
-
 class Validation extends Component {
   state = {
     note: {},
@@ -103,7 +102,7 @@ class Validation extends Component {
   }
 
   renderTextarea(errors) {
-    const {note } = this.state;
+    const { note } = this.state;
     return (
       <div className="form-group">
         <label htmlFor="textarea">Description </label>
@@ -115,11 +114,12 @@ class Validation extends Component {
           id="body"
           rows="3"
         ></textarea>
-        { !_.isEmpty(errors) && <div className="alert alert-info">{errors.body}</div>}
+        {!_.isEmpty(errors) && (
+          <div className="alert alert-info">{errors.body}</div>
+        )}
       </div>
     );
   }
-
 
   renderBack = () => {
     return (

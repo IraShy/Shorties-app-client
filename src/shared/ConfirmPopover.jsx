@@ -22,7 +22,9 @@ const ConfirmPopover = (props) => {
 
   const MarkedButton = () => (
     <OverlayTrigger trigger="click" placement="top" overlay={popover}>
-      <Button variant="info" id="share_complete_buttons">{props.buttonText}</Button>
+      <Button variant="info" id="share_complete_buttons">
+        {props.buttonText}
+      </Button>
     </OverlayTrigger>
   );
 

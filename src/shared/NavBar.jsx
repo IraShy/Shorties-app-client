@@ -34,7 +34,6 @@ class NavBar extends Component {
     );
   };
 
-
   render() {
     const path = window.location.pathname;
     return (

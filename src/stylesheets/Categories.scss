@@ -1,7 +1,6 @@
-@import 'vars';
+@import "vars";
 
 Button.category:hover {
   background-color: $light-blue;
-  color: rgb(108,117,125);
-
+  color: rgb(108, 117, 125);
 }

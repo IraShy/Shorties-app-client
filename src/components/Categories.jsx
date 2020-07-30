@@ -37,7 +37,12 @@ class Categories extends Component {
               state: category,
             }}
           >
-            <Button className="category" variant="outline-secondary" size="lg" block>
+            <Button
+              className="category"
+              variant="outline-secondary"
+              size="lg"
+              block
+            >
               {category.name}
             </Button>
           </Link>

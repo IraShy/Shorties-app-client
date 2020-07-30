@@ -1,12 +1,14 @@
-@import 'buttons';
-@import 'vars';
+@import "buttons";
+@import "vars";
 
-h5, p.cohort-p, h1.cohort-title {
+h5,
+p.cohort-p,
+h1.cohort-title {
   text-align: center;
 }
 
 Table {
-  td.delcell{
+  td.delcell {
     display: flex;
     justify-content: center;
   }
