@@ -30,7 +30,7 @@ class Validation extends Component {
       categories: this.state.categories,
     });
     this.setState({ note, errors });
-    console.log(errors);
+    
   };
 
   validateNote = (note) => {
