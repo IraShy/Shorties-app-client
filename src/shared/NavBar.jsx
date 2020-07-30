@@ -5,7 +5,8 @@ import Nav from "react-bootstrap/Nav";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
-
+import LoggedIn from "../shared/LoggedIn";
+import LoggedOut from "../shared/LoggedOut";
 
 class NavBar extends Component {
   static contextType = Context;
@@ -23,6 +24,16 @@ class NavBar extends Component {
       document.getElementById("searchInput").value = "";
     }
   };
+
+  renderNavBar = () => {
+    const { currentUser } = this.context;
+    return currentUser || localStorage.getItem("token") ? (
+      <LoggedIn history={this.props.history} context={this.context} />
+    ) : (
+      <LoggedOut />
+    );
+  };
+
 
   render() {
     const path = window.location.pathname;
@@ -70,53 +81,7 @@ class NavBar extends Component {
             )}
           </Nav>
 
-          <Nav>
-            {this.context.currentUser ? (
-              <React.Fragment>
-                <Nav.Link className="nav-item nav-link" href="/notes">
-                  Notes
-                </Nav.Link>
-                <Nav.Link href="/notes/create">
-                  <img
-                    src={require("../assets/add_note.png")}
-                    width="35"
-                    height="35"
-                    alt="icon"
-                  />
-                </Nav.Link>
-                {this.context.isTeacher && (
-                  <Nav.Link className="nav-item nav-link" href="/cohorts">
-                    Cohorts
-                  </Nav.Link>
-                )}
-                <Nav.Link className="nav-item nav-link" href="/categories">
-                  Categories
-                </Nav.Link>
-
-                <Nav.Link
-                  href="/login"
-                  className="nav-item nav-link"
-                  onClick={() => {
-                    localStorage.removeItem("token");
-                  }}
-                >
-                  Logout
-                </Nav.Link>
-
-              
-              </React.Fragment>
-            ) : (
-              <React.Fragment>
-                <Nav.Link href="/Login" data-testid="login">
-                  {" "}
-                  Login
-                </Nav.Link>
-                <Nav.Link eventKey={2} href="/signup" data-testid="signup">
-                  Sign Up
-                </Nav.Link>
-              </React.Fragment>
-            )}
-          </Nav>
+          <Nav>{this.renderNavBar()}</Nav>
         </Navbar.Collapse>
       </Navbar>
     );
