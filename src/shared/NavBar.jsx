@@ -28,15 +28,12 @@ class NavBar extends Component {
   renderNavBar = () => {
     const { currentUser } = this.context;
     return currentUser || localStorage.getItem("token") ? (
-      <LoggedIn />
+      <LoggedIn history={this.props.history} context={this.context} />
     ) : (
       <LoggedOut />
     );
   };
 
-  async componentDidMount() {
-    await this.context.currentUser;
-  }
 
   render() {
     const path = window.location.pathname;
