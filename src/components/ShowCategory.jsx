@@ -151,7 +151,11 @@ class ShowCategory extends Component {
                 height="30"
                 alt="icon"
                 id="delete_icon"
-                onClick={() => this.deleteNote(note.id)}
+                onClick={() =>
+                  window.confirm("Are you sure?")
+                    ? this.deleteNote(note.id)
+                    : this.props.history.goBack
+                }
               />
             </div>
           </div>
@@ -196,7 +200,6 @@ class ShowCategory extends Component {
   }
 
   render() {
-    console.log(this.context);
     const { id } = this.props.location.state;
     const category = this.context.categories.find(
       (category) => category.id === id
