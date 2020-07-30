@@ -43,7 +43,7 @@ describe("with the correct login credentials user", () => {
   it("should be able to click on submit and be navigated to /notes", () => {
     cy.getUser().then(({ email, password }) => {
       cy.visit("/login");
-      cy.typeInLoginCredentials2("teacher1@g.com", "123456");
+      cy.typeInLoginCredentials2("test3@g.com", "730test3");
       cy.findByTestId("login-submit").click();
       cy.url()
         .should("eql", "http://localhost:8080/notes")
