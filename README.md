@@ -4,7 +4,7 @@
 
 ### Link to Website 
 
-Client side: https://github.com/IraShy/Shorties-app-client
+Client side: https://shorties-app.netlify.app
 
 Back end: https://shorties-server.herokuapp.com
 
